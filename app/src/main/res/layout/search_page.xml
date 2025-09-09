@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingTop="20dp"
+    android:paddingHorizontal="10dp"
+    >
+
+    <!-- 🔍 Search Bar -->
+    <LinearLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="#F5F5F5">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/search_search_icon" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="Search"
+            android:background="@null"
+            android:padding="0dp"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/search_live"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- 🏷️ Category Chips -->
+    <HorizontalScrollView
+        android:id="@+id/categories_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/search_bar"
+        android:background="#FFFFFF"
+        android:scrollbars="none"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_shop"
+                android:scaleType="centerInside"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_style"
+                android:scaleType="centerInside"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_sports"
+                android:scaleType="centerInside"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_auto"
+                android:scaleType="centerInside"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_music"
+                android:scaleType="centerInside"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+    <!-- 📸 Image Grid -->
+    <GridLayout
+        android:id="@+id/search_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/categories_scroll"
+        android:columnCount="3"
+        android:rowCount="5"
+        android:orientation="horizontal">
+
+        <!-- Each image with weight -->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo1"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowSpan="2"
+            android:layout_columnSpan="2"
+
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo2"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo3"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo4"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo5"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo6"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo7"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo8"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo9"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_columnSpan="2"
+
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo10"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/search_photo11"/>
+
+
+
+        <!-- keep adding more -->
+    </GridLayout>
+
+
+    <!-- Bottom Navigation with indicator inside -->
+    <LinearLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:elevation="8dp">
+
+        <!-- Nav items row -->
+        <LinearLayout
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:background="@color/white">
+
+            <!-- Home -->
+            <ImageView
+                android:id="@+id/iv_nav_home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_home"
+                android:contentDescription="Home" />
+
+            <!-- Search -->
+            <ImageView
+                android:id="@+id/iv_nav_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/search_search_bold"
+                android:contentDescription="Search" />
+
+            <!-- Add Post -->
+            <ImageView
+                android:id="@+id/iv_nav_add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/add"
+                android:contentDescription="Add" />
+
+            <!-- Notifications -->
+            <ImageView
+                android:id="@+id/iv_nav_heart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/notif_nav"
+                android:contentDescription="Activity" />
+
+            <!-- Profile with border -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <!-- Border ring -->
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/storyring"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"/>
+
+                <!-- Profile picture -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_your_profile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/profile"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/home_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/search_homebar_line"
+            android:scaleType="fitXY"
+            android:background="@color/white" />
+    </LinearLayout>
+
+
+</RelativeLayout>

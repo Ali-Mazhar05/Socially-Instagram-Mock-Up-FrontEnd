@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/main_feed_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/search_nav"
+        android:title="Search" />
+
+    <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/add"
+        android:title="Add" />
+
+    <item
+        android:id="@+id/nav_heart"
+        android:icon="@drawable/notif_nav"
+        android:title="Activity" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
+</menu>

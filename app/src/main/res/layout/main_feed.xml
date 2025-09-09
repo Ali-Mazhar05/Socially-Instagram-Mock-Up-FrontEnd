@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Header Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:paddingHorizontal="16dp">
+
+        <!-- Left camera icon -->
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/main_feed_camera_icon"
+            android:contentDescription="Camera" />
+
+        <!-- Center title -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Socially"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#825858" />
+
+        <!-- Right icons -->
+        <LinearLayout
+            android:id="@+id/right_icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_message"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/main_feed_igtv"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Messages" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/main_feed_messengar"
+                android:contentDescription="Share" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <!-- Stories Section -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <!-- Your Story -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_your_story"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Story"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <!-- Story 1 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <ImageView
+                        android:id="@+id/iv_story_1"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile_karenne"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="karenme"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <!-- Story 2 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <ImageView
+                        android:id="@+id/iv_story_2"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/jack_profile"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="zackjohn"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <!-- Story 3 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <ImageView
+                        android:id="@+id/iv_story_3"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/kieron_profile"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kieron_d"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <!-- Story 4 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_story_4"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/craig_profile"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="craig"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- Separator -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0" />
+
+    <!-- Main Content - ScrollView for posts -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Post -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF">
+
+                <!-- Post Header -->
+                <!-- Post Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <!-- Profile with border -->
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp">
+
+                        <!-- Story ring / border -->
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/storyring"
+                            android:scaleType="fitXY" />
+
+                        <!-- Profile picture -->
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_post_profile"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/post_profile"
+                            android:scaleType="centerCrop" />
+                    </FrameLayout>
+
+                    <!-- Name + Verified + Location -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- Username + Verified checkmark -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="joshua_l"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_marginStart="4dp"
+                                android:src="@drawable/main_feed_official_icon"
+                                android:contentDescription="Verified account" />
+                        </LinearLayout>
+
+                        <!-- Location -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tokyo, Japan"
+                            android:textColor="#666666"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <!-- More icon (rightmost) -->
+                    <ImageView
+                        android:id="@+id/iv_post_menu"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_more"
+                        android:contentDescription="More options" />
+                </LinearLayout>
+
+
+                <!-- Post Image -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp">
+
+                    <!-- Main post image -->
+                    <ImageView
+                        android:id="@+id/iv_main_post_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/main_post_img" />
+
+                    <!-- Photo number icon (overlay, top-right) -->
+                    <ImageView
+                        android:id="@+id/iv_main_feed_photonumber"
+                        android:layout_width="45dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/main_feed_photo_number"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="8dp" />
+
+                </FrameLayout>
+
+
+                <!-- Post Actions -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/iv_like"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/like"
+                        android:contentDescription="Like" />
+
+                    <ImageView
+                        android:id="@+id/iv_comment"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/comment"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="Comment" />
+
+                    <ImageView
+                        android:id="@+id/iv_send"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/messanger"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="Send" />
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="70dp"
+                        android:src="@drawable/main_feed_pagination"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/iv_bookmark"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/save"
+                        android:contentDescription="Save" />
+
+                </LinearLayout>
+
+                <!-- Like Count and Caption -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="12dp"
+                    android:paddingBottom="12dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:id="@+id/iv_liked_by_profile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/craig_profile" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Liked by "
+                            android:textSize="14sp"
+                            android:textColor="#000000"
+                            android:layout_marginStart="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="craig_love"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" and "
+                            android:textSize="14sp"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="44,686 others"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/igpost_caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/post_text"/>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- Bottom Navigation with indicator inside -->
+    <LinearLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:elevation="8dp">
+
+        <!-- Nav items row -->
+        <LinearLayout
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:background="@color/white">
+
+            <!-- Home -->
+            <ImageView
+                android:id="@+id/iv_nav_home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/main_feed_home"
+                android:contentDescription="Home" />
+
+            <!-- Search -->
+            <ImageView
+                android:id="@+id/iv_nav_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/search_nav"
+                android:contentDescription="Search" />
+
+            <!-- Add Post -->
+            <ImageView
+                android:id="@+id/iv_nav_add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/add"
+                android:contentDescription="Add" />
+
+            <!-- Notifications -->
+            <ImageView
+                android:id="@+id/iv_nav_heart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/notif_nav"
+                android:contentDescription="Activity" />
+
+            <!-- Profile with border -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <!-- Border ring -->
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/storyring"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"/>
+
+                <!-- Profile picture -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_your_profile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/profile"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Indicator line -->
+        <ImageView
+            android:id="@+id/home_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/search_homebar_line"
+            android:scaleType="fitXY"
+            android:background="@color/white" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

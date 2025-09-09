@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Story Ring -->
+    <item>
+        <bitmap
+            android:src="@drawable/storyring"
+            android:gravity="center" />
+    </item>
+    <!-- Profile Picture -->
+    <item>
+        <bitmap
+            android:src="@drawable/profile"
+            android:width="60dp"
+            android:height="60dp"
+
+            android:gravity="center" />
+    </item>
+</layer-list>

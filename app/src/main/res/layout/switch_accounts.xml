@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Center container -->
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="34dp">
+
+        <!-- App Title -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Socially"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#9C4C42"
+            android:layout_marginBottom="36dp" />
+
+        <!-- Profile Image (Circular) -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/profile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#9C4C42"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Username -->
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jacob_w"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/btnLoginSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Log in"
+            android:backgroundTint="#9C4C42"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Switch Accounts -->
+        <TextView
+            android:id="@+id/switchAccounts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Switch accounts"
+            android:textSize="14sp"
+            android:textColor="#9C4C42"
+            android:layout_marginBottom="36dp" />
+
+        <!-- Signup Section -->
+        <TextView
+            android:id="@+id/signupPromptSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don’t have an account? Sign up."
+            android:textSize="14sp"
+            android:textColor="#9C4C42" />
+
+    </LinearLayout>
+
+</RelativeLayout>

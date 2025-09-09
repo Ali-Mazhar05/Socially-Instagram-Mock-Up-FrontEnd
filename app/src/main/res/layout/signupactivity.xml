@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9B2C2C">
+
+    <!-- Back Arrow -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_media_previous"
+        android:contentDescription="Back" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Socially"
+        android:textSize="28sp"
+        android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/appSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create An Account and Sign Up"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/appTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp" />
+
+    <!-- Profile Image Circle -->
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/appSubtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circle_bg"
+        android:src="@android:drawable/ic_menu_camera"
+        android:scaleType="centerInside"
+        android:padding="20dp"
+        android:contentDescription="Profile Image" />
+
+    <!-- Form Fields -->
+    <LinearLayout
+        android:id="@+id/formLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/profileImage"
+        android:layout_marginTop="20dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
+
+        <!-- Username -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="tejpatil064"
+            android:background="@drawable/underline"
+
+
+            />
+
+        <!-- First Name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Name"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/etFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tejas"
+            android:textColor="@android:color/white"
+            android:background="@drawable/underline" />
+
+        <!-- Last Name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Last name"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/etLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Patil"
+            android:textColor="@android:color/white"
+            android:background="@drawable/underline"/>
+
+        <!-- Date of Birth -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of Birth"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/etDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="02 - 09 - 2003"
+            android:textColor="@android:color/white"
+            android:background="@drawable/underline" />
+
+        <!-- Email -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter E-mail"
+            android:textColor="@android:color/white"
+            android:textColorHint="#CCCCCC"
+            android:background="@drawable/underline"/>
+
+        <!-- Password -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:text="********"
+            android:textColor="@android:color/white"
+            android:background="@drawable/underline"
+            android:drawableEnd="@android:drawable/ic_menu_view" />
+
+    </LinearLayout>
+
+    <!-- Disabled Button -->
+    <Button
+        android:id="@+id/btnCreateAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create an Account"
+        android:enabled="true"
+        android:alpha="0.5"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:background="@drawable/rounded_button"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

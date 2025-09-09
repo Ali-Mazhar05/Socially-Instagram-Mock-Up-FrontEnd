@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#995A5B">
+
+    <!-- Center Image -->
+    <ImageView
+        android:id="@+id/mother_picture"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/call_mother" />
+
+    <!-- Name -->
+    <TextView
+        android:id="@+id/mother_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mother ❤️"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/mother_picture"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Timer -->
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="03:12"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_below="@id/mother_text"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Bottom control bar -->
+    <LinearLayout
+        android:id="@+id/control_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginBottom="40dp"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingHorizontal="40dp"
+            android:src="@drawable/call_text_ic" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="80dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:id="@+id/call_callic"
+            android:src="@drawable/call_callic" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingHorizontal="40dp"
+            android:src="@drawable/call_speaker_ic" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="10dp"
+    >
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp">
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/dm_back" />
+
+        <!-- Middle section (username + icon) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="jacob_w"
+
+                android:textColor="@color/main_layout_brown"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:id="@+id/dm_other_accounts"
+                android:layout_height="18dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="6dp"
+                android:src="@drawable/dm_other_accounts" />
+        </LinearLayout>
+
+        <!-- Add button -->
+        <ImageView
+            android:id="@+id/btnAdd"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/dm_add_shape" />
+    </LinearLayout>
+
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Search"
+        android:layout_below="@id/topBar"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:drawableStart="@drawable/search_search_icon"
+        android:background="@color/searchbox_gray"/>
+
+    <!-- Hardcoded Chat List -->
+    <LinearLayout
+        android:id="@+id/chatList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/etSearch"
+        android:orientation="vertical">
+
+        <!-- Chat 1 -->
+        <LinearLayout
+            android:id="@+id/chat1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile picture -->
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+            <!-- Border PNG -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/dm_viewed_story"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:src="@drawable/post_profile"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="3dp"/>
+            </FrameLayout>
+
+            <!-- Name + message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="joshua_l"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:text="Have a nice day, bro!"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=". now"
+                android:textSize="12sp"
+                android:textColor="#060606"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp" />
+
+            <!-- Camera icon -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dm_camera" />
+        </LinearLayout>
+
+
+        <!-- Chat 2 -->
+        <LinearLayout
+            android:id="@+id/chat2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile picture -->
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/karenne_profile"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="3dp"/>
+            </FrameLayout>
+
+            <!-- Name + message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="karenne"
+                    android:textColor="#060606"
+                    android:ellipsize="end"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:text="I heard this is a good movie, s..."
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=". now"
+                android:textSize="12sp"
+                android:textColor="#060606"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp" />
+
+
+            <!-- Camera icon -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dm_camera" />
+        </LinearLayout>
+        <!-- Chat 3 -->
+        <LinearLayout
+            android:id="@+id/chat3"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile picture -->
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/dm_martini_rond"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="3dp"/>
+            </FrameLayout>
+
+            <!-- Name + message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="martini_rond"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:text="See you on the next meeting!"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=". 15m"
+                android:textSize="12sp"
+                android:textColor="#060606"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp" />
+
+
+            <!-- Camera icon -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dm_camera" />
+        </LinearLayout>
+        <!-- Chat 4 -->
+
+        <LinearLayout
+            android:id="@+id/chat4"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile picture -->
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+                <!-- Border PNG -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dm_viewed_story"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/dm_andreww"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="3dp"/>
+            </FrameLayout>
+
+            <!-- Name + message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="andrewww_"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:text="Sounds good 😂😂😂"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=". 20m"
+                android:textSize="12sp"
+                android:textColor="#060606"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp" />
+
+
+            <!-- Camera icon -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dm_camera" />
+        </LinearLayout>
+        <!-- Chat 5 -->
+        <LinearLayout
+            android:id="@+id/chat5"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile picture -->
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+                <!-- Border PNG -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dm_viewed_story"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/kieron_profile"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="3dp"/>
+            </FrameLayout>
+
+            <!-- Name + message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kiero_d"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:text="The new design looks cool, b..."
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=". 1m"
+                android:textSize="12sp"
+                android:textColor="#060606"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp" />
+
+
+            <!-- Camera icon -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dm_camera" />
+        </LinearLayout>
+
+        <!-- Chat 6 -->
+        <LinearLayout
+            android:id="@+id/chat6"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Profile picture -->
+            <FrameLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp">
+
+                <!-- Border PNG -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dm_viewed_story"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/dm_max_jacobson"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="3dp"/>
+            </FrameLayout>
+
+            <!-- Name + message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="maxjacobson"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:text="Thank you, bro!"
+                    android:textColor="#060606"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=". 15m"
+                android:textSize="12sp"
+                android:textColor="#060606"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp" />
+
+
+            <!-- Camera icon -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/dm_camera" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Bottom Camera Button -->
+    <!-- Bottom Navigation with indicator inside -->
+    <LinearLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:elevation="2dp">
+
+    <!-- Nav items row -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imgBottomCamera"
+            android:layout_width="375dp"
+            android:layout_height="79dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/dm_camera_filled" />
+    </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:src="@drawable/search_homebar_line" />
+    </LinearLayout>
+
+
+
+
+
+
+
+</RelativeLayout>
