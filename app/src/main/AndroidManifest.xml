@@ -30,6 +30,8 @@
         <activity android:name=".search_page"/>
         <activity android:name=".dm_feed"/>
         <activity android:name=".chat_screen"/>
+        <activity android:name=".you_notif"/>
+        <activity android:name=".following_notif"/>
 
     </application>
 

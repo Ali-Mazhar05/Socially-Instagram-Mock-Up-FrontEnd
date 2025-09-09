@@ -4,7 +4,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class call_screen: AppCompatActivity() {
-    override fun OnCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.call_screen)
 
