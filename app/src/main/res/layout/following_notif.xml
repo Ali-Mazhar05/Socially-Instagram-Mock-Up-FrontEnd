@@ -10,7 +10,7 @@
         android:id="@+id/top_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:weightSum="2"
         android:padding="12dp">
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="12dp">
+            android:paddingHorizontal="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/karenne_you_text"
-                    android:text="karenne liked 3 photos. 3h"
+                    android:text="@string/karenne_following_text1"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -143,7 +143,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,8 +173,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/kiero_d_zackjon_following_text"
-                    android:text="kiero_d, zackjohn and craig_love
-                    liked joshua_I photo. 3h"
+                    android:text="@string/kiero_d_zackjon_following_text"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -204,8 +202,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/kiero_d_following_text"
-                    android:text="kiero_d started following
-                                   craig_love. 3h"
+                    android:text="@string/kiero_d_following_text"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -236,7 +233,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="10dp"
                         android:id="@+id/craig_love_you_text"
-                        android:text="craig_love liked 8 posts. 3h"
+                        android:text="@string/craig_love_you_text"
                         android:textSize="14sp"
                         android:textColor="@android:color/black" />
 
@@ -281,6 +278,13 @@
                             android:src="@drawable/following_craige_5"
                             android:scaleType="centerCrop"
                             android:layout_marginEnd="8dp"/>
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:src="@drawable/following_craige_6"
+                                    android:scaleType="centerCrop"
+                                    android:layout_marginEnd="8dp"/>
                     </LinearLayout>
                          <LinearLayout
         android:layout_width="wrap_content"
@@ -288,12 +292,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="6dp">
-        <ImageView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/following_craige_6"
-            android:scaleType="centerCrop"
-            android:layout_marginEnd="8dp"/>
+
         <ImageView
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -318,8 +317,209 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="6dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="2dp"
+                    android:src="@drawable/jack_profile" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="2dp"
+                    android:src="@drawable/kieron_profile"
+                    android:layout_marginStart="-25dp"
+                    android:layout_marginTop="5dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/kiero_d_zackjon_following_text_2"
+                    android:text="@string/kiero_d_zackjon_following_text_2"
+                    android:textSize="14sp"
+                    android:textColor="#404040" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/following_post6"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="6dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="2dp"
+                    android:src="@drawable/jack_profile" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/circle_bg"
+                    android:padding="2dp"
+                    android:src="@drawable/kieron_profile"
+                    android:layout_marginStart="-25dp"
+                    android:layout_marginTop="5dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/kiero_d_zackjon_following_text_3"
+                    android:text="@string/kiero_d_zackjon_following_text_3"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/following_post7"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="6dp">
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <ImageView
+                        android:id="@+id/iv_story_1"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile_karenne"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/karenne_following_text_2"
+                    android:text="@string/karenne_following_text_2"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/following_post8"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="6dp">
+
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                    <!-- Border PNG -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/storyring"
+                        android:scaleType="fitXY"/>
+
+                    <!-- Profile image -->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/maxjacobson_following_pfp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dm_max_jacobson"/>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:paddingVertical="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:id="@+id/maxjacobson_following_text"
+                        android:text="@string/maxjacobson_following_text"
+                        android:textSize="14sp"
+                        android:textColor="@android:color/black" />
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/following_maxjacobson1"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="8dp"/>
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/following_maxjacobson2"
+                            android:scaleType="centerCrop"
+                            android:layout_marginEnd="8dp"/>
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/following_maxjacobson3"
+                            android:scaleType="centerCrop"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
 

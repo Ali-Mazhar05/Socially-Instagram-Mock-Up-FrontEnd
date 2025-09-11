@@ -25,7 +25,6 @@ class you_notif : AppCompatActivity() {
         val joshuaText: TextView = findViewById(R.id.joshua_you_text)
         val parkerText: TextView = findViewById(R.id.parkerr_you_text)
 
-        // Apply bold styling
         karenneText.text = boldFirstWordAnd26Others(karenneText.text.toString())
         kieroText.text = boldFirstWordAnd26Others(kieroText.text.toString())
         craigText.text = boldFirstWordAnd26Others(craigText.text.toString())

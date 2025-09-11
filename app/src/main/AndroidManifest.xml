@@ -32,6 +32,14 @@
         <activity android:name=".chat_screen"/>
         <activity android:name=".you_notif"/>
         <activity android:name=".following_notif"/>
+        <activity android:name="your_profile_screen"/>
+        <activity android:name=".story_screen"/>
+        <activity android:name=".call_screen"/>
+        <activity android:name=".search_tab_internshala"/>
+        <activity android:name=".edit_profile_screen"/>
+
+
+
 
     </application>
 

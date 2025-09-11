@@ -144,7 +144,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/karenne_you_text"
-                    android:text="karenne liked your photo. 1h"
+                    android:text="@string/you_notif_karenne"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -201,7 +201,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/kiero_d_zackjon_you_text"
-                    android:text="kiero_d, zackjohn and 26 others liked your photo. 3h"
+                    android:text="@string/you_notif_kiero_d"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/craig_love_you_text"
-                        android:text="craig_love mentioned you in a comment: @jacob_w exactly.. 2d"
+                        android:text="@string/you_notif_craig_love"
                         android:textSize="14sp"
                         android:textColor="@android:color/black" />
 
@@ -304,7 +304,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/martini_rond_you_text"
-                    android:text="martini_rond started following you. 3d"
+                    android:text="@string/you_notif_martini_rond"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -339,7 +339,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/miss_potter_you_text"
-                    android:text="mis_potter started following you. 3d"
+                    android:text="@string/you_notif_miss_potter"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -390,7 +390,7 @@
                     android:layout_weight="1"
                     android:id="@+id/m_humphrey_you_text"
                     android:layout_marginStart="10dp"
-                    android:text="m_humphrey started following you. 3d"
+                    android:text="@string/you_notif_humphrey"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -424,7 +424,7 @@
                     android:layout_weight="1"
                     android:id="@+id/jammmie_you_text"
                     android:layout_marginStart="10dp"
-                    android:text="jammmie_ started following you. 3d"
+                    android:text="@string/you_notif_jammmie"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -458,7 +458,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:id="@+id/joshua_you_text"
-                    android:text="joshua_l started following you. 3d"
+                    android:text="@string/you_notif_joshua"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
@@ -492,7 +492,7 @@
                     android:layout_weight="1"
                     android:id="@+id/parkerr_you_text"
                     android:layout_marginStart="10dp"
-                    android:text="parker_22 started following you. 3d"
+                    android:text="@string/you_notif_parker"
                     android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
