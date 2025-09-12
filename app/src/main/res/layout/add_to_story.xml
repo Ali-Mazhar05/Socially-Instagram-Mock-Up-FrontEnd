@@ -1,0 +1,190 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav">
+        <ImageView
+            android:id="@+id/storyImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/black_rounded_container"
+
+            android:src="@drawable/story_screen_main_img" />
+
+    </RelativeLayout>
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+    android:weightSum="8"
+
+        android:id="@+id/top__bar"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_close"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="2dp"
+            android:src="@drawable/add_to_story_close"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_partnership"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_to_story_partnership"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_text"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_to_story_text"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_stickers"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_to_story_stickers"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_music"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_to_story_music"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_filters"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_to_story_filters"
+            android:layout_weight="1"/>
+        <Space
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/add_to_story_options"
+            android:layout_height="match_parent"
+            android:src="@drawable/add_to_story_options"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:gravity="center_vertical">
+
+        <!-- Your Stories -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:background="@drawable/grey_add_to_story_box"
+            android:layout_weight="0.4"
+            android:padding="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/gursky_studio"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="Your stories"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent"/>
+
+        <!-- Close Friends -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:background="@drawable/grey_add_to_story_box"
+            android:layout_weight="0.4"
+            android:padding="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/close_friends"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="Close Friends"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Add Story Post Button -->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="0.13"
+            android:src="@drawable/add_to_story_post"
+            android:scaleType="centerInside"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

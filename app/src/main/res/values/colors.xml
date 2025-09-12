@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="searchbox_gray">#EDEDEE</color>
     <color name="main_layout_brown">#825858</color>
+    <color name="add_to_story">#A16F55</color>
 </resources>

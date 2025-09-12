@@ -11,7 +11,7 @@ class search_page : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.search_page) // 👈 make sure XML file is named search_page.xml
+        setContentView(R.layout.search_page)
 
         // 🔍 Search Bar
         val etSearch = findViewById<EditText>(R.id.et_search)

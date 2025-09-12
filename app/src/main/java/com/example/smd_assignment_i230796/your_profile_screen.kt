@@ -40,7 +40,7 @@ class your_profile_screen : AppCompatActivity() {
         }
 
         ivSearch.setOnClickListener {
-            startActivity(Intent(this, search_page::class))
+            startActivity(Intent(this, search_page::class.java))
             finish()
         }
 
