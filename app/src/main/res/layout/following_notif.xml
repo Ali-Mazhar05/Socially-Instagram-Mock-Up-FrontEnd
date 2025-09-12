@@ -34,7 +34,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
+                android:layout_height="3dp"
                 android:background="@color/main_layout_brown"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
@@ -151,14 +151,14 @@
                 android:paddingVertical="6dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:background="@drawable/circle_bg"
                     android:padding="2dp"
                     android:src="@drawable/jack_profile" />
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:background="@drawable/circle_bg"
                     android:padding="2dp"
                     android:src="@drawable/kieron_profile"
@@ -197,13 +197,14 @@
                     android:src="@drawable/kieron_profile" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="10dp"
+
+                    android:layout_marginStart="12dp"
                     android:id="@+id/kiero_d_following_text"
                     android:text="@string/kiero_d_following_text"
                     android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@android:color/black" />
 
 
@@ -325,14 +326,14 @@
                 android:paddingVertical="6dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:background="@drawable/circle_bg"
                     android:padding="2dp"
                     android:src="@drawable/jack_profile" />
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:background="@drawable/circle_bg"
                     android:padding="2dp"
                     android:src="@drawable/kieron_profile"
@@ -366,14 +367,14 @@
                 android:paddingVertical="6dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:background="@drawable/circle_bg"
                     android:padding="2dp"
                     android:src="@drawable/jack_profile" />
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
                     android:background="@drawable/circle_bg"
                     android:padding="2dp"
                     android:src="@drawable/kieron_profile"

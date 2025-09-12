@@ -5,4 +5,7 @@
     <color name="searchbox_gray">#EDEDEE</color>
     <color name="main_layout_brown">#825858</color>
     <color name="add_to_story">#A16F55</color>
+    <color name="kyan_follow">#AC7F5F</color>
+    <color name="kyan_gray">#EEF2F5</color>
+
 </resources>

@@ -6,6 +6,8 @@
     android:background="@android:color/white"
     android:padding="16dp">
 
+
+
     <!-- Top Bar -->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -68,6 +70,11 @@
             android:layout_marginTop="8dp"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#E0E0E0" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -224,7 +231,6 @@
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
-            <!-- FULL divider under Bio -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:paddingTop="20dp"
-    android:paddingHorizontal="10dp"
+    android:paddingTop="10dp"
     >
 
     <!-- 🔍 Search Bar -->
@@ -41,15 +40,14 @@
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
-    <!-- 🏷️ Category Chips -->
     <HorizontalScrollView
         android:id="@+id/categories_scroll"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:layout_below="@id/search_bar"
         android:background="#FFFFFF"
         android:scrollbars="none"
-        android:fillViewport="false">
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -62,52 +60,51 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/search_shop"
                 android:scaleType="centerInside"
-                android:padding="8dp"/>
+                />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/search_style"
                 android:scaleType="centerInside"
-                android:padding="8dp"/>
+                />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/search_sports"
                 android:scaleType="centerInside"
-                android:padding="8dp"/>
+                />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/search_auto"
                 android:scaleType="centerInside"
-                android:padding="8dp"/>
+                />
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/search_music"
                 android:scaleType="centerInside"
-                android:padding="8dp"/>
+                android:src="@drawable/search_music_1" />
 
         </LinearLayout>
     </HorizontalScrollView>
 
-
-    <!-- 📸 Image Grid -->
     <GridLayout
         android:id="@+id/search_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/categories_scroll"
         android:columnCount="3"
+
         android:rowCount="5"
         android:orientation="horizontal">
 
         <!-- Each image with weight -->
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -116,6 +113,7 @@
             android:src="@drawable/search_photo1"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -127,6 +125,7 @@
             android:src="@drawable/search_photo2"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -134,6 +133,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/search_photo3"/>
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -142,6 +142,7 @@
             android:src="@drawable/search_photo4"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -151,6 +152,7 @@
             android:src="@drawable/search_photo5"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -159,6 +161,7 @@
             android:src="@drawable/search_photo6"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -167,6 +170,7 @@
             android:src="@drawable/search_photo7"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -176,6 +180,7 @@
             android:src="@drawable/search_photo8"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -184,6 +189,7 @@
             android:src="@drawable/search_photo9"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -194,6 +200,7 @@
             android:src="@drawable/search_photo10"/>
 
         <ImageView
+            android:padding="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
@@ -202,8 +209,6 @@
             android:src="@drawable/search_photo11"/>
 
 
-
-        <!-- keep adding more -->
     </GridLayout>
 
 

@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
     android:background="@android:color/white">
 
     <!-- Back Arrow -->
-
-
-    <!-- App Title -->
-
     <ImageView
         android:id="@+id/backArrow"
-        android:layout_width="30dp"
-        android:layout_height="24dp"
-
-
-        android:background="@color/black"
-       android:layout_marginLeft="-5dp"
-
-
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="-5dp"
+        android:tint="@color/black"
         android:contentDescription="Back"
-        android:src="@android:drawable/ic_media_previous" />
+        android:src="@drawable/dm_back" />
 
+    <!-- App Title -->
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Socially"
-        android:textSize="28sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:textColor="#9C4C42"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="36dp" />
 
     <!-- Username Input -->
@@ -70,42 +64,95 @@
         android:layout_below="@id/etPassword"
         android:layout_marginBottom="20dp" />
 
-    <!-- Login Button -->
-    <Button
+    <TextView
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:gravity="center"
         android:text="Log in"
+        android:textStyle="bold"
+        android:background="@drawable/switch_accounts_login"
         android:backgroundTint="#9C4C42"
         android:textColor="@android:color/white"
         android:layout_below="@id/forgotPassword"
         android:layout_marginBottom="20dp" />
 
-    <!-- OR Divider -->
-    <TextView
-        android:id="@+id/orDivider"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/orDividerContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OR"
-        android:textSize="14sp"
-        android:textColor="#9E9E9E"
         android:layout_below="@id/btnLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <!-- Signup Prompt -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#9E9E9E" />
+
+        <TextView
+            android:id="@+id/orDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OR"
+            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="#9E9E9E" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/signupPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don’t have an account? Sign up."
+        android:text="@string/login_activity_signuptext"
         android:textSize="14sp"
-        android:textColor="#9C4C42"
-        android:layout_below="@id/orDivider"
+
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/orDividerContainer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="36dp" />
 
-    <!-- Bottom brand -->
+
+    <LinearLayout
+        android:id="@+id/bottomDividerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/bottomBrand"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:background="@android:color/white" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+
+            android:background="#9E9E9E" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:background="@android:color/white" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/bottomBrand"
         android:layout_width="wrap_content"

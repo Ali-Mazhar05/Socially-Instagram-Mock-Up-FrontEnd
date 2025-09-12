@@ -43,8 +43,8 @@
 
             <ImageView
                 android:id="@+id/dm_other_accounts"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="13dp"
+                android:layout_height="15dp"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="3dp"
                 android:src="@drawable/dm_other_accounts" />

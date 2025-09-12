@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:padding="34dp">
@@ -21,19 +22,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Socially"
-            android:textSize="28sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:textColor="#9C4C42"
             android:layout_marginBottom="36dp" />
 
-        <!-- Profile Image (Circular) -->
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImage"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/profile"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#9C4C42"
+            android:src="@drawable/main_profile_circle"
             android:layout_marginBottom="12dp" />
 
         <!-- Username -->
@@ -47,14 +46,17 @@
             android:layout_marginBottom="16dp" />
 
         <!-- Login Button -->
-        <Button
+        <TextView
             android:id="@+id/btnLoginSwitch"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="48dp"
-            android:text="Log in"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/switch_accounts_login"
             android:backgroundTint="#9C4C42"
+            android:text="Log in"
             android:textColor="@android:color/white"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold"
+            android:gravity="center" />
 
         <!-- Switch Accounts -->
         <TextView
@@ -62,19 +64,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Switch accounts"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:textColor="#9C4C42"
             android:layout_marginBottom="36dp" />
-
-        <!-- Signup Section -->
-        <TextView
-            android:id="@+id/signupPromptSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Don’t have an account? Sign up."
-            android:textSize="14sp"
-            android:textColor="#9C4C42" />
-
     </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/signupPromptSwitch"
+        android:background="#CCCCCC"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Signup Section pinned to bottom -->
+    <TextView
+        android:id="@+id/signupPromptSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="40dp"
+        android:text="@string/switch_accounts_signuptext"
+        android:textSize="14sp"
+        android:textColor="#9C4C42"
+        android:padding="16dp" />
 
 </RelativeLayout>

@@ -3,6 +3,9 @@
     <string name="app_name">SMD_Assignment_i230796</string>
     <string name="post_text"><b>joshua_l</b> The game in Japan was amazing and I want to share some photos</string>
 
+    <string name="switch_accounts_signuptext">Don’t have an account? <b>Sign up.</b></string>
+    <string name="login_activity_signuptext"><font color="#9A9A9A">Don’t have an account?</font>  <font color="#9C4C42"><b>Sign up.</b></font></string>
+
     <string name="you_notif_karenne"><b>karenne</b> liked your photo. <font color="#989898">1h</font></string>
     <string name="you_notif_kiero_d"><b>kiero_d</b>, <b>zackjohn</b> and <b>26 others</b>\nliked your photo. <font color="#989898">3h</font></string>
     <string name="you_notif_craig_love"><b>craig_love</b> mentioned you in a\ncomment: <font color="#1C3761">@jacob_w</font> exactly.. <b>2</b><font color="#989898">d</font></string>
@@ -28,4 +31,7 @@
     <string name="edit_profile_bio">Digital goodies designer <font color="#825858">@pixsellz</font>\nEverything is designed.</string>
 
     <string name="story_other_heading"><font color="white">craig_love</font>   <font color="#989898">4h</font></string>
+
+    <string name="kyan_coleman">Followed by <b>your friend</b> , <b>another friend</b> and <b>297 others</b></string>
+    <string name="kyancoleman_bio">At vero eos et accusamus et iusto odio dignissimos ducimusqui blanditiis praesentium voluptatum deleniti atque corruptiquos dolores et quas molestias excepturi sint occaecat <font color="#73777A"> ... more</font></string>
 </resources>

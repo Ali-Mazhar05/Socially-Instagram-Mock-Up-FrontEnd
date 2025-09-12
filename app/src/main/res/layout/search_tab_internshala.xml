@@ -36,6 +36,7 @@
                     android:id="@+id/search_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:tint="#818181"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/search_search_icon" />
@@ -47,7 +48,8 @@
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@id/search_icon"
                     android:layout_toStartOf="@id/profile_icon"
-                    android:hint="Search"
+                    android:hint="internshala"
+                    android:textColorHint="#393939"
                     android:background="@android:color/transparent"
                     android:paddingStart="8dp"
                     android:singleLine="true"
@@ -56,8 +58,9 @@
                 <!-- Profile Circle -->
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:src="@drawable/story_screen_close"
@@ -189,12 +192,55 @@
         android:padding="12dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/icon1"
+            android:id="@+id/icon0"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/internshala_main_img"
             android:scaleType="centerCrop"
 
+            android:layout_marginEnd="12dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/title0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="internshala"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/subtitle0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="internshala"
+                android:textSize="13sp"
+                android:textColor="@android:color/darker_gray"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+             android:padding="10dp"
+            
+            android:id="@+id/icon1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/hashtag_black_1"
+            android:scaleType="centerCrop"
+            android:background="@drawable/white_circle_black_border"
             android:layout_marginEnd="12dp"/>
 
         <LinearLayout
@@ -217,13 +263,12 @@
                 android:id="@+id/subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="internshala"
+                android:text="1000+ posts"
                 android:textSize="13sp"
                 android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -232,12 +277,12 @@
         android:padding="12dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:padding="15dp"
-            android:rotation="10"
+             android:padding="10dp"
+            
             android:id="@+id/icon2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/hashtag_black"
+            android:src="@drawable/hashtag_black_1"
             android:scaleType="centerCrop"
             android:background="@drawable/white_circle_black_border"
             android:layout_marginEnd="12dp"/>
@@ -275,12 +320,12 @@
         android:padding="12dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:padding="15dp"
-            android:rotation="10"
+             android:padding="10dp"
+            
             android:id="@+id/icon3"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/hashtag_black"
+            android:src="@drawable/hashtag_black_1"
             android:scaleType="centerCrop"
             android:background="@drawable/white_circle_black_border"
             android:layout_marginEnd="12dp"/>
@@ -319,12 +364,12 @@
         android:padding="12dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:padding="15dp"
-            android:rotation="10"
+             android:padding="10dp"
+            
             android:id="@+id/icon4"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/hashtag_black"
+            android:src="@drawable/hashtag_black_1"
             android:scaleType="centerCrop"
             android:background="@drawable/white_circle_black_border"
             android:layout_marginEnd="12dp"/>
@@ -362,12 +407,12 @@
         android:padding="12dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:padding="15dp"
-            android:rotation="10"
+             android:padding="10dp"
+            
             android:id="@+id/icon5"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/hashtag_black"
+            android:src="@drawable/hashtag_black_1"
             android:scaleType="centerCrop"
             android:background="@drawable/white_circle_black_border"
             android:layout_marginEnd="12dp"/>
