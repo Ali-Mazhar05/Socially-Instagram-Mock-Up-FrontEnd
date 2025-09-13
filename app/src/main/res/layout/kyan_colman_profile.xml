@@ -25,6 +25,7 @@
                 android:paddingHorizontal="16dp">
                 <ImageView
                     android:layout_width="0dp"
+                    android:id="@+id/back"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:src="@drawable/dm_back"

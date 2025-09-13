@@ -13,42 +13,42 @@ class search_page : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_page)
 
-        // 🔍 Search Bar
         val etSearch = findViewById<EditText>(R.id.et_search)
 
-        // 🏠 Bottom navigation items
-        val ivHome = findViewById<ImageView>(R.id.iv_nav_home)
-        val ivSearch = findViewById<ImageView>(R.id.iv_nav_search)
-        val ivAdd = findViewById<ImageView>(R.id.iv_nav_add)
-        val ivHeart = findViewById<ImageView>(R.id.iv_nav_heart)
-        val ivProfile = findViewById<ImageView>(R.id.iv_your_profile)
+        //bottom nav
+        var ichome=findViewById<ImageView>(R.id.iv_nav_home)
+        var icsearch=findViewById<ImageView>(R.id.iv_nav_search)
+        var icadd=findViewById<ImageView>(R.id.iv_nav_add)
+        var icheart=findViewById<ImageView>(R.id.iv_nav_heart)
+        var icprofile=findViewById<ImageView>(R.id.iv_your_profile)
 
-        // Example: handle clicks
-        ivHome.setOnClickListener {
-            Toast.makeText(this, "Home clicked", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, main_feed::class.java))
+        ichome.setOnClickListener{ startActivity(Intent(this, main_feed::class.java))
+                        overridePendingTransition(0,0)
+            finish()
+        }
+        icsearch.setOnClickListener { startActivity(Intent(this, search_page::class.java))
+                        overridePendingTransition(0,0)
+            finish()
+        }
+        icadd.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                        overridePendingTransition(0,0)
+            finish()
+        }
+        icheart.setOnClickListener { startActivity(Intent(this, following_notif::class.java))
+                        overridePendingTransition(0,0)
+            finish() }
+        icprofile.setOnClickListener { startActivity(Intent(this, your_profile_screen::class.java))
+                        overridePendingTransition(0,0)
+            finish()
         }
 
-        ivSearch.setOnClickListener {
-            Toast.makeText(this, "Already on Search", Toast.LENGTH_SHORT).show()
+        etSearch.setOnClickListener {
+            startActivity(Intent(this, search_tab_internshala::class.java))
+                        overridePendingTransition(0,0)
+            finish()
+                        overridePendingTransition(0,0)
         }
 
-        ivAdd.setOnClickListener {
-            Toast.makeText(this, "Add Post clicked", Toast.LENGTH_SHORT).show()
-            // startActivity(Intent(this, AddPostActivity::class.java))
-        }
-
-        ivHeart.setOnClickListener {
-            Toast.makeText(this, "Notifications clicked", Toast.LENGTH_SHORT).show()
-            // startActivity(Intent(this, NotificationsActivity::class.java))
-        }
-
-        ivProfile.setOnClickListener {
-            Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
-            // startActivity(Intent(this, ProfileActivity::class.java))
-        }
-
-        // 🔎 Handle typing in search
         etSearch.setOnEditorActionListener { v, _, _ ->
             val query = v.text.toString().trim()
             if (query.isNotEmpty()) {

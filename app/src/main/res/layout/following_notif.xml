@@ -15,7 +15,7 @@
         android:weightSum="2"
         android:padding="12dp">
 
-        <!-- Following Tab with underline -->
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,6 +41,7 @@
 
         <!-- You Tab with underline -->
         <LinearLayout
+            android:id="@+id/you_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

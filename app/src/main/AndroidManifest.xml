@@ -39,6 +39,7 @@
         <activity android:name=".story_preview" />
         <activity android:name=".gursky_studio_story" />
         <activity android:name=".kyan_colman_profile"/>
+        <activity android:name=".post_picture_screen"/>
     </application>
 
 </manifest>

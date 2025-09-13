@@ -19,9 +19,8 @@
             android:id="@+id/storyImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
             android:background="@drawable/black_rounded_container"
-            android:paddingVertical="10dp"
+
             android:scaleType="centerCrop"
             android:src="@drawable/story_other_mainimg" />
     </RelativeLayout>
@@ -185,6 +184,7 @@
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_weight="1"
+            android:id="@+id/ic_messenger"
             android:src="@drawable/main_feed_messengar" />
 
         <ImageView

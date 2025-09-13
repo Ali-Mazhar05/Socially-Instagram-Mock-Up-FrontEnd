@@ -10,28 +10,26 @@ class post_picture_screen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_picture_screen)
 
-        // Top bar buttons
         val cancelBtn: TextView = findViewById(R.id.cancel_btn)
         val nextBtn: TextView = findViewById(R.id.next_btn)
         val centerTitle: LinearLayout = findViewById(R.id.center_title)
 
-        // Main large image
+
         val selectedImage: ImageView = findViewById(R.id.selected_image)
 
         // GridLayout
         val photoGrid: GridLayout = findViewById(R.id.photo_grid)
 
-        // Cancel button closes screen
         cancelBtn.setOnClickListener {
             finish()
+                        overridePendingTransition(0,0)
         }
 
-        // Next button (placeholder action)
         nextBtn.setOnClickListener {
-            Toast.makeText(this, "Next clicked!", Toast.LENGTH_SHORT).show()
+            finish()
+                        overridePendingTransition(0,0)
         }
 
-        // Title (Recents dropdown placeholder)
         centerTitle.setOnClickListener {
             Toast.makeText(this, "Recents dropdown clicked!", Toast.LENGTH_SHORT).show()
         }

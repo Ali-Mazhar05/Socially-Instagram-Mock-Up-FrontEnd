@@ -7,17 +7,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smd_assignment_i230796.R
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class story_screen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.story_screen)   // make sure your XML file is named story_screen.xml
+        setContentView(R.layout.story_screen)
 
-        // Top bar
-        val closeBtn: ImageView = findViewById(R.id.closeBtn) // give the close button an id in XML (e.g. android:id="@+id/closeBtn")
+        val closeBtn: CircleImageView = findViewById(R.id.closeBtn)
         val storyTitle: TextView = findViewById(R.id.storyTitle)
+        // Top bar
         val storyDate: TextView = findViewById(R.id.storyDate)
         val storySong: TextView = findViewById(R.id.storySong)
 
@@ -29,12 +30,13 @@ class story_screen : AppCompatActivity() {
         val navSend: ImageView = findViewById(R.id.navSend)
         val navMore: ImageView = findViewById(R.id.navMore)
 
-        // Close button exits activity
+
         closeBtn.setOnClickListener {
-            finish() // closes this screen
+            finish()
+            overridePendingTransition(0,0)
         }
 
-        // Example click listeners for bottom nav buttons
+
         navActivity.setOnClickListener {
             // Replace with real navigation
 
@@ -60,7 +62,7 @@ class story_screen : AppCompatActivity() {
 
         }
 
-        // You can also attach clicks to title/song if you want
+
         storySong.setOnClickListener {
 
         }

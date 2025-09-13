@@ -1,5 +1,6 @@
 package com.example.smd_assignment_i230796
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -27,7 +28,21 @@ class chat_screen : AppCompatActivity() {
         val btnGallery = findViewById<ImageView>(R.id.btnGallery)
         val btnGifs = findViewById<ImageView>(R.id.btnGifs)
 
-        btnBack.setOnClickListener { finish() }
+        btnVideo.setOnClickListener{
+            startActivity(Intent(this, call_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+        btnGallery.setOnClickListener {
+            startActivity(Intent(this, post_picture_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+        btnCamera.setOnClickListener {
+            startActivity(Intent(this, post_picture_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+
+        btnBack.setOnClickListener { finish()
+            overridePendingTransition(0,0)}
         /*btnVideo.setOnClickListener { Toast.makeText(this, "Video Call Clicked", Toast.LENGTH_SHORT).show() }
         btnInfo.setOnClickListener { Toast.makeText(this, "Info Clicked", Toast.LENGTH_SHORT).show() }
         btnCamera.setOnClickListener { Toast.makeText(this, "Camera Clicked", Toast.LENGTH_SHORT).show() }*/

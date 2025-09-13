@@ -129,6 +129,7 @@
                 android:layout_marginEnd="20dp" />
 
             <ImageView
+                android:id="@+id/chat_cam1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
@@ -174,6 +175,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="1dp"
+
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="I heard this is a good movie, s..."
                     android:textColor="#060606"
                     android:textSize="13sp" />
@@ -189,6 +193,7 @@
                 android:layout_marginEnd="20dp" />
 
             <ImageView
+                android:id="@+id/chat_cam2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
@@ -248,6 +253,7 @@
                 android:layout_marginEnd="20dp" />
 
             <ImageView
+                android:id="@+id/chat_cam3"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
@@ -312,6 +318,7 @@
                 android:layout_marginEnd="20dp" />
 
             <ImageView
+                android:id="@+id/chat_cam4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
@@ -376,6 +383,7 @@
                 android:layout_marginEnd="20dp" />
 
             <ImageView
+                android:id="@+id/chat_cam5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
@@ -440,6 +448,7 @@
                 android:layout_marginEnd="20dp" />
 
             <ImageView
+                android:id="@+id/chat_cam6"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />

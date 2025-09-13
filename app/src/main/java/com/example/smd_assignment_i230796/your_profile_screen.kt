@@ -17,6 +17,12 @@ class your_profile_screen : AppCompatActivity() {
         val ivMenu = findViewById<ImageView>(R.id.ivMenu)
         val tvUsername = findViewById<TextView>(R.id.tvUsername)
 
+        findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.edit_profile)
+            .setOnClickListener {
+                            overridePendingTransition(0,0)
+                startActivity(Intent(this, edit_profile_screen::class.java))
+                overridePendingTransition(0,0)
+            }
 
         val addStory = findViewById<ImageView>(R.id.your_profile_addtostory)
         val friends = findViewById<ImageView>(R.id.your_profile_friends)
@@ -24,39 +30,59 @@ class your_profile_screen : AppCompatActivity() {
         val design = findViewById<ImageView>(R.id.your_profile_design)
 
 
-
-
-
-        // ----------------- Bottom Navigation -----------------
-        val ivHome = findViewById<ImageView>(R.id.iv_nav_home)
-        val ivSearch = findViewById<ImageView>(R.id.iv_nav_search)
-        val ivAdd = findViewById<ImageView>(R.id.iv_nav_add)
-        val ivHeart = findViewById<ImageView>(R.id.iv_nav_heart)
-        val ivProfile = findViewById<CircleImageView>(R.id.iv_your_profile)
-
-        ivHome.setOnClickListener {
-            startActivity(Intent(this, main_feed::class.java))
-            finish()
-        }
-
-        ivSearch.setOnClickListener {
-            startActivity(Intent(this, search_page::class.java))
-            finish()
-        }
-
-        ivAdd.setOnClickListener {
-
+        addStory.setOnClickListener {
+            startActivity(Intent(this, story_preview::class.java))
+                        overridePendingTransition(0,0)
 
         }
 
-        ivHeart.setOnClickListener {
+        friends.setOnClickListener {
+            startActivity(Intent(this, story_screen::class.java))
+                        overridePendingTransition(0,0)
 
+        }
+        sports.setOnClickListener {
+            startActivity(Intent(this, story_other::class.java))
+                        overridePendingTransition(0,0)
+
+        }
+        design.setOnClickListener {
+            startActivity(Intent(this, story_other::class.java))
+                        overridePendingTransition(0,0)
 
         }
 
-        ivProfile.setOnClickListener {
+        findViewById<CircleImageView>(R.id.ivProfilePic).setOnClickListener{
+            startActivity(Intent(this, story_screen::class.java))
+            overridePendingTransition(0,0)
+        }
 
+        //bottom nav
+        var ichome=findViewById<ImageView>(R.id.iv_nav_home)
+        var icsearch=findViewById<ImageView>(R.id.iv_nav_search)
+        var icadd=findViewById<ImageView>(R.id.iv_nav_add)
+        var icheart=findViewById<ImageView>(R.id.iv_nav_heart)
+        var icprofile=findViewById<ImageView>(R.id.iv_your_profile)
+
+        ichome.setOnClickListener{ startActivity(Intent(this, main_feed::class.java))
+                        overridePendingTransition(0,0)
 
         }
+        icsearch.setOnClickListener { startActivity(Intent(this, search_page::class.java))
+                        overridePendingTransition(0,0)
+
+        }
+        icadd.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                        overridePendingTransition(0,0)
+
+        }
+        icheart.setOnClickListener { startActivity(Intent(this, following_notif::class.java))
+                        overridePendingTransition(0,0)
+             }
+        icprofile.setOnClickListener { startActivity(Intent(this, your_profile_screen::class.java))
+                        overridePendingTransition(0,0)
+
+        }
+
     }
 }

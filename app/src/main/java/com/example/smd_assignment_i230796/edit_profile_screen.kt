@@ -24,10 +24,13 @@ class edit_profile_screen : AppCompatActivity() {
 
         cancelBtn.setOnClickListener {
             finish()
+            overridePendingTransition(0,0)
         }
 
+        /*doneBtn.setOnClickListener { finish() }*/
+
         doneBtn.setOnClickListener {
-            /*val userData = """
+            val userData = """
                 Name: ${nameEt.text}
                 Username: ${usernameEt.text}
                 Website: ${websiteEt.text}
@@ -37,8 +40,9 @@ class edit_profile_screen : AppCompatActivity() {
                 Gender: ${genderEt.text}
             """.trimIndent()
 
-            Toast.makeText(this, userData, Toast.LENGTH_LONG).show()*/
+            Toast.makeText(this, userData, Toast.LENGTH_LONG).show()
             finish()
+            overridePendingTransition(0,0)
         }
     }
 }

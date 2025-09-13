@@ -13,6 +13,12 @@ class story_preview: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.story_preview)
 
+        findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.closeBtn)
+            .setOnClickListener {
+                finish()
+                overridePendingTransition(0,0)
+            }
+
     }
 
 

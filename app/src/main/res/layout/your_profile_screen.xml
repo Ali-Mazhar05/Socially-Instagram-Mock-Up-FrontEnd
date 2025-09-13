@@ -181,6 +181,7 @@
                     android:layout_height="30dp"
                     android:text="Edit Profile"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/edit_profile"
                     android:textAllCaps="false"
                     android:textColor="@color/main_layout_brown"
                     android:textSize="14sp"

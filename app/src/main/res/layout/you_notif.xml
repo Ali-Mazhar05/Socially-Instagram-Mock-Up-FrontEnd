@@ -7,9 +7,10 @@
     <!-- Top Tabs -->
     <LinearLayout
         android:id="@+id/top_tabs"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+
         android:orientation="horizontal"
         android:weightSum="2"
         android:padding="12dp">
@@ -18,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/following_tab"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
@@ -64,50 +66,30 @@
     </LinearLayout>
 
 
-    <!-- Divider -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/div"
-        android:layout_height="wrap_content">
-    <View
-        android:id="@+id/div1"
-        android:layout_below="@id/top_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1"
-        android:background="@android:color/darker_gray" />
-
-        <View
-            android:id="@+id/div2"
-            android:layout_below="@id/top_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="@color/main_layout_brown" />
-    </LinearLayout>
-
-    <!-- Scrollable Notifications -->
     <ScrollView
-        android:id="@+id/scroll_area"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/div"
-        android:layout_above="@id/bottom_nav_container">
-
+        android:layout_below="@+id/top_tabs"
+        android:layout_above="@+id/bottom_nav_container"
+        >
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="10dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Follow Requests"
-                android:layout_marginTop="40dp"
                 android:textColor="#8E5E60"
-                android:paddingVertical="8dp" />
+                android:paddingVertical="2dp" />
+            </LinearLayout>
             <!-- Divider -->
             <View
                 android:id="@+id/divider2"
@@ -313,6 +295,7 @@
                     android:text="Message"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
+                    android:id="@+id/msg1"
                     android:textSize="12sp"
                     android:background="@drawable/notif_message"
                     android:stateListAnimator="@null"
@@ -345,6 +328,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:id="@+id/follow1"
                     android:text="Follow"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -395,6 +379,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
+                    android:id="@+id/msg2"
                     android:layout_height="30dp"
                     android:text="Message"
                     android:textAllCaps="false"
@@ -430,6 +415,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:id="@+id/msg3"
                     android:text="Message"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
@@ -464,6 +450,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:id="@+id/follow2"
                     android:text="Follow"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -498,6 +485,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:id="@+id/follow3"
                     android:text="Follow"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
