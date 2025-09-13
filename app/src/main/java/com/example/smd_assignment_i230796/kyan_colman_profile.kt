@@ -50,6 +50,12 @@ class kyan_colman_profile : AppCompatActivity() {
 
         }
 
+        findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.msg_box)
+            .setOnClickListener {
+                startActivity(Intent(this, chat_screen::class.java))
+                overridePendingTransition(0,0)
+            }
+
 
         findViewById<ImageView>(R.id.back).setOnClickListener {
             finish()
