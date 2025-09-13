@@ -13,6 +13,7 @@ class call_screen: AppCompatActivity() {
 
         cal_btn.setOnClickListener {
             finish()
+            overridePendingTransition(0,0)
         }
     }
 

@@ -19,54 +19,16 @@ class LogInActivity : AppCompatActivity() {
 
         val etUsername: EditText = findViewById(R.id.etUsername)
         val etPassword: EditText = findViewById(R.id.etPassword)
-        val btnLogin: Button = findViewById(R.id.btnLogin)
+        val btnLogin: TextView = findViewById(R.id.btnLogin)
         val forgotPassword: TextView = findViewById(R.id.forgotPassword)
         val signupPrompt: TextView = findViewById(R.id.signupPrompt)
 
-        // ✅ Auto-fill username if passed from SignUpActivity
         val receivedUsername = intent.getStringExtra("USERNAME-RECIEVED")
         if (!receivedUsername.isNullOrEmpty()) {
             etUsername.setText(receivedUsername)
         }
 
-        // --- Make only "Sign up" clickable and underlined ---
-        val fullText = "Don’t have an account? Sign up."
-        val spannable = SpannableString(fullText)
 
-        val startIndex = fullText.indexOf("Sign up")
-        val endIndex = startIndex + "Sign up".length
-
-        val backArrow= findViewById<ImageView>(R.id.backArrow)
-        backArrow.setOnClickListener {
-            finish()
-        }
-        // Underline the "Sign up"
-        spannable.setSpan(
-            UnderlineSpan(),
-            startIndex,
-            endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        // Make "Sign up" clickable
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                // Navigate to SignUpActivity
-                val intent = Intent(this@LogInActivity, SignUpActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        spannable.setSpan(
-            clickableSpan,
-            startIndex,
-            endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        signupPrompt.text = spannable
-        signupPrompt.movementMethod = LinkMovementMethod.getInstance()
-
-        // --- Login button click ---
         btnLogin.setOnClickListener {
             val username = etUsername.text.toString().trim()
             val password = etPassword.text.toString().trim()
@@ -76,18 +38,27 @@ class LogInActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Login successful for $username", Toast.LENGTH_SHORT).show()
 
-                // Navigate to main_feed and close login
+
+
                 val intent = Intent(this, main_feed::class.java)
                 startActivity(intent)
+                overridePendingTransition(0,0)
                 finish()
             }
         }
 
+        findViewById<ImageView>(R.id.backArrow).setOnClickListener { finish()
+            overridePendingTransition(0,0)}
 
-        // --- Forgot Password click ---
+
         forgotPassword.setOnClickListener {
             Toast.makeText(this, "Forgot Password clicked", Toast.LENGTH_SHORT).show()
-            // TODO: Open ForgotPasswordActivity
+        }
+
+        signupPrompt.setOnClickListener {
+          startActivity(Intent(this, SignUpActivity::class.java))
+            overridePendingTransition(0,0)
+            finish()
         }
     }
 }

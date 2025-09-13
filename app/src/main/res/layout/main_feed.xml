@@ -79,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/iv_your_story"
                 android:gravity="center"
                 android:layout_marginHorizontal="8dp">
 
@@ -95,7 +96,7 @@
 
                     <!-- Profile image -->
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_your_story"
+
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_gravity="center"
@@ -117,6 +118,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/iv_story_1"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_marginHorizontal="8dp">
@@ -134,7 +136,7 @@
 
                     <!-- Profile image -->
                     <ImageView
-                        android:id="@+id/iv_story_1"
+
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_gravity="center"
@@ -156,12 +158,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/iv_story_2"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_marginHorizontal="8dp">
 
                 <FrameLayout
                     android:layout_width="70dp"
+
                     android:layout_height="70dp">
 
                     <!-- Border PNG -->
@@ -173,7 +177,7 @@
 
                     <!-- Profile image -->
                     <ImageView
-                        android:id="@+id/iv_story_2"
+
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_gravity="center"
@@ -196,6 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/iv_story_3"
                 android:gravity="center"
                 android:layout_marginHorizontal="8dp">
 
@@ -212,7 +217,7 @@
 
                     <!-- Profile image -->
                     <ImageView
-                        android:id="@+id/iv_story_3"
+
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_gravity="center"
@@ -236,10 +241,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:id="@+id/iv_story_4"
                 android:layout_marginHorizontal="8dp">
 
                 <FrameLayout
                     android:layout_width="70dp"
+
                     android:layout_height="70dp">
 
                     <!-- Border PNG -->
@@ -251,7 +258,7 @@
 
                     <!-- Profile image -->
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_story_4"
+
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_gravity="center"

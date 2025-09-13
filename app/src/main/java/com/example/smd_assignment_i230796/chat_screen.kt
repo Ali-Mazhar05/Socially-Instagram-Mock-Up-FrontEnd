@@ -1,12 +1,13 @@
 package com.example.smd_assignment_i230796
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ChatActivity : AppCompatActivity() {
+class chat_screen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,22 +28,29 @@ class ChatActivity : AppCompatActivity() {
         val btnGallery = findViewById<ImageView>(R.id.btnGallery)
         val btnGifs = findViewById<ImageView>(R.id.btnGifs)
 
-        btnBack.setOnClickListener { finish() }
-        btnVideo.setOnClickListener { Toast.makeText(this, "Video Call Clicked", Toast.LENGTH_SHORT).show() }
-        btnInfo.setOnClickListener { Toast.makeText(this, "Info Clicked", Toast.LENGTH_SHORT).show() }
-        btnCamera.setOnClickListener { Toast.makeText(this, "Camera Clicked", Toast.LENGTH_SHORT).show() }
-
-        etMessage.setOnEditorActionListener { _, _, _ ->
-            val text = etMessage.text.toString().trim()
-            if (text.isNotEmpty()) {
-                addMessage(text, messageContainer, messageScroll)
-                etMessage.text.clear()
-            }
-            true
+        btnVideo.setOnClickListener{
+            startActivity(Intent(this, call_screen::class.java))
+                        overridePendingTransition(0,0)
         }
+        btnGallery.setOnClickListener {
+            startActivity(Intent(this, post_picture_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+        btnCamera.setOnClickListener {
+            startActivity(Intent(this, post_picture_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+
+        btnBack.setOnClickListener { finish()
+            overridePendingTransition(0,0)}
+        /*btnVideo.setOnClickListener { Toast.makeText(this, "Video Call Clicked", Toast.LENGTH_SHORT).show() }
+        btnInfo.setOnClickListener { Toast.makeText(this, "Info Clicked", Toast.LENGTH_SHORT).show() }
+        btnCamera.setOnClickListener { Toast.makeText(this, "Camera Clicked", Toast.LENGTH_SHORT).show() }*/
+
+
     }
 
-    private fun addMessage(message: String, messageContainer: RelativeLayout, messageScroll: ScrollView) {
+   /* private fun addMessage(message: String, messageContainer: RelativeLayout, messageScroll: ScrollView) {
         val msgView = TextView(this).apply {
             text = message
             setBackgroundResource(R.drawable.hello_text)
@@ -65,5 +73,5 @@ class ChatActivity : AppCompatActivity() {
         messageScroll.post {
             messageScroll.fullScroll(View.FOCUS_DOWN)
         }
-    }
+    }*/
 }

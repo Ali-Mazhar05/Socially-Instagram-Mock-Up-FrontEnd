@@ -3,10 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
-    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -15,14 +13,12 @@
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp">
 
-        <!-- Back button -->
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/dm_back" />
 
-        <!-- Middle section (username + icon) -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -35,21 +31,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="jacob_w"
-
                 android:textColor="@color/main_layout_brown"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="18dp"
+                android:layout_width="10dp"
                 android:id="@+id/dm_other_accounts"
-                android:layout_height="18dp"
+                android:layout_height="12dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="6dp"
                 android:src="@drawable/dm_other_accounts" />
         </LinearLayout>
 
-        <!-- Add button -->
         <ImageView
             android:id="@+id/btnAdd"
             android:layout_width="24dp"
@@ -57,8 +51,6 @@
             android:src="@drawable/dm_add_shape" />
     </LinearLayout>
 
-
-    <!-- Search Bar -->
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
@@ -67,10 +59,11 @@
         android:layout_below="@id/topBar"
         android:layout_margin="8dp"
         android:padding="8dp"
+        android:drawableTint="#D8D8D8"
+        android:drawablePadding="8dp"
         android:drawableStart="@drawable/search_search_icon"
         android:background="@color/searchbox_gray"/>
 
-    <!-- Hardcoded Chat List -->
     <LinearLayout
         android:id="@+id/chatList"
         android:layout_width="match_parent"
@@ -78,35 +71,31 @@
         android:layout_below="@id/etSearch"
         android:orientation="vertical">
 
-        <!-- Chat 1 -->
         <LinearLayout
             android:id="@+id/chat1"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:padding="8dp"
             android:gravity="center_vertical">
 
-            <!-- Profile picture -->
             <FrameLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_width="65dp"
+                android:layout_height="65dp">
 
-            <!-- Border PNG -->
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/dm_viewed_story"
-                android:scaleType="fitXY"/>
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:src="@drawable/post_profile"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="3dp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/dm_viewed_story"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:src="@drawable/post_profile"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="3dp"/>
             </FrameLayout>
 
-            <!-- Name + message -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -130,7 +119,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,37 +128,34 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp" />
 
-            <!-- Camera icon -->
             <ImageView
+                android:id="@+id/chat_cam1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
         </LinearLayout>
 
-
         <!-- Chat 2 -->
         <LinearLayout
             android:id="@+id/chat2"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:padding="8dp"
             android:gravity="center_vertical">
 
-            <!-- Profile picture -->
             <FrameLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_width="65dp"
+                android:layout_height="65dp">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="48dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:src="@drawable/karenne_profile"
                     android:layout_marginLeft="2dp"
-                    android:layout_marginTop="3dp"/>
+                    android:layout_marginTop="2dp"/>
             </FrameLayout>
 
-            <!-- Name + message -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -190,12 +175,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="1dp"
+
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:text="I heard this is a good movie, s..."
                     android:textColor="#060606"
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,36 +192,34 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp" />
 
-
-            <!-- Camera icon -->
             <ImageView
+                android:id="@+id/chat_cam2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
         </LinearLayout>
+
         <!-- Chat 3 -->
         <LinearLayout
             android:id="@+id/chat3"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:padding="8dp"
             android:gravity="center_vertical">
 
-            <!-- Profile picture -->
             <FrameLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_width="65dp"
+                android:layout_height="65dp">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="48dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:src="@drawable/dm_martini_rond"
                     android:layout_marginLeft="2dp"
-                    android:layout_marginTop="3dp"/>
+                    android:layout_marginTop="2dp"/>
             </FrameLayout>
 
-            <!-- Name + message -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -258,7 +243,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -268,43 +252,39 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp" />
 
-
-            <!-- Camera icon -->
             <ImageView
+                android:id="@+id/chat_cam3"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
         </LinearLayout>
-        <!-- Chat 4 -->
 
+        <!-- Chat 4 -->
         <LinearLayout
             android:id="@+id/chat4"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:padding="8dp"
             android:gravity="center_vertical">
 
-            <!-- Profile picture -->
             <FrameLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_width="65dp"
+                android:layout_height="65dp">
 
-                <!-- Border PNG -->
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dm_viewed_story"
                     android:scaleType="fitXY"/>
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="48dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:src="@drawable/dm_andreww"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="3dp"
                     android:layout_marginTop="3dp"/>
             </FrameLayout>
 
-            <!-- Name + message -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -328,7 +308,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -338,42 +317,39 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp" />
 
-
-            <!-- Camera icon -->
             <ImageView
+                android:id="@+id/chat_cam4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
         </LinearLayout>
+
         <!-- Chat 5 -->
         <LinearLayout
             android:id="@+id/chat5"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:padding="8dp"
             android:gravity="center_vertical">
 
-            <!-- Profile picture -->
             <FrameLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_width="65dp"
+                android:layout_height="65dp">
 
-                <!-- Border PNG -->
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dm_viewed_story"
                     android:scaleType="fitXY"/>
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="48dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:src="@drawable/kieron_profile"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="3dp"
                     android:layout_marginTop="3dp"/>
             </FrameLayout>
 
-            <!-- Name + message -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -397,7 +373,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -407,9 +382,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp" />
 
-
-            <!-- Camera icon -->
             <ImageView
+                android:id="@+id/chat_cam5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
@@ -419,31 +393,28 @@
         <LinearLayout
             android:id="@+id/chat6"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:padding="8dp"
             android:gravity="center_vertical">
 
-            <!-- Profile picture -->
             <FrameLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp">
+                android:layout_width="65dp"
+                android:layout_height="65dp">
 
-                <!-- Border PNG -->
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dm_viewed_story"
                     android:scaleType="fitXY"/>
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="48dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:src="@drawable/dm_max_jacobson"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="3dp"
                     android:layout_marginTop="3dp"/>
             </FrameLayout>
 
-            <!-- Name + message -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -467,7 +438,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -477,16 +447,15 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp" />
 
-
-            <!-- Camera icon -->
             <ImageView
+                android:id="@+id/chat_cam6"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/dm_camera" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Bottom Camera Button -->
+
     <!-- Bottom Navigation with indicator inside -->
     <LinearLayout
         android:id="@+id/bottom_nav_container"
@@ -520,11 +489,5 @@
             android:layout_height="34dp"
             android:src="@drawable/search_homebar_line" />
     </LinearLayout>
-
-
-
-
-
-
 
 </RelativeLayout>

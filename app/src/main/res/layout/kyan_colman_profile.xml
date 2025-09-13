@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav_container">
+        <!-- Top Bar -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:id="@+id/back"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:src="@drawable/dm_back"
+                    android:tint="@color/black"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="kyan.coleman"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivOtherAccounts"
+                    android:layout_width="13dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_height="8dp"
+                    android:src="@drawable/verified_checkmark" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/ivMenu"
+                    android:layout_width="40dp"
+                    android:tint="@color/black"
+                    android:layout_height="25dp"
+                    android:src="@drawable/story_screen_options" />
+            </LinearLayout>
+
+            <!-- Profile Section -->
+            <LinearLayout
+                android:layout_marginTop="-12dp"
+                android:id="@+id/profileSection"
+                android:layout_below="@id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Top row: Profile picture + stats -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Profile pic -->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfilePic"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:src="@drawable/kyan_coleman_profile" />
+
+                    <!-- Stats -->
+                    <LinearLayout
+                        android:id="@+id/statsSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="25dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:text="151"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:text="Posts"
+                                android:textColor="@color/black"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:text="112k"
+                                android:textColor="@color/black"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:text="Followers"
+                                android:textColor="@color/black"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/black"
+                                android:text="162"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/black"
+                                android:text="Following"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <!-- Name -->
+                <TextView
+                    android:id="@+id/tvName"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kyan Coleman"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:background="@drawable/threads_grey">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:tint="@color/black"
+                        android:src="@drawable/kyancoleman_threads"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:text="kyan.coleman"
+                        android:layout_marginTop="2dp"
+                        android:textSize="12sp"/>
+
+
+
+                </LinearLayout>
+
+
+                <!-- Bio -->
+
+                <TextView
+                    android:id="@+id/tvBlogger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blogger"
+
+                    android:textColor="#73777A"
+                    android:layout_marginTop="8dp"
+                    />
+                <TextView
+                    android:id="@+id/tvBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kyancoleman_bio"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:id="@+id/linkic"
+                        android:src="@drawable/kyancoleman_link"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:text="kyan.co"
+                        android:layout_marginLeft="20dp"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:layout_alignLeft="@+id/linkic"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <!-- Profile Image -->
+                    <ImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/kyancoleman_avatars"
+                        android:scaleType="centerCrop"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        />
+
+                    <!-- Username -->
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kyan_coleman"
+                        android:textColor="@android:color/black"
+                        android:layout_toEndOf="@id/profileImage"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
+
+
+                <!-- Button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3.5"
+                    android:layout_marginTop="15dp">
+
+                    <!-- Follow Button (filled) -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Follow"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:background="@drawable/kyan_follow_box"
+                        android:stateListAnimator="@null"
+                        android:elevation="0dp" />
+
+                    <!-- Message Button (outlined / light) -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Message"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:background="@drawable/kyan_gray_box"
+                    android:stateListAnimator="@null"
+                    android:elevation="0dp"
+                    android:layout_marginStart="6dp" />
+
+                    <!-- Email Button (outlined / light) -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Email"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:background="@drawable/kyan_gray_box"
+                        android:stateListAnimator="@null"
+                        android:elevation="0dp"
+                        android:layout_marginStart="6dp" />
+
+                    <!-- Icon Button -->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/kyan_coleman_people"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/kyan_gray_box"
+                        android:padding="8dp"
+                        android:layout_marginStart="6dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <!-- Story Highlights -->
+            <LinearLayout
+                android:id="@+id/storyHighlights"
+                android:layout_below="@id/profileSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="-10dp"
+                android:gravity="left"
+                android:layout_marginStart="10dp"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="68dp"
+                    android:layout_height="84dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:id="@+id/kyan_highlight1"
+                        android:src="@drawable/kyan_story1"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highlight 1"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="68dp"
+                    android:layout_height="84dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:id="@+id/kyan_highlight2"
+                        android:src="@drawable/kyan_story2"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highlight 2"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="68dp"
+                    android:layout_height="84dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:id="@+id/kyan_highlight3"
+                        android:src="@drawable/kyan_story3"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highlight 3"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="68dp"
+                    android:layout_height="84dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="2dp"
+                    >
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:id="@+id/kyan_highlight4"
+                        android:src="@drawable/kyan_story4"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highlight 4"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="68dp"
+                    android:layout_height="84dp"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="5dp"
+                    >
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:id="@+id/kyan_highlight5"
+                        android:tint="@color/black"
+                        android:src="@drawable/kyan_coleman_add"/>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:id="@+id/div1"
+                android:layout_below="@id/storyHighlights"
+                android:background="#D0D0D0"
+                />
+
+            <LinearLayout
+                android:id="@+id/your_profile_gridcolumns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_below="@+id/div1">
+
+                <!-- First column -->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/kyan_grid" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/div2"
+                        android:background="@color/black"/>
+                </LinearLayout>
+
+                <!-- Second column -->
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tint="@android:color/black"
+                    android:src="@drawable/yout_profile_tagged_ic" />
+            </LinearLayout>
+
+
+            <!-- Grid of posts -->
+
+
+            <GridLayout
+                android:id="@+id/gridPosts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="true"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/your_profile_pic1"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/kyan_post1" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic2"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/kyan_post2" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic3"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/kyan_post3" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic4"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yout_profile_pic4" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic5"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yout_profile_pic5" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic6"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yout_profile_pic6" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic7"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yout_profile_pic7" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic8"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yout_profile_pic8" />
+
+                <ImageView
+                    android:id="@+id/your_profile_pic9"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yout_profile_pic9" />
+            </GridLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+    <!-- Bottom Navigation with indicator inside -->
+    <LinearLayout
+        android:id="@+id/bottom_nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:elevation="8dp">
+
+        <!-- Nav items row -->
+        <LinearLayout
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:background="@color/white">
+
+            <!-- Home -->
+            <ImageView
+                android:id="@+id/iv_nav_home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_home"
+                android:contentDescription="Home" />
+
+            <!-- Search -->
+            <ImageView
+                android:id="@+id/iv_nav_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/search_nav"
+                android:contentDescription="Search" />
+
+            <!-- Add Post -->
+            <ImageView
+                android:id="@+id/iv_nav_add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/add"
+                android:contentDescription="Add" />
+
+            <!-- Notifications -->
+            <ImageView
+                android:id="@+id/iv_nav_heart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/notif_nav"
+                android:contentDescription="Activity" />
+
+            <!-- Profile with border -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <!-- Border ring -->
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/storyring"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center"/>
+
+                <!-- Profile picture -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_your_profile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/profile"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Indicator line -->
+        <ImageView
+            android:id="@+id/home_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/search_homebar_line"
+            android:scaleType="fitXY"
+            android:background="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

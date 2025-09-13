@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/socially_logo"
+        android:src="@drawable/socially_logo_1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +46,12 @@
             android:id="@+id/brandSmd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SMD(i230796)"
-            android:textSize="28sp"
-            android:textStyle="bold"
+            android:text="SMD"
+            android:textSize="40sp"
+
             android:fontFamily="sans-serif-medium"
             android:textColor="#7A4A33"
-            android:letterSpacing="0.02" />
+            android:letterSpacing="-0.03" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

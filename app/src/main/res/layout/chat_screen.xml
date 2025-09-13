@@ -9,10 +9,11 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="#F8F8F8"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingHorizontal="12dp"
-        android:background="@color/white">
+        >
 
         <ImageView
             android:id="@+id/btnBack"
@@ -21,6 +22,7 @@
             android:src="@drawable/dm_back" />
 
         <LinearLayout
+            android:background="#F8F8F8"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -33,9 +35,9 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgProfile"
 
-                android:layout_width="30dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/internshala_profile"
+                android:src="@drawable/internshala_profile_1"
                 android:layout_marginEnd="8dp" />
 
             <TextView

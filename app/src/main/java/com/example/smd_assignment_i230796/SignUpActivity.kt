@@ -17,7 +17,7 @@ class SignUpActivity : AppCompatActivity() {
         val dob = findViewById<EditText>(R.id.etDob)
         val email = findViewById<EditText>(R.id.etEmail)
         val password = findViewById<EditText>(R.id.etPassword)
-        val btnCreate = findViewById<Button>(R.id.btnCreateAccount)
+        val btnCreate = findViewById<FrameLayout>(R.id.btnCreateAccount)
 
         btnCreate.setOnClickListener {
             val u = username.text.toString()
@@ -34,12 +34,14 @@ class SignUpActivity : AppCompatActivity() {
             val intent=Intent(this, LogInActivity::class.java)
             intent.putExtra("USERNAME-RECIEVED", u)
             startActivity(intent)
+            overridePendingTransition(0,0)
             finish()
         }
 
         val backArrow= findViewById<ImageView>(R.id.backArrow)
         backArrow.setOnClickListener {
             finish()
+            overridePendingTransition(0,0)
         }
 
     }

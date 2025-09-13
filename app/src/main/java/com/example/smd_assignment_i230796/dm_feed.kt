@@ -1,5 +1,6 @@
 package com.example.smd_assignment_i230796
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +11,11 @@ class dm_feed : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dm_feed)
 
-        // Top buttons
+
         val btnBack = findViewById<ImageView>(R.id.btnBack)
         val btnAdd = findViewById<ImageView>(R.id.btnAdd)
 
-        // Chats
+        //chats
         val chat1 = findViewById<LinearLayout>(R.id.chat1)
         val chat2 = findViewById<LinearLayout>(R.id.chat2)
         val chat3 = findViewById<LinearLayout>(R.id.chat3)
@@ -22,14 +23,40 @@ class dm_feed : AppCompatActivity() {
         val chat5 = findViewById<LinearLayout>(R.id.chat5)
         val chat6 = findViewById<LinearLayout>(R.id.chat6)
 
+        //chatcam
+        val chatcam1=findViewById<ImageView>(R.id.chat_cam1)
+        val chatcam2=findViewById<ImageView>(R.id.chat_cam2)
+        val chatcam3=findViewById<ImageView>(R.id.chat_cam3)
+        val chatcam4=findViewById<ImageView>(R.id.chat_cam4)
+        val chatcam5=findViewById<ImageView>(R.id.chat_cam5)
+        val chatcam6=findViewById<ImageView>(R.id.chat_cam6)
 
-        // Bottom camera
+        //bottom cam
         val imgBottomCamera = findViewById<ImageView>(R.id.imgBottomCamera)
 
-        // Event Listeners
+        chatcam1.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                    overridePendingTransition(0,0)
+        }
+        chatcam2.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                    overridePendingTransition(0,0)
+        }
+        chatcam3.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                    overridePendingTransition(0,0)
+        }
+        chatcam4.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                    overridePendingTransition(0,0)
+        }
+        chatcam5.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                    overridePendingTransition(0,0)
+        }
+        chatcam6.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
+                    overridePendingTransition(0,0)
+        }
+
+
         btnBack.setOnClickListener {
-            Toast.makeText(this, "Back pressed", Toast.LENGTH_SHORT).show()
             finish()
+            overridePendingTransition(0,0)
         }
 
         btnAdd.setOnClickListener {
@@ -37,15 +64,38 @@ class dm_feed : AppCompatActivity() {
         }
 
         chat1.setOnClickListener {
-            Toast.makeText(this, "Opening chat with joshua_j", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, chat_screen::class.java))
+                        overridePendingTransition(0,0)
         }
 
         chat2.setOnClickListener {
-            Toast.makeText(this, "Opening chat with karenne", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, chat_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+        chat3.setOnClickListener {
+            startActivity(Intent(this, chat_screen::class.java))
+                        overridePendingTransition(0,0)
         }
 
+        chat4.setOnClickListener {
+            startActivity(Intent(this, chat_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+
+        chat5.setOnClickListener {
+            startActivity(Intent(this, chat_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+
+        chat6.setOnClickListener {
+            startActivity(Intent(this, chat_screen::class.java))
+                        overridePendingTransition(0,0)
+        }
+
+
         imgBottomCamera.setOnClickListener {
-            Toast.makeText(this, "Camera opened", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, story_preview::class.java))
+                        overridePendingTransition(0,0)
         }
     }
 }

@@ -1,0 +1,314 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Main Story Image -->
+    <ImageView
+        android:id="@+id/storyImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@drawable/black_rounded_container"
+        android:padding="4dp"
+        android:src="@drawable/story_other_main_img_1" />
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:id="@+id/top__bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Progress Bars -->
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:background="#F9FDF9" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:background="#657156" />
+
+
+        </LinearLayout>
+
+        <!-- Profile, Title, Date, Close Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Profile Picture -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/gursky_studio_st"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Title + Date + Song -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Title + Date Row -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/storyTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="gursky.studio"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/storyDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="11h"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Close Button -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/story_screen_close"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/black"
+        android:gravity="center_vertical">
+
+        <!-- Activity -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="12dp">
+
+            <ImageView
+                android:id="@+id/navActivity"
+                android:layout_width="120dp"
+                android:layout_height="38dp"
+                android:src="@drawable/gursky_studio_activity"
+                android:contentDescription="Activity" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="Activity"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <!-- Navigation Options -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Create -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingHorizontal="8dp">
+
+                <ImageView
+                    android:id="@+id/navCreate"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/story_screen_reels"
+                    android:contentDescription="Create" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Create"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Facebook -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingHorizontal="8dp">
+
+                <ImageView
+                    android:id="@+id/navFacebook"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/gursky_studio_story_facebook"
+                    android:contentDescription="Facebook" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Facebook"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Highlights -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingHorizontal="8dp">
+
+                <ImageView
+                    android:id="@+id/navBrowse"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/gursky_studio_story_highlight"
+                    android:contentDescription="Highlights" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Highlights"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- More -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingHorizontal="8dp">
+
+                <ImageView
+                    android:id="@+id/navMore"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/gursky_studio_story_options"
+                    android:contentDescription="More" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="More"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+    android:id="@+id/heartOverlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="40dp"
+        android:layout_marginBottom="60dp"
+    android:gravity="bottom">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_heart_red"
+            android:layout_marginBottom="-15dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_alignParentBottom="true"
+            android:alpha="1.0" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_heart_red"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_alignParentBottom="true"
+            android:alpha="1"
+            android:rotation="0" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_heart_red"
+            android:layout_marginBottom="55dp"
+
+            android:layout_alignParentBottom="true"
+            android:alpha="0.6"
+            android:rotation="0" />
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_heart_red"
+
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="90dp"
+            android:alpha="0.6"
+            android:rotation="12" />
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_heart_red"
+            android:layout_marginBottom="110dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_alignParentBottom="true"
+            android:alpha="0.5" />
+
+    </RelativeLayout>
+</RelativeLayout>

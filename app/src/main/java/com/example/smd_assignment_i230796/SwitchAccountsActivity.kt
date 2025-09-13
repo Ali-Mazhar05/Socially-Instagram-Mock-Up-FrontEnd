@@ -18,48 +18,23 @@ class SwitchAccountsActivity : AppCompatActivity() {
         setContentView(R.layout.switch_accounts)
 
         val tvUsername: TextView = findViewById(R.id.tvUsername)
-        val btnLoginSwitch: Button = findViewById(R.id.btnLoginSwitch)
+        val btnLoginSwitch: TextView = findViewById(R.id.btnLoginSwitch)
         val signupPrompt: TextView = findViewById(R.id.signupPromptSwitch)
 
-
-
-        val fullText = "Don’t have an account? Sign up."
-        val spannable = SpannableString(fullText)
-
-        val startIndex = fullText.indexOf("Sign up")
-        val endIndex = startIndex + "Sign up".length
-
-        spannable.setSpan(
-            UnderlineSpan(),
-            startIndex,
-            endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                val intent = Intent(this@SwitchAccountsActivity, SignUpActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        spannable.setSpan(
-            clickableSpan,
-            startIndex,
-            endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        signupPrompt.text = spannable
-        signupPrompt.movementMethod = LinkMovementMethod.getInstance()
-
-        // --- Login button click ---
         btnLoginSwitch.setOnClickListener {
 
             val username = tvUsername.text.toString()
 
             val intent = Intent(this, LogInActivity::class.java)
-            intent.putExtra("USERNAME-RECIEVED", username) // send username
+            intent.putExtra("USERNAME-RECIEVED", username)
             startActivity(intent)
+            overridePendingTransition(0,0)
+        }
+
+        signupPrompt.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java) )
+            overridePendingTransition(0,0)
+            finish()
         }
     }
 }
