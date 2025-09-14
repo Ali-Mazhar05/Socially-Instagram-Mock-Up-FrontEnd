@@ -112,6 +112,12 @@ class main_feed : AppCompatActivity() {
             overridePendingTransition(0,0)
         }
 
+        findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.iv_post_profile)
+            .setOnClickListener{
+            startActivity(Intent(this, story_other::class.java))
+            overridePendingTransition(0,0)
+        }
+
         // Share button
         ivShare.setOnClickListener {
             startActivity(Intent(this, dm_feed::class.java))
