@@ -19,6 +19,16 @@ class SignUpActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.etPassword)
         val btnCreate = findViewById<FrameLayout>(R.id.btnCreateAccount)
 
+        findViewById<ImageView>(R.id.profileImage)
+            .setOnClickListener {
+                val gallIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+                if (gallIntent.resolveActivity(packageManager) != null) {
+                    startActivity(gallIntent)
+                    overridePendingTransition(0, 0)
+                }
+            }
+
         btnCreate.setOnClickListener {
             val u = username.text.toString()
             val f = firstName.text.toString()

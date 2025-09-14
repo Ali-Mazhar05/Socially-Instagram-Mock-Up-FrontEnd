@@ -33,8 +33,11 @@ class chat_screen : AppCompatActivity() {
                         overridePendingTransition(0,0)
         }
         btnGallery.setOnClickListener {
-            startActivity(Intent(this, post_picture_screen::class.java))
-                        overridePendingTransition(0,0)
+            val intent=Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+        }
         }
         btnCamera.setOnClickListener {
             startActivity(Intent(this, post_picture_screen::class.java))

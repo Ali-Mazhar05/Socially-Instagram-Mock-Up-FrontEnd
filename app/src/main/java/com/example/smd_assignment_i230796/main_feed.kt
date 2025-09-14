@@ -81,7 +81,7 @@ class main_feed : AppCompatActivity() {
 
         // Story clickers
         ivYourStory.setOnClickListener {
-            startActivity(Intent(this, story_screen::class.java))
+            startActivity(Intent(this, gursky_studio_story::class.java))
                         overridePendingTransition(0,0)
         }
 
@@ -92,7 +92,23 @@ class main_feed : AppCompatActivity() {
 
         // Camera clicker
         findViewById<ImageView>(R.id.iv_camera).setOnClickListener {
+
+            //this makes sense here but i had to add add to story somewhere
+            /*val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }*/
+
             startActivity(Intent(this, add_to_story::class.java))
+            overridePendingTransition(0,0)
+
+
+        }
+
+        findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.iv_post_profile)
+            .setOnClickListener{
+            startActivity(Intent(this, story_other::class.java))
             overridePendingTransition(0,0)
         }
 

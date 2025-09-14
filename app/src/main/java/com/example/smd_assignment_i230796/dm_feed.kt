@@ -34,23 +34,41 @@ class dm_feed : AppCompatActivity() {
         //bottom cam
         val imgBottomCamera = findViewById<ImageView>(R.id.imgBottomCamera)
 
-        chatcam1.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                    overridePendingTransition(0,0)
+        chatcam1.setOnClickListener { val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }
         }
-        chatcam2.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                    overridePendingTransition(0,0)
+        chatcam2.setOnClickListener { val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }
         }
-        chatcam3.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                    overridePendingTransition(0,0)
+        chatcam3.setOnClickListener { val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }
         }
-        chatcam4.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                    overridePendingTransition(0,0)
+        chatcam4.setOnClickListener { val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }
         }
-        chatcam5.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                    overridePendingTransition(0,0)
+        chatcam5.setOnClickListener { val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }
         }
-        chatcam6.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                    overridePendingTransition(0,0)
+        chatcam6.setOnClickListener { val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0)
+            }
         }
 
 
@@ -92,10 +110,15 @@ class dm_feed : AppCompatActivity() {
                         overridePendingTransition(0,0)
         }
 
-
         imgBottomCamera.setOnClickListener {
-            startActivity(Intent(this, story_preview::class.java))
-                        overridePendingTransition(0,0)
+            val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+
+            // Make sure there is a camera app that can handle this intent
+            if (cameraIntent.resolveActivity(packageManager) != null) {
+                startActivity(cameraIntent)
+                overridePendingTransition(0, 0) // remove transition if you want it smooth
+            }
         }
+
     }
 }
