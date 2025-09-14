@@ -53,7 +53,7 @@ class your_profile_screen : AppCompatActivity() {
         }
 
         findViewById<CircleImageView>(R.id.ivProfilePic).setOnClickListener{
-            startActivity(Intent(this, story_screen::class.java))
+            startActivity(Intent(this, gursky_studio_story::class.java))
             overridePendingTransition(0,0)
         }
 

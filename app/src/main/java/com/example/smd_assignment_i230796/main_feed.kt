@@ -81,7 +81,7 @@ class main_feed : AppCompatActivity() {
 
         // Story clickers
         ivYourStory.setOnClickListener {
-            startActivity(Intent(this, story_screen::class.java))
+            startActivity(Intent(this, gursky_studio_story::class.java))
                         overridePendingTransition(0,0)
         }
 
@@ -93,6 +93,12 @@ class main_feed : AppCompatActivity() {
         // Camera clicker
         findViewById<ImageView>(R.id.iv_camera).setOnClickListener {
             startActivity(Intent(this, add_to_story::class.java))
+            overridePendingTransition(0,0)
+        }
+
+        findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.iv_post_profile)
+            .setOnClickListener{
+            startActivity(Intent(this, story_other::class.java))
             overridePendingTransition(0,0)
         }
 
