@@ -10,13 +10,13 @@ class main_startup : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_startup) // <-- create this XML for your splash screen
+        setContentView(R.layout.main_startup)
 
         // Delay 5 seconds, then go to login
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, SwitchAccountsActivity::class.java)
             startActivity(intent)
-            finish() // prevent going back to splash
+            finish()
         }, 3000)
     }
 }
