@@ -32,6 +32,9 @@
 
     <string name="story_other_heading"><font color="white">craig_love</font>   <font color="#989898">4h</font></string>
 
+    <string name="profile_image_desc">Profile image</string>
+
+
     <string name="kyan_coleman">Followed by <b>your friend</b> , <b>another friend</b> and <b>297 others</b></string>
     <string name="kyancoleman_bio">At vero eos et accusamus et iusto odio dignissimos ducimusqui blanditiis praesentium voluptatum deleniti atque corruptiquos dolores et quas molestias excepturi sint occaecat <font color="#73777A"> ... more</font></string>
 </resources>

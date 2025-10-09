@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SMD_Assignment_i230796">
         <activity
+            android:name=".post_preview"
+            android:exported="false" />
+        <activity
             android:name=".main_startup"
             android:exported="true">
             <intent-filter>
@@ -38,8 +41,10 @@
         <activity android:name=".add_to_story" />
         <activity android:name=".story_preview" />
         <activity android:name=".gursky_studio_story" />
-        <activity android:name=".kyan_colman_profile"/>
-        <activity android:name=".post_picture_screen"/>
+        <activity android:name=".kyan_colman_profile" />
+        <activity android:name=".post_picture_screen" />
+
+        <activity android:name=".comment"/>
     </application>
 
 </manifest>
