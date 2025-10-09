@@ -112,8 +112,7 @@ class dm_feed : AppCompatActivity() {
 
         imgBottomCamera.setOnClickListener {
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-
-            // Make sure there is a camera app that can handle this intent
+            
             if (cameraIntent.resolveActivity(packageManager) != null) {
                 startActivity(cameraIntent)
                 overridePendingTransition(0, 0) // remove transition if you want it smooth
