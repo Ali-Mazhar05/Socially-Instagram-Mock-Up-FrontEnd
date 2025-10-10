@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/commentItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical"
+    android:background="@android:color/white">
+
+    <!-- Profile Image -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivCommentProfile"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
+        android:background="@drawable/dm_viewed_story"
+        android:contentDescription="@string/profile_image_desc" />
+
+    <!-- Comment Text Container -->
+    <LinearLayout
+        android:id="@+id/commentTextContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Username -->
+        <TextView
+            android:id="@+id/tvCommentUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="2dp" />
+
+        <!-- Comment text -->
+        <TextView
+            android:id="@+id/tvCommentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is a sample comment text..."
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</LinearLayout>
