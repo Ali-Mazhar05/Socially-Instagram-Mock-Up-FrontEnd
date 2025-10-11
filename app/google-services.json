@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1002888302631",
+    "firebase_url": "https://smdassignmenti230796-default-rtdb.firebaseio.com",
+    "project_id": "smdassignmenti230796",
+    "storage_bucket": "smdassignmenti230796.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002888302631:android:c72bdbcc56fb23a8517e02",
+        "android_client_info": {
+          "package_name": "com.example.smd_assignment_i230796"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjFPHYf9Do-BCMp_74Lpepvzwv__-vSPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
