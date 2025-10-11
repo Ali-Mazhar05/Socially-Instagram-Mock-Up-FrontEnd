@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     android:paddingBottom="8dp">
 
-    <!--   Post Header -->
+    <!-- Post Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,6 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
-        <!-- Profile Frame -->
         <FrameLayout
             android:layout_width="40dp"
             android:layout_height="40dp">
@@ -38,7 +37,6 @@
                 android:scaleType="centerCrop" />
         </FrameLayout>
 
-        <!-- Username + Location -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -85,13 +83,12 @@
             android:src="@drawable/ic_more" />
     </LinearLayout>
 
-    <!-- Post Image (with Double Tap Like) -->
+    <!-- Post Image -->
     <FrameLayout
         android:id="@+id/postImageFrame"
         android:layout_width="match_parent"
         android:layout_height="400dp">
 
-        <!--Main Post Image -->
         <ImageView
             android:id="@+id/ivMainPostImage"
             android:layout_width="match_parent"
@@ -101,15 +98,12 @@
             android:contentDescription="Post Image"
             android:visibility="visible" />
 
-        <!-- For multiple images -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPagerPost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
             android:visibility="gone" />
 
-        <!--Double Tap Like Animation -->
         <ImageView
             android:id="@+id/iv_double_tap_like"
             android:layout_width="100dp"
@@ -119,12 +113,12 @@
             android:visibility="gone" />
     </FrameLayout>
 
-    <!--Action Bar -->
+    <!-- Indicator + Actions (combined in one RelativeLayout) -->
     <RelativeLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="12dp">
+        android:paddingHorizontal="12dp"
+        android:layout_marginTop="4dp">
 
         <!-- Left Actions -->
         <LinearLayout
@@ -155,15 +149,19 @@
                 android:src="@drawable/messanger" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/pagination"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+        <!-- Center Indicator -->
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/postIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/main_feed_pagination"
+
+            android:layout_marginTop="7dp"
+            app:ci_drawable="@drawable/indicator_dot"
+            app:ci_drawable_unselected="@drawable/indicator_dot_unselected"
             android:visibility="gone" />
 
-        <!-- Bookmark -->
+        <!-- Right Bookmark -->
         <ImageView
             android:id="@+id/iv_bookmark"
             android:layout_width="26dp"
@@ -171,6 +169,7 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/save" />
     </RelativeLayout>
+
 
     <!--Comments Section -->
     <LinearLayout

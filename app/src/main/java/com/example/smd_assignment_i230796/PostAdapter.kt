@@ -41,21 +41,47 @@ class PostAdapter(private val posts: MutableList<Post>) :
 
         //----------IMAGE HANDLING----------
         if (!post.imageUris.isNullOrEmpty() && post.imageResIds.isNullOrEmpty()) {
-            holder.binding.ivMainPostImage.visibility = View.VISIBLE
-            holder.binding.viewPagerPost.visibility = View.GONE
-            holder.binding.ivMainPostImage.setImageURI(post.imageUris.first())
-        } else if (!post.imageResIds.isNullOrEmpty() && post.imageResIds.size == 1) {
-            holder.binding.ivMainPostImage.visibility = View.VISIBLE
-            holder.binding.viewPagerPost.visibility = View.GONE
-            holder.binding.ivMainPostImage.setImageResource(post.imageResIds.first())
+            if (post.imageUris.size == 1) {
+                holder.binding.ivMainPostImage.visibility = View.VISIBLE
+                holder.binding.viewPagerPost.visibility = View.GONE
+                holder.binding.postIndicator.visibility = View.GONE
+                holder.binding.ivMainPostImage.setImageURI(post.imageUris.first())
+            } else {
+                holder.binding.ivMainPostImage.visibility = View.GONE
+                holder.binding.viewPagerPost.visibility = View.VISIBLE
+                holder.binding.postIndicator.visibility = View.VISIBLE
+
+                val adapter = PostImagePagerAdapter(
+                    post.imageUris,
+                    emptyList(),
+                    context
+                )
+                holder.binding.viewPagerPost.adapter = adapter
+                holder.binding.postIndicator.setViewPager(holder.binding.viewPagerPost)
+            }
+        } else if (!post.imageResIds.isNullOrEmpty()) {
+            if (post.imageResIds.size == 1) {
+                holder.binding.ivMainPostImage.visibility = View.VISIBLE
+                holder.binding.viewPagerPost.visibility = View.GONE
+                holder.binding.postIndicator.visibility = View.GONE
+                holder.binding.ivMainPostImage.setImageResource(post.imageResIds.first())
+            } else {
+                holder.binding.ivMainPostImage.visibility = View.GONE
+                holder.binding.viewPagerPost.visibility = View.VISIBLE
+                holder.binding.postIndicator.visibility = View.VISIBLE
+
+                val adapter = PostImagePagerAdapter(
+                    emptyList(),
+                    post.imageResIds,
+                    context
+                )
+                holder.binding.viewPagerPost.adapter = adapter
+                holder.binding.postIndicator.setViewPager(holder.binding.viewPagerPost)
+            }
         } else {
             holder.binding.ivMainPostImage.visibility = View.GONE
-            holder.binding.viewPagerPost.visibility = View.VISIBLE
-            holder.binding.viewPagerPost.adapter = PostImagePagerAdapter(
-                post.imageUris ?: emptyList(),
-                post.imageResIds ?: emptyList(),
-                context
-            )
+            holder.binding.viewPagerPost.visibility = View.GONE
+            holder.binding.postIndicator.visibility = View.GONE
         }
 
         //----------MAIN LIKE HANDLING IN THE BINDER----------

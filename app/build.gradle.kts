@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
+    implementation(libs.circleindicator)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
