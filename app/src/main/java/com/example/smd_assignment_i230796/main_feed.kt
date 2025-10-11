@@ -1,154 +1,234 @@
 package com.example.smd_assignment_i230796
 
 import android.content.Intent
-import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StyleSpan
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import de.hdodenhof.circleimageview.CircleImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.smd_assignment_i230796.databinding.MainFeedBinding
 
 class main_feed : AppCompatActivity() {
 
-    // Bottom navigation
-    private lateinit var ivNavHome: ImageView
-    private lateinit var ivNavSearch: ImageView
-    private lateinit var ivNavAdd: ImageView
-    private lateinit var ivNavHeart: ImageView
-    private lateinit var ivNavProfile: CircleImageView
+    private lateinit var binding: MainFeedBinding
+    private lateinit var storyAdapter: StoryAdapter
+    private lateinit var postAdapter: PostAdapter
+    private val posts = mutableListOf<Post>()
 
-    // Stories
-    private lateinit var ivYourStory: LinearLayout
-    private lateinit var ivStory1: LinearLayout
-    private lateinit var ivStory2: LinearLayout
-    private lateinit var ivStory3: LinearLayout
-    private lateinit var ivStory4: LinearLayout
+    // -------------------- Multiple Image Picker --------------------
+    private val pickImagesLauncher =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            if (!uris.isNullOrEmpty()) openImagePreview(uris)
+        }
 
-    // Post UI
-    private lateinit var ivShare: ImageView
-    private lateinit var tvPostCaption: TextView
+    // -------------------- Result from Preview --------------------
+    private val postPreviewLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val uris = result.data!!.getStringArrayListExtra("imageUris")?.map { Uri.parse(it) } ?: emptyList()
+                val caption = result.data!!.getStringExtra("caption") ?: ""
+                addNewPost(uris, caption)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_feed)
+        binding = MainFeedBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize bottom nav
-        ivNavHome = findViewById(R.id.iv_nav_home)
-        ivNavSearch = findViewById(R.id.iv_nav_search)
-        ivNavAdd = findViewById(R.id.iv_nav_add)
-        ivNavHeart = findViewById(R.id.iv_nav_heart)
-        ivNavProfile = findViewById(R.id.iv_your_profile)
+        setupStoriesRecycler()
+        setupPostsRecycler()
+        bottomNav()
+    }
 
-        // Post UI
-        ivShare = findViewById(R.id.iv_share)
-        tvPostCaption = findViewById(R.id.igpost_caption)
+    // -------------------- Bottom Navigation --------------------
+    private fun bottomNav() {
+        val ichome = findViewById<ImageView>(R.id.iv_nav_home)
+        val icsearch = findViewById<ImageView>(R.id.iv_nav_search)
+        val icadd = findViewById<ImageView>(R.id.iv_nav_add)
+        val icheart = findViewById<ImageView>(R.id.iv_nav_heart)
+        val icprofile = findViewById<ImageView>(R.id.iv_your_profile)
 
-        // Stories
-        ivYourStory = findViewById(R.id.iv_your_story)
-        ivStory1 = findViewById(R.id.iv_story_1)
-        ivStory2 = findViewById(R.id.iv_story_2)
-        ivStory3 = findViewById(R.id.iv_story_3)
-        ivStory4 = findViewById(R.id.iv_story_4)
+        ichome.setOnClickListener {
+            startActivity(Intent(this, main_feed::class.java))
+            overridePendingTransition(0, 0)
+        }
 
-        // Set a sample caption
-        setPostCaption("joshua_l", "The game in Japan was amazing and I want to share some photos")
-
-
-
-        ivNavSearch.setOnClickListener {
+        icsearch.setOnClickListener {
             startActivity(Intent(this, search_page::class.java))
-            overridePendingTransition(0,0)
+            overridePendingTransition(0, 0)
         }
 
-        ivNavAdd.setOnClickListener {
-            startActivity(Intent(this, post_picture_screen::class.java))
-                        overridePendingTransition(0,0)
+        icadd.setOnClickListener {
+            pickImagesLauncher.launch("image/*")
         }
 
-        ivNavHeart.setOnClickListener {
+        icheart.setOnClickListener {
             startActivity(Intent(this, following_notif::class.java))
-                        overridePendingTransition(0,0)
+            overridePendingTransition(0, 0)
         }
 
-        ivNavProfile.setOnClickListener {
+        icprofile.setOnClickListener {
             startActivity(Intent(this, your_profile_screen::class.java))
-                        overridePendingTransition(0,0)
-        }
-
-        // Story clickers
-        ivYourStory.setOnClickListener {
-            startActivity(Intent(this, gursky_studio_story::class.java))
-                        overridePendingTransition(0,0)
-        }
-
-        ivStory1.setOnClickListener { openStory("story1") }
-        ivStory2.setOnClickListener { openStory("story2") }
-        ivStory3.setOnClickListener { openStory("story3") }
-        ivStory4.setOnClickListener { openStory("story4") }
-
-        // Camera clicker
-        findViewById<ImageView>(R.id.iv_camera).setOnClickListener {
-
-            //this makes sense here but i had to add add to story somewhere
-            /*val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-            if (cameraIntent.resolveActivity(packageManager) != null) {
-                startActivity(cameraIntent)
-                overridePendingTransition(0, 0)
-            }*/
-
-            startActivity(Intent(this, add_to_story::class.java))
-            overridePendingTransition(0,0)
-
-
-        }
-
-        findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.iv_post_profile)
-            .setOnClickListener{
-            startActivity(Intent(this, story_other::class.java))
-            overridePendingTransition(0,0)
-        }
-
-        findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.iv_post_profile)
-            .setOnClickListener{
-            startActivity(Intent(this, story_other::class.java))
-            overridePendingTransition(0,0)
-        }
-
-        // Share button
-        ivShare.setOnClickListener {
-            startActivity(Intent(this, dm_feed::class.java))
-            overridePendingTransition(0,0)
+            overridePendingTransition(0, 0)
         }
     }
 
-    /**
-     * Function to set a caption with bold username
-     */
-    private fun setPostCaption(username: String, caption: String) {
-        val fullText = "$username $caption"
-        val spannable = SpannableString(fullText)
-
-        spannable.setSpan(
-            StyleSpan(Typeface.BOLD),
-            0,
-            username.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    // -------------------- Stories --------------------
+    private fun setupStoriesRecycler() {
+        val stories = listOf(
+            Story("Your Story", R.drawable.profile, true),
+            Story("Ali", R.drawable.main_profile_circle, false),
+            Story("Karenne", R.drawable.karenne_profile, true),
+            Story("Jack", R.drawable.jack_profile, false),
+            Story("Craig", R.drawable.craig_circle_profile, false)
         )
 
-        tvPostCaption.text = spannable
+        storyAdapter = StoryAdapter(stories)
+        binding.rvStories.apply {
+            layoutManager = LinearLayoutManager(this@main_feed, LinearLayoutManager.HORIZONTAL, false)
+            adapter = storyAdapter
+        }
     }
 
-    /**
-     * Opens another user's story
-     */
-    private fun openStory(storyId: String) {
-        val intent = Intent(this, story_other::class.java)
-        intent.putExtra("storyId", storyId)
-        startActivity(intent)
-        overridePendingTransition(0,0)
+    // -------------------- Posts --------------------
+    private fun setupPostsRecycler() {
+        posts.addAll(
+            listOf(
+                // ---------- POST 1 ----------
+                Post(
+                    username = "Ali",
+                    location = "Islamabad, Pakistan",
+                    caption = "Having a great day at Margalla Hills!",
+                    imageResIds = listOf(R.drawable.post_main, R.drawable.post_picture_screen_4),
+                    profileResId = R.drawable.profile,
+                    likedByProfileResId = R.drawable.craig_profile,
+                    likedByName = "craig_love",
+                    likeCount = 1520,
+                    isVerified = true,
+                    isLiked = true,
+                    paginationIconResId = R.drawable.main_feed_pagination,
+                    comments = mutableListOf(
+                        comment(R.drawable.craig_profile, "craig_love", "Looks amazing!"),
+                        comment(R.drawable.karenne_profile, "karenne_travels", "Love Margalla views ❤️")
+                    )
+                ),
+
+                // ---------- POST 2 ----------
+                Post(
+                    username = "Jack",
+                    location = "Karachi, Pakistan",
+                    caption = "Food festival fun at Port Grand!",
+                    imageResIds = listOf(R.drawable.post_picture_screen_2),
+                    profileResId = R.drawable.jack_profile,
+                    likedByProfileResId = R.drawable.jack_profile,
+                    likedByName = "jack_travels",
+                    likeCount = 2398,
+                    isVerified = true,
+                    paginationIconResId = null,
+                    isLiked = false,
+                    comments = mutableListOf(
+                        comment(R.drawable.craig_profile, "craig_love", "Yummy 😋"),
+                        comment(R.drawable.profile, "you_user", "I went there too!")
+                    )
+                ),
+
+                // ---------- POST 3 ----------
+                Post(
+                    username = "Karenne",
+                    location = "Hunza Valley, Gilgit-Baltistan",
+                    caption = "Can’t believe how breathtaking Hunza is 😍",
+                    imageResIds = listOf(R.drawable.post_picture_screen_3, R.drawable.post_picture_screen_4),
+                    profileResId = R.drawable.karenne_profile,
+                    likedByProfileResId = R.drawable.profile,
+                    likedByName = "ali_travels",
+                    likeCount = 1876,
+                    isVerified = true,
+                    paginationIconResId = R.drawable.main_feed_pagination,
+                    isLiked = false,
+                    comments = mutableListOf(
+                        comment(R.drawable.jack_profile, "jack_travels", "Dream destination!"),
+                        comment(R.drawable.craig_profile, "craig_love", "I want to go there too!")
+                    )
+                ),
+
+                // ---------- POST 4 ----------
+                Post(
+                    username = "Craig",
+                    location = "Lahore, Pakistan",
+                    caption = "Street food night! Nothing beats Lahore’s taste 🔥",
+                    imageResIds = listOf(R.drawable.post_picture_screen_5),
+                    profileResId = R.drawable.craig_profile,
+                    likedByProfileResId = R.drawable.karenne_profile,
+                    likedByName = "karenne_travels",
+                    likeCount = 3240,
+                    isVerified = false,
+                    paginationIconResId = null,
+                    isLiked = false,
+                    comments = mutableListOf(
+                        comment(R.drawable.profile, "you_user", "Now I’m hungry 😭"),
+                        comment(R.drawable.jack_profile, "jack_travels", "Best food city ever!")
+                    )
+                ),
+
+                // ---------- POST 5 ----------
+                Post(
+                    username = "Zain",
+                    location = "Gwadar, Balochistan",
+                    caption = "Golden hour by the sea 🌅 — peace and serenity.",
+                    imageResIds = listOf(R.drawable.post_picture_screen_6, R.drawable.post_picture_screen_2),
+                    profileResId = R.drawable.main_profile_circle,
+                    likedByProfileResId = R.drawable.profile,
+                    likedByName = "ali_travels",
+                    likeCount = 980,
+                    isVerified = true,
+                    paginationIconResId = R.drawable.main_feed_pagination,
+                    isLiked = true,
+                    comments = mutableListOf(
+                        comment(R.drawable.craig_profile, "craig_love", "That sunset 😍"),
+                        comment(R.drawable.karenne_profile, "karenne_travels", "So calm and beautiful!")
+                    )
+                )
+            )
+        )
+
+        postAdapter = PostAdapter(posts)
+        binding.rvPosts.apply {
+            layoutManager = LinearLayoutManager(this@main_feed)
+            adapter = postAdapter
+        }
     }
+
+
+    // -------------------- Open Image Preview --------------------
+    private fun openImagePreview(imageUris: List<Uri>) {
+        val intent = Intent(this, post_preview::class.java)
+        intent.putStringArrayListExtra("imageUris", ArrayList(imageUris.map { it.toString() }))
+        postPreviewLauncher.launch(intent)
+    }
+
+    // -------------------- Add New Post --------------------
+
+    private fun addNewPost(imageUris: List<Uri>, caption: String) {
+        val newPost = Post(
+            username = "You",
+            location = "Pakistan",
+            caption = caption,
+            imageUris = imageUris,
+            profileResId = R.drawable.profile,
+            likedByProfileResId = 0,   // 🟢 no liker image initially
+            likedByName = null,         // 🟢 no liker name
+            likeCount = 0,              // 🟢 starts at 0
+            isVerified = true,
+            paginationIconResId = null,
+            isLiked = false,            // 🟢 not liked yet
+            comments = mutableListOf()  // 🟢 empty comments
+        )
+
+        posts.add(0, newPost)
+        postAdapter.notifyItemInserted(0)
+        binding.rvPosts.scrollToPosition(0)
+    }
+
 }

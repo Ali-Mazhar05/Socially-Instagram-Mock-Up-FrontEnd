@@ -2,62 +2,85 @@ package com.example.smd_assignment_i230796
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.UnderlineSpan
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LogInActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loginactivity)
 
-        val etUsername: EditText = findViewById(R.id.etUsername)
+        auth = FirebaseAuth.getInstance()
+
+        // UI references
+        val etEmail: EditText = findViewById(R.id.etUsername) // Your layout uses etUsername ID
         val etPassword: EditText = findViewById(R.id.etPassword)
         val btnLogin: TextView = findViewById(R.id.btnLogin)
         val forgotPassword: TextView = findViewById(R.id.forgotPassword)
         val signupPrompt: TextView = findViewById(R.id.signupPrompt)
+        val backArrow: ImageView = findViewById(R.id.backArrow)
 
-        val receivedUsername = intent.getStringExtra("USERNAME-RECIEVED")
-        if (!receivedUsername.isNullOrEmpty()) {
-            etUsername.setText(receivedUsername)
+        // Autofill if user came from signup
+        val receivedEmail = intent.getStringExtra("USERNAME-RECIEVED")
+        if (!receivedEmail.isNullOrEmpty()) {
+            etEmail.setText(receivedEmail)
         }
 
-
+        // 🔹 LOGIN BUTTON HANDLER
         btnLogin.setOnClickListener {
-            val username = etUsername.text.toString().trim()
+            val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Enter username and password", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+
+                    // Go to main feed
+                    startActivity(Intent(this, main_feed::class.java))
+                    overridePendingTransition(0, 0)
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        }
+
+        // 🔹 BACK BUTTON HANDLER
+        backArrow.setOnClickListener {
+            finish()
+            overridePendingTransition(0, 0)
+        }
+
+        // 🔹 FORGOT PASSWORD HANDLER
+        forgotPassword.setOnClickListener {
+            val email = etEmail.text.toString().trim()
+
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Enter your email to reset password", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Login successful for $username", Toast.LENGTH_SHORT).show()
-
-
-
-                val intent = Intent(this, main_feed::class.java)
-                startActivity(intent)
-                overridePendingTransition(0,0)
-                finish()
+                auth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Password reset email sent!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
 
-        findViewById<ImageView>(R.id.backArrow).setOnClickListener { finish()
-            overridePendingTransition(0,0)}
-
-
-        forgotPassword.setOnClickListener {
-            Toast.makeText(this, "Forgot Password clicked", Toast.LENGTH_SHORT).show()
-        }
-
+        // 🔹 SIGNUP PROMPT HANDLER
         signupPrompt.setOnClickListener {
-          startActivity(Intent(this, SignUpActivity::class.java))
-            overridePendingTransition(0,0)
+            startActivity(Intent(this, SignUpActivity::class.java))
+            overridePendingTransition(0, 0)
             finish()
         }
     }
