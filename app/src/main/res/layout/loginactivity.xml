@@ -34,7 +34,7 @@
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="Username"
+        android:hint="Email"
         android:padding="12dp"
         android:background="@drawable/edittext_background"
         android:layout_below="@id/appTitle"
