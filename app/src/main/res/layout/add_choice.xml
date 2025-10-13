@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What would you like to add?"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnAddStory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Story"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3F51B5"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnAddPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Post"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#FF4081"/>
+</LinearLayout>

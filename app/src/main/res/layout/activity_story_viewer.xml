@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000">
+
+    <!-- Progress Bar Indicator -->
+    <LinearLayout
+        android:id="@+id/storyProgressContainer"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ProgressBar
+            android:id="@+id/storyProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:progress="0"
+            android:max="100"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/story_progress_drawable" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/storyImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_below="@id/storyProgressContainer"/>
+
+    <TextView
+        android:id="@+id/captionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:shadowColor="#000"
+        android:shadowRadius="5" />
+
+</RelativeLayout>

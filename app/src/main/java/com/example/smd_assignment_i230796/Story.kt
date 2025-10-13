@@ -1,7 +1,8 @@
-package com.example.smd_assignment_i230796
-
 data class Story(
-    val name: String,
-    val imageRes: Int,
-    var isViewed: Boolean
+    var timestamp: String = "",
+    var imageBase64: String = "",
+    var caption: String = "",
+    var closeFriends: Boolean = false,
+    var viewedBy: Map<String, Boolean>? = null,
+    var isViewed: Boolean = false
 )

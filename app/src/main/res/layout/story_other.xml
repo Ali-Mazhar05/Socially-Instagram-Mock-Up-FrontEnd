@@ -34,77 +34,24 @@
         android:padding="12dp"
         android:layout_alignParentTop="true">
 
-        <!-- Progress bar row -->
-        <LinearLayout
-            android:id="@+id/topBar"
+        <ProgressBar
+            android:id="@+id/storyProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="4dp"
-                android:background="#F9FDF9" />
-            <Space
-                android:layout_width="1dp"
-                android:layout_height="match_parent"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="4dp"
-                android:background="#F9FDF9" />
-            <Space
-                android:layout_width="1dp"
-                android:layout_height="match_parent"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.6"
-                    android:background="#F9FDF9" />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:alpha="0.3"
-                    android:background="#F9FDF9"  />
-            </LinearLayout>
-            <Space
-                android:layout_width="1dp"
-                android:layout_height="match_parent"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:alpha="0.3"
-                android:background="#F9FDF9"  />
-            <Space
-                android:layout_width="1dp"
-                android:layout_height="match_parent"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="4dp"
-                android:alpha="0.3"
-                android:background="#F9FDF9" />
-        </LinearLayout>
+            android:progressDrawable="@drawable/progress_segment"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginTop="5dp" />
 
         <!-- Top row (profile, title/date, close) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
 
             <!-- Profile Picture -->
             <de.hdodenhof.circleimageview.CircleImageView
@@ -114,10 +61,11 @@
                 android:layout_marginEnd="8dp" />
 
             <!-- Title + Date -->
-            <RelativeLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/storyTitle"
@@ -126,18 +74,32 @@
                     android:text="@string/story_other_heading"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_alignParentTop="true"/>
-            </RelativeLayout>
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/storyDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="11h"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Spacer pushes the close button to the right -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
             <!-- Close Button -->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/closeBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
                 android:src="@drawable/story_screen_close"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>
 
