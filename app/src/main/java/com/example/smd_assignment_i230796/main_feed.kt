@@ -259,7 +259,7 @@ class main_feed : AppCompatActivity() {
 
                             val st = Story(
                                 imageBase64 = b64,
-                                timestamp = "2025-10-13T0${5 + u}:00:00Z",
+                                timestamp = "2025-10-14T0${5 + u}:00:00Z",
                                 caption = "User$u public story",
                                 closeFriends = false,
                                 viewedBy = mapOf("viewer1" to false)
@@ -268,7 +268,7 @@ class main_feed : AppCompatActivity() {
                             publicStories["user$u"] = tempStories
                         }
 
-                        // 🟡 4 close friends users
+                        //4 close friends users
                         val closeStories = mutableMapOf<String, List<Story>>()
                         for (u in 6..9) {
                             val tempStories = mutableListOf<Story>()
@@ -279,7 +279,7 @@ class main_feed : AppCompatActivity() {
 
                             val st = Story(
                                 imageBase64 = b64,
-                                timestamp = "2025-10-13T0${u}:00:00Z",
+                                timestamp = "2025-10-14T0${u}:00:00Z",
                                 caption = "User$u close story",
                                 closeFriends = true,
                                 viewedBy = mapOf("viewer1" to false)
