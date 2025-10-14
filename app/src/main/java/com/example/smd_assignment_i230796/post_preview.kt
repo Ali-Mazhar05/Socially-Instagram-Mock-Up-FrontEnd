@@ -23,9 +23,9 @@ class post_preview : AppCompatActivity() {
 
 
         binding.viewPagerPreview.adapter = PostImagePagerAdapter(
-            imageUris = imageUris,
-            imageResIds = emptyList(),
-            context = this
+            imageUris,
+             emptyList(),
+             this
         )
 
         //buttons
