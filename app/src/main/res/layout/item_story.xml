@@ -1,38 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:gravity="center"
-    android:padding="6dp">
+    android:padding="8dp">
 
-    <FrameLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/storyProfileImage"
         android:layout_width="70dp"
-        android:layout_height="70dp">
-
-        <ImageView
-            android:id="@+id/ivStoryRing"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/story_ring"
-            android:scaleType="fitXY" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivStoryProfile"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
-            android:layout_gravity="center"
-            android:src="@drawable/profile"
-            android:scaleType="centerCrop" />
-    </FrameLayout>
+        android:layout_height="70dp"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="2dp"/>
 
     <TextView
-        android:id="@+id/tvStoryName"
+        android:id="@+id/storyUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Your Story"
+        android:text="User"
         android:textSize="12sp"
-        android:textColor="#000"
-        android:ellipsize="end"
-        android:maxLines="1" />
+        android:layout_marginTop="4dp"
+        android:textColor="@color/black"/>
 </LinearLayout>

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.gms.google.services)
+    id("org.jetbrains.kotlin.kapt") // for Glide annotation processor
 }
 
 android {
@@ -49,6 +51,29 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // UI Libraries
+    implementation(libs.circleimageview)
+    implementation(libs.circleindicator)
+
+    // Firebase (Auth, Realtime Database, Storage)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.ui.storage)
+
+    // Glide for image loading
+    implementation(libs.glide)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    kapt(libs.glide.compiler)
+
+    // Credentials & Google ID (for sign-in)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    // Tests
     implementation(libs.firebase.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)

@@ -22,32 +22,21 @@
         android:padding="12dp">
 
         <!-- Progress Bars -->
-        <LinearLayout
-            android:id="@+id/topBar"
+        <ProgressBar
+            android:id="@+id/storyProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.7"
-                    android:background="#F9FDF9" />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:background="#657156" />
-
-
-        </LinearLayout>
+            android:progressDrawable="@drawable/progress_segment"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginTop="5dp" />
 
         <!-- Profile, Title, Date, Close Button -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
