@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SMD_Assignment_i230796">
         <activity
+            android:name=".AddChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".post_preview"
             android:exported="false" />
         <activity
@@ -43,8 +46,7 @@
         <activity android:name=".gursky_studio_story" />
         <activity android:name=".kyan_colman_profile" />
         <activity android:name=".post_picture_screen" />
-
-        <activity android:name=".comment"/>
+        <activity android:name=".comment" />
     </application>
 
 </manifest>

@@ -1,7 +1,11 @@
+package com.example.smd_assignment_i230796
+
 data class ChatPreview(
-    val receiverId: String = "",
+    val chatId: String = "",
+    val otherUserId: String = "",
     val username: String = "",
-    val profileUrl: String? = null,
+    val profileImage: String? = null,
     val lastMessage: String = "",
-    val lastMsgTime: Long = 0
+    val lastMessageTime: Long = 0L
 )
+

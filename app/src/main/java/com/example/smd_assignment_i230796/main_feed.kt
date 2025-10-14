@@ -39,7 +39,37 @@ class main_feed : AppCompatActivity() {
 
         setupStoriesRecycler()
         setupPostsRecycler()
+        setupTopBarButtons()
         bottomNav()
+    }
+
+    // -------------------- 🔝 Top Bar Buttons --------------------
+    private fun setupTopBarButtons() {
+        val cameraBtn = findViewById<ImageView>(R.id.iv_camera)
+        val messageBtn = findViewById<ImageView>(R.id.iv_share)
+        val shareBtn = findViewById<ImageView>(R.id.iv_message)
+
+        // 📸 Camera opens post picture screen
+        cameraBtn.setOnClickListener {
+            startActivity(Intent(this, post_picture_screen::class.java))
+            overridePendingTransition(0, 0)
+        }
+
+        // 💬 Message opens chat screen
+        messageBtn.setOnClickListener {
+            startActivity(Intent(this, dm_feed::class.java))
+            overridePendingTransition(0, 0)
+        }
+
+        // 📤 Share opens Android share sheet
+        shareBtn.setOnClickListener {
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Check out Socially App!")
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share via"))
+        }
     }
 
     // -------------------- Bottom Navigation --------------------
@@ -96,7 +126,6 @@ class main_feed : AppCompatActivity() {
     private fun setupPostsRecycler() {
         posts.addAll(
             listOf(
-                // ---------- POST 1 ----------
                 Post(
                     username = "Ali",
                     location = "Islamabad, Pakistan",
@@ -114,8 +143,6 @@ class main_feed : AppCompatActivity() {
                         comment(R.drawable.karenne_profile, "karenne_travels", "Love Margalla views ❤️")
                     )
                 ),
-
-                // ---------- POST 2 ----------
                 Post(
                     username = "Jack",
                     location = "Karachi, Pakistan",
@@ -133,8 +160,6 @@ class main_feed : AppCompatActivity() {
                         comment(R.drawable.profile, "you_user", "I went there too!")
                     )
                 ),
-
-                // ---------- POST 3 ----------
                 Post(
                     username = "Karenne",
                     location = "Hunza Valley, Gilgit-Baltistan",
@@ -152,8 +177,6 @@ class main_feed : AppCompatActivity() {
                         comment(R.drawable.craig_profile, "craig_love", "I want to go there too!")
                     )
                 ),
-
-                // ---------- POST 4 ----------
                 Post(
                     username = "Craig",
                     location = "Lahore, Pakistan",
@@ -171,8 +194,6 @@ class main_feed : AppCompatActivity() {
                         comment(R.drawable.jack_profile, "jack_travels", "Best food city ever!")
                     )
                 ),
-
-                // ---------- POST 5 ----------
                 Post(
                     username = "Zain",
                     location = "Gwadar, Balochistan",
@@ -200,7 +221,6 @@ class main_feed : AppCompatActivity() {
         }
     }
 
-
     // -------------------- Open Image Preview --------------------
     private fun openImagePreview(imageUris: List<Uri>) {
         val intent = Intent(this, post_preview::class.java)
@@ -209,7 +229,6 @@ class main_feed : AppCompatActivity() {
     }
 
     // -------------------- Add New Post --------------------
-
     private fun addNewPost(imageUris: List<Uri>, caption: String) {
         val newPost = Post(
             username = "You",
@@ -217,18 +236,17 @@ class main_feed : AppCompatActivity() {
             caption = caption,
             imageUris = imageUris,
             profileResId = R.drawable.profile,
-            likedByProfileResId = 0,   // 🟢 no liker image initially
-            likedByName = null,         // 🟢 no liker name
-            likeCount = 0,              // 🟢 starts at 0
+            likedByProfileResId = 0,
+            likedByName = null,
+            likeCount = 0,
             isVerified = true,
             paginationIconResId = null,
-            isLiked = false,            // 🟢 not liked yet
-            comments = mutableListOf()  // 🟢 empty comments
+            isLiked = false,
+            comments = mutableListOf()
         )
 
         posts.add(0, newPost)
         postAdapter.notifyItemInserted(0)
         binding.rvPosts.scrollToPosition(0)
     }
-
 }

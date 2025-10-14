@@ -1,6 +1,5 @@
 package com.example.smd_assignment_i230796
 
-import ChatPreview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ class ChatListAdapter(
     inner class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
         val tvName: TextView = view.findViewById(R.id.tvName)
-        val tvLastMsg: TextView = view.findViewById(R.id.tvLastMsg)
+        val tvLastMsg: TextView = view.findViewById(R.id.txtLastMessage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -32,7 +31,7 @@ class ChatListAdapter(
         holder.tvLastMsg.text = chat.lastMessage
 
         Glide.with(holder.itemView.context)
-            .load(chat.profileUrl)
+            .load(chat.profileImage)
             .placeholder(R.drawable.internshala_profile_1)
             .circleCrop()
             .into(holder.imgProfile)

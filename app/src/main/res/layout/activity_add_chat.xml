@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#ffffff"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etSearchUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search users..."
+        android:padding="12dp"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:background="@android:color/transparent"
+        android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerUsers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp" />
-
-</RelativeLayout>
+        android:padding="8dp" />
+</LinearLayout>
