@@ -9,6 +9,7 @@ import android.os.*
 import android.util.Base64
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -123,12 +124,20 @@ class main_feed : AppCompatActivity() {
     }
 
 
+    private val addChoiceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val addType = result.data!!.getStringExtra("addType")
+                if (addType == "post") {
 
-    private fun refreshStories() {
-        userStoryList.clear()
-        setupStoriesRecycler()
-    }
+                    pickImagesLauncher.launch("image/*")
+                }
+            }
+        }
 
+
+
+
+    //----------bottom navigation-----------------------
     private fun bottomNav() {
         val icadd = findViewById<ImageView>(R.id.iv_nav_add)
         val icprofile = findViewById<ImageView>(R.id.iv_your_profile)
@@ -142,15 +151,24 @@ class main_feed : AppCompatActivity() {
         }
 
         icadd.setOnClickListener {
-            startActivity(Intent(this, AddChoiceActivity::class.java))
-            overridePendingTransition(0,0)
+            val intent = Intent(this, AddChoiceActivity::class.java)
+            addChoiceLauncher.launch(intent)
+            overridePendingTransition(0, 0)
         }
+
         icprofile.setOnClickListener {
             startActivity(Intent(this, your_profile_screen::class.java))
             overridePendingTransition(0,0)
         }
     }
 
+
+
+    //--------------------stories---------------------------
+    private fun refreshStories() {
+        userStoryList.clear()
+        setupStoriesRecycler()
+    }
     //Load stories (public & close friends)
     private fun setupStoriesRecycler() {
         userStoryList.clear()
@@ -215,24 +233,6 @@ class main_feed : AppCompatActivity() {
         binding.rvStories.adapter = storyAdapter
     }
 
-    private fun setupPostsRecycler() {
-        posts.clear()
-        posts.addAll(
-            listOf(
-                Post("Ali", "Karachi", "Beach coffee ☕🌊",
-                    listOf(Uri.parse("https://picsum.photos/seed/1/800/1000"),Uri.parse("https://picsum.photos/seed/1/800/1000")), null,
-                    R.drawable.profile, R.drawable.craig_profile, "craig_love", 121, true,
-                    R.drawable.main_feed_pagination, false),
-                Post("Hina", "Lahore", "Skyline 🌇",
-                    listOf(Uri.parse("https://picsum.photos/seed/2/800/1000")), null,
-                    R.drawable.jack_profile, R.drawable.craig_profile, "fatima_khan", 93, false,
-                    R.drawable.main_feed_pagination, false)
-            )
-        )
-        postAdapter = PostAdapter(posts)
-        binding.rvPosts.layoutManager = LinearLayoutManager(this)
-        binding.rvPosts.adapter = postAdapter
-    }
 
     //Adds demo data ONCE (5 normal + 4 close friends)
     private fun addDemoDataOnce(context: Context) {
@@ -304,4 +304,148 @@ class main_feed : AppCompatActivity() {
             }
         }
     }
+
+    // -------------------- Posts --------------------
+
+    private val pickImagesLauncher =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
+            if (!uris.isNullOrEmpty()) openImagePreview(uris)
+        }
+
+    private fun openImagePreview(imageUris: List<Uri>) {
+        val intent = Intent(this, post_preview::class.java)
+        intent.putStringArrayListExtra("imageUris", ArrayList(imageUris.map { it.toString() }))
+        postPreviewLauncher.launch(intent)
+    }
+
+    private val postPreviewLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val uris = result.data!!.getStringArrayListExtra("imageUris")?.map { Uri.parse(it) } ?: emptyList()
+                val caption = result.data!!.getStringExtra("caption") ?: ""
+                addNewPost(uris, caption)
+            }
+        }
+
+    private fun addNewPost(imageUris: List<Uri>, caption: String) {
+        val newPost = Post(
+            username = "You",
+            location = "Pakistan",
+            caption = caption,
+            imageUris = imageUris,
+            profileResId = R.drawable.profile,
+            likedByProfileResId = 0,
+            likedByName = null,
+            likeCount = 0,
+            isVerified = true,
+            paginationIconResId = null,
+            isLiked = false,
+            comments = mutableListOf()
+        )
+        posts.add(0, newPost)
+        postAdapter.notifyItemInserted(0)
+        binding.rvPosts.scrollToPosition(0)
+    }
+
+    private fun setupPostsRecycler() {
+        posts.clear()
+        posts.addAll(
+            listOf(
+            Post(
+                username = "alex_jones",
+                location = "New York, USA",
+                caption = "Morning coffee vibes ☕🌅",
+                imageResIds = listOf(R.drawable.post_picture_screen_1),
+                profileResId = R.drawable.craig_profile,
+                likedByProfileResId = R.drawable.jack_profile,
+                likedByName = "emma_watson",
+                likeCount = 321,
+                isVerified = true,
+                paginationIconResId = null,
+                isLiked = false,
+                comments = mutableListOf(
+                    comment(R.drawable.profile, "john_doe", "That looks so peaceful!"),
+                    comment(R.drawable.profile_karenne, "sarah_k", "Love this shot 🔥")
+                )
+            ),
+
+            Post(
+                username = "sophia_lee",
+                location = "Maldives",
+                caption = "Paradise found 🏝️✨",
+                imageResIds = listOf(
+                    R.drawable.post_picture_screen_2,
+                    R.drawable.post_picture_screen_3
+                ),
+                profileResId = R.drawable.jack_profile,
+                likedByProfileResId = R.drawable.craig_profile,
+                likedByName = "alex_jones",
+                likeCount = 452,
+                isVerified = true,
+                paginationIconResId = R.drawable.main_feed_pagination,
+                isLiked = true
+            ),
+
+            // 🐾 Post 3 — 3 images, a few comments
+            Post(
+                username = "petlover_mia",
+                location = "London, UK",
+                caption = "Playtime with these cuties 🐶🐾",
+                imageResIds = listOf(
+                    R.drawable.post_picture_screen_4,
+                    R.drawable.post_picture_screen_5,
+                    R.drawable.post_picture_screen_6
+                ),
+                profileResId = R.drawable.craig_profile,
+                likedByProfileResId = R.drawable.post_profile,
+                likedByName = "lucas_park",
+                likeCount = 198,
+                isVerified = false,
+                paginationIconResId = R.drawable.main_feed_pagination,
+                isLiked = false,
+                comments = mutableListOf(
+                    comment(R.drawable.profile_karenne, "sophia_lee", "Omg they’re adorable 😍"),
+                    comment(R.drawable.jack_profile, "emma_watson", "Cutest post today! 🐕❤️")
+                )
+            ),
+
+            // 🚴 Post 4 — Single image
+            Post(
+                username = "lucas_park",
+                location = "Amsterdam, Netherlands",
+                caption = "City rides and clear skies 🚴‍♂️☀️",
+                imageResIds = listOf(R.drawable.post_picture_screen_7),
+                profileResId = R.drawable.post_profile,
+                likedByProfileResId = R.drawable.profile_karenne,
+                likedByName = "petlover_mia",
+                likeCount = 265,
+                isVerified = true,
+                paginationIconResId = null,
+                isLiked = true
+            ),
+            Post(
+                username = "emma_watson",
+                location = "Paris, France",
+                caption = "Lost in the rhythm 🎧💫",
+                imageResIds = listOf(R.drawable.post_picture_screen_8),
+                profileResId = R.drawable.kieron_profile,
+                likedByProfileResId = R.drawable.jack_profile,
+                likedByName = "alex_jones",
+                likeCount = 589,
+                isVerified = true,
+                paginationIconResId = null,
+                isLiked = false,
+                comments = mutableListOf(
+                    comment(R.drawable.craig_profile, "lucas_park", "That vibe tho 🔥🔥"),
+                    comment(R.drawable.profile_karenne, "sophia_lee", "Paris fits your style 💕")
+                )
+            )
+        )
+        )
+
+        postAdapter = PostAdapter(posts)
+        binding.rvPosts.layoutManager = LinearLayoutManager(this)
+        binding.rvPosts.adapter = postAdapter
+    }
+
 }
