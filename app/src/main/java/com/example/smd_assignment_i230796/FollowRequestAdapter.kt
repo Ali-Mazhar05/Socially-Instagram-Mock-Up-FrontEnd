@@ -58,8 +58,13 @@ class FollowRequestAdapter(
                 FollowManager.acceptFollowRequest(user.uid!!, currentUserId) { success ->
                     if (success) {
                         Toast.makeText(context, "Accepted ${user.username}", Toast.LENGTH_SHORT).show()
-                        requests.removeAt(pos)
-                        notifyItemRemoved(pos)
+                        if (pos in requests.indices) {
+                            requests.removeAt(pos)
+                            notifyItemRemoved(pos)
+                            if (requests.isEmpty()) onListEmpty?.invoke()
+                        } else {
+                            notifyDataSetChanged() // fallback refresh
+                        }
                         if (requests.isEmpty()) onListEmpty?.invoke()
                     } else {
                         Toast.makeText(context, "Failed to accept request", Toast.LENGTH_SHORT).show()
@@ -75,8 +80,13 @@ class FollowRequestAdapter(
                 FollowManager.rejectFollowRequest(user.uid!!, currentUserId) { success ->
                     if (success) {
                         Toast.makeText(context, "Rejected ${user.username}", Toast.LENGTH_SHORT).show()
-                        requests.removeAt(pos)
-                        notifyItemRemoved(pos)
+                        if (pos in requests.indices) {
+                            requests.removeAt(pos)
+                            notifyItemRemoved(pos)
+                            if (requests.isEmpty()) onListEmpty?.invoke()
+                        } else {
+                            notifyDataSetChanged() // fallback refresh
+                        }
                         if (requests.isEmpty()) onListEmpty?.invoke()
                     } else {
                         Toast.makeText(context, "Failed to reject request", Toast.LENGTH_SHORT).show()

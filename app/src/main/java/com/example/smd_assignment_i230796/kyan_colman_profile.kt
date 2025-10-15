@@ -60,6 +60,21 @@ class kyan_colman_profile : AppCompatActivity() {
         btnFollow = findViewById(R.id.stateButton)
         recyclerProfilePosts = findViewById(R.id.recyclerProfilePosts)
 
+        tvFollowersCount.setOnClickListener {
+            val intent = Intent(this, UserListActivity::class.java)
+            intent.putExtra("userId", visitedUserId)
+            intent.putExtra("type", "followers")
+            startActivity(intent)
+        }
+
+        tvFollowingCount.setOnClickListener {
+            val intent = Intent(this, UserListActivity::class.java)
+            intent.putExtra("userId", visitedUserId)
+            intent.putExtra("type", "following")
+            startActivity(intent)
+        }
+
+
         recyclerProfilePosts.layoutManager = GridLayoutManager(this, 3)
         postAdapter = ProfilePostAdapter(postImages)
         recyclerProfilePosts.adapter = postAdapter

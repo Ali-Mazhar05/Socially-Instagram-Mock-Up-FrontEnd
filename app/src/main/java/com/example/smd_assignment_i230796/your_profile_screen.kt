@@ -47,6 +47,22 @@ class your_profile_screen : AppCompatActivity() {
         tvPostsCount = findViewById(R.id.tvPostsCount)
         tvFollowersCount = findViewById(R.id.tvFollowersCount)
         tvFollowingCount = findViewById(R.id.tvFollowingCount)
+
+        tvFollowersCount.setOnClickListener {
+            val intent = Intent(this, UserListActivity::class.java)
+            intent.putExtra("userId", currentUserId)
+            intent.putExtra("type", "followers")
+            startActivity(intent)
+        }
+
+        tvFollowingCount.setOnClickListener {
+            val intent = Intent(this, UserListActivity::class.java)
+            intent.putExtra("userId", currentUserId)
+            intent.putExtra("type", "following")
+            startActivity(intent)
+        }
+
+
         val ivMenu = findViewById<ImageView>(R.id.ivMenu)
 
         // RecyclerView setup
