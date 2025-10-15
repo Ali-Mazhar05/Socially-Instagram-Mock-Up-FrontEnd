@@ -90,6 +90,7 @@ class main_feed : AppCompatActivity() {
         setupStoriesRecycler()
         setupPostsRecycler()
         bottomNav()
+        TopBar()
         addDemoDataOnce(this)
 
         //Register STORY_UPDATED receiver
@@ -125,9 +126,17 @@ class main_feed : AppCompatActivity() {
     }
 
 
+    private fun TopBar(){
+        findViewById<ImageView>(R.id.iv_share).setOnClickListener {
+            startActivity(Intent(this, dm_feed::class.java))
+            overridePendingTransition(0,0)
+        }
+    }
+
 
     //----------bottom navigation-----------------------
     private fun bottomNav() {
+
         val icadd = findViewById<ImageView>(R.id.iv_nav_add)
         val icprofile = findViewById<ImageView>(R.id.iv_your_profile)
         findViewById<ImageView>(R.id.iv_nav_search).setOnClickListener {

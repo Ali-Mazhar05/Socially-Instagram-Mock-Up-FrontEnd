@@ -8,6 +8,6 @@ data class User(
     var lastName: String? = null,
     var email: String? = null,
     var dob: String? = null,
-    var profileImage: String? = null // base64 or URL (you used base64)
+    var profileImage: String? = null
 )
 

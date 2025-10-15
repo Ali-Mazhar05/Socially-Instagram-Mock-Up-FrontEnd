@@ -11,7 +11,10 @@ import com.example.smd_assignment_i230796.adapters.ChatPreviewAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class dm_feed : AppCompatActivity() {
+class
+dm_feed : AppCompatActivity() {
+
+
 
     private lateinit var recyclerChats: RecyclerView
     private lateinit var chatAdapter: ChatPreviewAdapter
