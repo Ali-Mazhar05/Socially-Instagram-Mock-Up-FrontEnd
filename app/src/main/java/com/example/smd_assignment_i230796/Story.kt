@@ -4,5 +4,6 @@ data class Story(
     var caption: String = "",
     var closeFriends: Boolean = false,
     var viewedBy: Map<String, Boolean>? = null,
-    var isViewed: Boolean = false
+    var isViewed: Boolean = false,
+    var profileImage: String? = null
 )

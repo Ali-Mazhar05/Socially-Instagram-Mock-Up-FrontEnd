@@ -2,6 +2,7 @@ package com.example.smd_assignment_i230796
 
 import Story
 import android.content.*
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.Image
 import android.net.Uri
@@ -124,18 +125,6 @@ class main_feed : AppCompatActivity() {
     }
 
 
-    private val addChoiceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val addType = result.data!!.getStringExtra("addType")
-                if (addType == "post") {
-
-                    pickImagesLauncher.launch("image/*")
-                }
-            }
-        }
-
-
-
 
     //----------bottom navigation-----------------------
     private fun bottomNav() {
@@ -169,6 +158,7 @@ class main_feed : AppCompatActivity() {
         userStoryList.clear()
         setupStoriesRecycler()
     }
+
     //Load stories (public & close friends)
     private fun setupStoriesRecycler() {
         userStoryList.clear()
@@ -189,21 +179,22 @@ class main_feed : AppCompatActivity() {
                         val story = st.getValue(Story::class.java) ?: continue
                         val storyTime = try {
                             java.time.Instant.parse(story.timestamp).toEpochMilli()
-                        } catch (_: Exception) { 0L }
+                        } catch (_: Exception) {
+                            0L
+                        }
 
+                        // Keep only valid stories (less than 24h)
                         if (now - storyTime < 86_400_000) {
                             stories.add(story)
-                        } else st.ref.removeValue() // delete old
+                        } else st.ref.removeValue()
                     }
 
                     if (stories.isNotEmpty()) userStoryList.add(UserStory(uid, stories))
                 }
 
-                //sort: unviewed first (normal/close), viewed last
+                // Sort: unviewed first
                 val sorted = userStoryList.sortedWith(compareByDescending<UserStory> {
-                    it.stories.any { s ->
-                        s.viewedBy?.get(currentUser) != true
-                    }
+                    it.stories.any { s -> s.viewedBy?.get(currentUser) != true }
                 })
 
                 userStoryList.clear()
@@ -233,66 +224,63 @@ class main_feed : AppCompatActivity() {
         binding.rvStories.adapter = storyAdapter
     }
 
-
-    //Adds demo data ONCE (5 normal + 4 close friends)
+    //-------------------------------------------------------
     private fun addDemoDataOnce(context: Context) {
         val storiesRef = FirebaseDatabase.getInstance().getReference("Stories")
         storiesRef.get().addOnSuccessListener { snapshot ->
             if (!snapshot.exists()) {
                 Thread {
                     try {
-                        val demoImages = listOf(
+                        val storyImages = listOf(
                             R.drawable.post_picture_screen_1,
                             R.drawable.post_picture_screen_2,
                             R.drawable.post_picture_screen_3,
                             R.drawable.post_picture_screen_4
                         )
 
-                        //5 normal users
-                        val publicStories = mutableMapOf<String, List<Story>>()
-                        for (u in 1..5) {
-                            val tempStories = mutableListOf<Story>()
-                            val bmp = BitmapFactory.decodeResource(context.resources, demoImages.random())
-                            val baos = ByteArrayOutputStream()
-                            bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 80, baos)
-                            val b64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
+                        val profileImages = listOf(
+                            R.drawable.craig_profile,
+                            R.drawable.karenne_profile,
+                            R.drawable.kieron_profile,
+                            R.drawable.jack_profile,
+                            R.drawable.profile
+                        )
 
+                        val allStories = mutableMapOf<String, List<Story>>()
+
+                        // 9 demo users (1–5 normal, 6–9 close friends)
+                        for (u in 1..9) {
+                            val tempStories = mutableListOf<Story>()
+
+                            // Convert story image
+                            val bmpStory = BitmapFactory.decodeResource(context.resources, storyImages.random())
+                            val baosStory = ByteArrayOutputStream()
+                            bmpStory.compress(Bitmap.CompressFormat.JPEG, 80, baosStory)
+                            val b64Story = Base64.encodeToString(baosStory.toByteArray(), Base64.DEFAULT)
+
+                            // Convert profile image
+                            val bmpProfile = BitmapFactory.decodeResource(context.resources, profileImages.random())
+                            val baosProfile = ByteArrayOutputStream()
+                            bmpProfile.compress(Bitmap.CompressFormat.JPEG, 80, baosProfile)
+                            val b64Profile = Base64.encodeToString(baosProfile.toByteArray(), Base64.DEFAULT)
+
+                            // Create Story with profile image embedded
                             val st = Story(
-                                imageBase64 = b64,
-                                timestamp = "2025-10-14T0${5 + u}:00:00Z",
-                                caption = "User$u public story",
-                                closeFriends = false,
-                                viewedBy = mapOf("viewer1" to false)
+                                imageBase64 = b64Story,
+                                timestamp = "2025-10-14T0${u + 3}:00:00Z",
+                                caption = if (u <= 5) "User$u public story" else "User$u close story",
+                                closeFriends = u > 5,
+                                viewedBy = mapOf("viewer1" to false),
+                                profileImage = b64Profile // ✅ store profile image in story
                             )
                             tempStories.add(st)
-                            publicStories["user$u"] = tempStories
+                            allStories["user$u"] = tempStories
                         }
 
-                        //4 close friends users
-                        val closeStories = mutableMapOf<String, List<Story>>()
-                        for (u in 6..9) {
-                            val tempStories = mutableListOf<Story>()
-                            val bmp = BitmapFactory.decodeResource(context.resources, demoImages.random())
-                            val baos = ByteArrayOutputStream()
-                            bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 80, baos)
-                            val b64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
-
-                            val st = Story(
-                                imageBase64 = b64,
-                                timestamp = "2025-10-14T0${u}:00:00Z",
-                                caption = "User$u close story",
-                                closeFriends = true,
-                                viewedBy = mapOf("viewer1" to false)
-                            )
-                            tempStories.add(st)
-                            publicStories["user$u"] = tempStories
-                        }
-
-                        storiesRef.setValue(publicStories)
-
+                        storiesRef.setValue(allStories)
 
                         runOnUiThread {
-                            Toast.makeText(context, "✅ Demo stories added", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "✅ Demo stories with profile images added", Toast.LENGTH_SHORT).show()
                             refreshStories()
                         }
                     } catch (e: Exception) {
@@ -306,6 +294,16 @@ class main_feed : AppCompatActivity() {
     }
 
     // -------------------- Posts --------------------
+
+    private val addChoiceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                val addType = result.data!!.getStringExtra("addType")
+                if (addType == "post") {
+
+                    pickImagesLauncher.launch("image/*")
+                }
+            }
+        }
 
     private val pickImagesLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
@@ -327,125 +325,251 @@ class main_feed : AppCompatActivity() {
             }
         }
 
-    private fun addNewPost(imageUris: List<Uri>, caption: String) {
-        val newPost = Post(
-            username = "You",
-            location = "Pakistan",
-            caption = caption,
-            imageUris = imageUris,
-            profileResId = R.drawable.profile,
-            likedByProfileResId = 0,
-            likedByName = null,
-            likeCount = 0,
-            isVerified = true,
-            paginationIconResId = null,
-            isLiked = false,
-            comments = mutableListOf()
-        )
-        posts.add(0, newPost)
-        postAdapter.notifyItemInserted(0)
-        binding.rvPosts.scrollToPosition(0)
+    fun addNewPost(imageUris: List<Uri>, caption: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val uid = user.uid
+        val usersRef = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+
+        usersRef.get().addOnSuccessListener { snapshot ->
+            val username = snapshot.child("username").getValue(String::class.java) ?: "Unknown User"
+            val location = snapshot.child("location").getValue(String::class.java) ?: " "
+            val profileImageUrl = snapshot.child("profileImage").getValue(String::class.java) ?: ""
+
+            // Convert URIs to Base64
+            val imageBase64List = mutableListOf<String>()
+            for (uri in imageUris) {
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    val baos = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+                    val base64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
+                    imageBase64List.add(base64)
+                    inputStream?.close()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            //Create a new post reference and assign its postId
+            val postRef = FirebaseDatabase.getInstance().getReference("Posts").push()
+            val postId = postRef.key ?: return@addOnSuccessListener
+
+            val newPost = Post(
+                postId = postId,
+                userId = uid,
+                username = username,
+                location = location,
+                caption = caption,
+                imageBase64List = imageBase64List,
+                profileImageUrl = profileImageUrl,
+                likedByName = null,
+                likeCount = 0,
+                isVerified = true,
+                comments = mutableListOf()
+            )
+
+            // ✅ Save to Firebase
+            postRef.setValue(newPost)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "✅ Post uploaded successfully", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "❌ Failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
+    private fun loadPostsFromFirebase() {
+        val postsRef = FirebaseDatabase.getInstance().getReference("Posts")
+        postsRef.get().addOnSuccessListener { snapshot ->
+            posts.clear()
+            for (postSnapshot in snapshot.children) {
+                val post = postSnapshot.getValue(Post::class.java)
+                if (post != null) posts.add(0, post)
+            }
+            postAdapter.notifyDataSetChanged()
+        }.addOnFailureListener {
+            Toast.makeText(this, "❌ Failed to load posts: ${it.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
     private fun setupPostsRecycler() {
-        posts.clear()
-        posts.addAll(
-            listOf(
-            Post(
-                username = "alex_jones",
-                location = "New York, USA",
-                caption = "Morning coffee vibes ☕🌅",
-                imageResIds = listOf(R.drawable.post_picture_screen_1),
-                profileResId = R.drawable.craig_profile,
-                likedByProfileResId = R.drawable.jack_profile,
-                likedByName = "emma_watson",
-                likeCount = 321,
-                isVerified = true,
-                paginationIconResId = null,
-                isLiked = false,
-                comments = mutableListOf(
-                    comment(R.drawable.profile, "john_doe", "That looks so peaceful!"),
-                    comment(R.drawable.profile_karenne, "sarah_k", "Love this shot 🔥")
-                )
-            ),
+        val postsRef = FirebaseDatabase.getInstance().getReference("Posts")
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUserId = currentUser?.uid ?: ""
 
-            Post(
-                username = "sophia_lee",
-                location = "Maldives",
-                caption = "Paradise found 🏝️✨",
-                imageResIds = listOf(
-                    R.drawable.post_picture_screen_2,
-                    R.drawable.post_picture_screen_3
-                ),
-                profileResId = R.drawable.jack_profile,
-                likedByProfileResId = R.drawable.craig_profile,
-                likedByName = "alex_jones",
-                likeCount = 452,
-                isVerified = true,
-                paginationIconResId = R.drawable.main_feed_pagination,
-                isLiked = true
-            ),
+        postsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                posts.clear()
 
-            // 🐾 Post 3 — 3 images, a few comments
-            Post(
-                username = "petlover_mia",
-                location = "London, UK",
-                caption = "Playtime with these cuties 🐶🐾",
-                imageResIds = listOf(
-                    R.drawable.post_picture_screen_4,
-                    R.drawable.post_picture_screen_5,
-                    R.drawable.post_picture_screen_6
-                ),
-                profileResId = R.drawable.craig_profile,
-                likedByProfileResId = R.drawable.post_profile,
-                likedByName = "lucas_park",
-                likeCount = 198,
-                isVerified = false,
-                paginationIconResId = R.drawable.main_feed_pagination,
-                isLiked = false,
-                comments = mutableListOf(
-                    comment(R.drawable.profile_karenne, "sophia_lee", "Omg they’re adorable 😍"),
-                    comment(R.drawable.jack_profile, "emma_watson", "Cutest post today! 🐕❤️")
-                )
-            ),
+                if (snapshot.exists() && snapshot.childrenCount > 0) {
+                    //Load posts from Firebase
+                    for (postSnapshot in snapshot.children) {
+                        val post = postSnapshot.getValue(Post::class.java)
+                        if (post != null) {
+                            // ✅ Determine if current user already liked this post
+                            post.isLiked = post.likedBy?.get(currentUserId) == true
+                            posts.add(0, post)
+                        }
+                    }
+                } else {
+                    // No posts → create & upload 5 demo posts
+                    Toast.makeText(
+                        this@main_feed,
+                        "No posts found — generating demo posts",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-            // 🚴 Post 4 — Single image
-            Post(
-                username = "lucas_park",
-                location = "Amsterdam, Netherlands",
-                caption = "City rides and clear skies 🚴‍♂️☀️",
-                imageResIds = listOf(R.drawable.post_picture_screen_7),
-                profileResId = R.drawable.post_profile,
-                likedByProfileResId = R.drawable.profile_karenne,
-                likedByName = "petlover_mia",
-                likeCount = 265,
-                isVerified = true,
-                paginationIconResId = null,
-                isLiked = true
-            ),
-            Post(
-                username = "emma_watson",
-                location = "Paris, France",
-                caption = "Lost in the rhythm 🎧💫",
-                imageResIds = listOf(R.drawable.post_picture_screen_8),
-                profileResId = R.drawable.kieron_profile,
-                likedByProfileResId = R.drawable.jack_profile,
-                likedByName = "alex_jones",
-                likeCount = 589,
-                isVerified = true,
-                paginationIconResId = null,
-                isLiked = false,
-                comments = mutableListOf(
-                    comment(R.drawable.craig_profile, "lucas_park", "That vibe tho 🔥🔥"),
-                    comment(R.drawable.profile_karenne, "sophia_lee", "Paris fits your style 💕")
-                )
-            )
-        )
-        )
+                    fun drawableToBase64(resId: Int): String {
+                        val bitmap = BitmapFactory.decodeResource(resources, resId)
+                        val outputStream = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+                    }
 
-        postAdapter = PostAdapter(posts)
-        binding.rvPosts.layoutManager = LinearLayoutManager(this)
-        binding.rvPosts.adapter = postAdapter
+                    val demoPosts = listOf(
+                        Post(
+                            username = "petlover_mia",
+                            location = "London, UK",
+                            caption = "Playtime with these cuties 🐶🐾",
+                            imageBase64List = listOf(
+                                drawableToBase64(R.drawable.post_picture_screen_4),
+                                drawableToBase64(R.drawable.post_picture_screen_5)
+                            ),
+                            profileImageUrl = drawableToBase64(R.drawable.craig_profile),
+                            likedByName = "lucas_park",
+                            likeCount = 198,
+                            likedBy = mapOf(), // ✅ empty map
+                            isVerified = false,
+                            comments = mutableListOf(
+                                comment(
+                                    drawableToBase64(R.drawable.profile_karenne),
+                                    "sophia_lee",
+                                    "Omg they’re adorable 😍"
+                                ),
+                                comment(
+                                    drawableToBase64(R.drawable.post_profile),
+                                    "lucas_park",
+                                    "Take me there 🌊"
+                                )
+                            )
+                        ),
+                        Post(
+                            username = "sophia_lee",
+                            location = "Maldives",
+                            caption = "Paradise found 🏝️✨",
+                            imageBase64List = listOf(
+                                drawableToBase64(R.drawable.post_picture_screen_2),
+                                drawableToBase64(R.drawable.post_picture_screen_3)
+                            ),
+                            profileImageUrl = drawableToBase64(R.drawable.jack_profile),
+                            likedByName = "alex_jones",
+                            likeCount = 452,
+                            likedBy = mapOf(),
+                            isVerified = true,
+                            comments = mutableListOf()
+                        ),
+                        Post(
+                            username = "alex_jones",
+                            location = "New York, USA",
+                            caption = "Morning coffee vibes ☕🌅",
+                            imageBase64List = listOf(drawableToBase64(R.drawable.post_picture_screen_1)),
+                            profileImageUrl = drawableToBase64(R.drawable.craig_profile),
+                            likedByName = "emma_watson",
+                            likeCount = 321,
+                            likedBy = mapOf(),
+                            isVerified = true
+                        ),
+                        Post(
+                            username = "hina_travels",
+                            location = "Hunza Valley, Pakistan",
+                            caption = "Heaven on earth 🇵🇰❄️",
+                            imageBase64List = listOf(drawableToBase64(R.drawable.post_picture_screen_7)),
+                            profileImageUrl = drawableToBase64(R.drawable.profile_karenne),
+                            likedByName = "ali_ahmed",
+                            likeCount = 289,
+                            likedBy = mapOf(),
+                            isVerified = false
+                        ),
+                        Post(
+                            username = "craig_love",
+                            location = "Paris, France",
+                            caption = "City of love ❤️🗼",
+                            imageBase64List = listOf(drawableToBase64(R.drawable.post_picture_screen_8)),
+                            profileImageUrl = drawableToBase64(R.drawable.post_profile),
+                            likedByName = "sophia_lee",
+                            likeCount = 512,
+                            likedBy = mapOf(),
+                            isVerified = true
+                        )
+                    )
+
+                    // Upload to Firebase
+                    demoPosts.forEach { post ->
+                        val newRef = postsRef.push()
+                        val postId = newRef.key ?: return@forEach
+                        post.postId = postId
+                        post.userId = "demo_user_${postId.takeLast(4)}"
+                        newRef.setValue(post)
+                    }
+
+                    posts.addAll(demoPosts)
+                }
+
+                // ✅ Setup Adapter
+                if (!::postAdapter.isInitialized) {
+                    var currentUsername = "You"
+                    var currentUserProfileBase64 = ""
+                    val currentUserId = currentUser?.uid ?: ""
+                    val usersRef = FirebaseDatabase.getInstance().getReference("Users")
+
+                    fun setupAdapter() {
+                        postAdapter = PostAdapter(
+                            this@main_feed,
+                            posts,
+                            currentUsername,
+                            currentUserProfileBase64
+                        )
+                        binding.rvPosts.layoutManager = LinearLayoutManager(this@main_feed)
+                        binding.rvPosts.adapter = postAdapter
+                    }
+
+                    if (currentUserId.isNotEmpty()) {
+                        // ✅ Fetch both username and profile image in one go
+                        usersRef.child(currentUserId).get()
+                            .addOnSuccessListener { userSnapshot ->
+                                if (userSnapshot.exists()) {
+                                    currentUsername = userSnapshot.child("username").getValue(String::class.java) ?: "You"
+                                    currentUserProfileBase64 =
+                                        userSnapshot.child("profileImage").getValue(String::class.java) ?: ""
+                                }
+                                setupAdapter()
+                            }
+                            .addOnFailureListener {
+                                setupAdapter()
+                            }
+                    } else {
+                        setupAdapter()
+                    }
+                } else {
+                    postAdapter.notifyDataSetChanged()
+                }
+            }
+
+
+                override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    this@main_feed,
+                    "Failed to load posts: ${error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
 }
