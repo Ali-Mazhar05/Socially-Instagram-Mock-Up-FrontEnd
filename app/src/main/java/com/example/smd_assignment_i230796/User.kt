@@ -1,9 +1,13 @@
 package com.example.smd_assignment_i230796
 
+// User.kt
 data class User(
-    val username: String? = null,
-    val firstName: String? = null,
-    val lastName: String? = null,
-    val dob: String? = null,
-    val email: String? = null
+    var uid: String? = null,
+    var username: String? = null,
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var email: String? = null,
+    var dob: String? = null,
+    var profileImage: String? = null // base64 or URL (you used base64)
 )
+

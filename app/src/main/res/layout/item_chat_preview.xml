@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <!-- Profile Picture -->
+    <ImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/jack_profile"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_bg"
+        android:layout_marginEnd="10dp" />
+
+    <!-- Username + Last Message -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtLastMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last message preview..."
+            android:textSize="14sp"
+            android:textColor="#666" />
+    </LinearLayout>
+
+    <!-- Timestamp -->
+    <TextView
+        android:id="@+id/txtTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:30 PM"
+        android:textSize="12sp"
+        android:textColor="#888"
+        android:layout_marginEnd="8dp" />
+
+    <!-- Camera Button -->
+    <ImageButton
+        android:id="@+id/btnCamera"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/chat_camera_filled"
+        android:contentDescription="Send Image" />
+
+</LinearLayout>

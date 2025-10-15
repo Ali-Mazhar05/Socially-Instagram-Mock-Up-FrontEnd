@@ -16,6 +16,9 @@
             android:exported="false"
             android:theme="@style/Theme.SMD_Assignment_i230796" />
         <activity
+            android:name=".AddChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".post_preview"
             android:exported="false" />
         <activity
@@ -51,6 +54,7 @@
         <activity android:name=".StoryViewerActivity" />
         <activity android:name=".StoryListActivity"/>
 
+        <activity android:name=".comment" />
     </application>
 
 </manifest>
