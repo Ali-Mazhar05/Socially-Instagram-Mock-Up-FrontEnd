@@ -54,6 +54,44 @@ class PostAdapter(
         holder.binding.igpostCaption.text = post.caption ?: ""
         holder.binding.tvLikedByName.text = post.likedByName ?: ""
         holder.binding.tvLikeCount.text = "${post.likeCount ?: 0} others"
+        // ---------- INITIALIZE "Liked by" section when post loads ----------
+        if (!post.likedBy.isNullOrEmpty() && post.likedBy!!.size > 1) {
+            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+            val likedByKeys = post.likedBy!!.keys
+
+            // pick the first liker that is NOT the current user
+            val firstLikerId: String? = likedByKeys.firstOrNull { it != currentUserId } ?: likedByKeys.firstOrNull()
+
+            if (!firstLikerId.isNullOrEmpty()) {
+                val usersRef = FirebaseDatabase.getInstance().getReference("Users").child(firstLikerId)
+                usersRef.get().addOnSuccessListener { snapshot ->
+                    val firstLikerName = snapshot.child("username").getValue(String::class.java)
+                    val firstLikerProfile = snapshot.child("profileImage").getValue(String::class.java)
+
+                    holder.binding.layoutLikedBySection.visibility = View.VISIBLE
+                    holder.binding.tvLikeCount.text = "${post.likedBy!!.size -1} others"
+                    holder.binding.tvLikedByName.text = firstLikerName ?: "Unknown"
+
+                    if (!firstLikerProfile.isNullOrEmpty()) {
+                        try {
+                            val bytes = Base64.decode(firstLikerProfile, Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            holder.binding.ivLikedByProfile.setImageBitmap(bitmap)
+                        } catch (e: Exception) {
+                            holder.binding.ivLikedByProfile.setImageResource(R.drawable.profile)
+                        }
+                    } else {
+                        holder.binding.ivLikedByProfile.setImageResource(R.drawable.profile)
+                    }
+                }
+            } else {
+                holder.binding.layoutLikedBySection.visibility = View.GONE
+            }
+        } else {
+            holder.binding.layoutLikedBySection.visibility = View.GONE
+        }
+
+
 
         // ---------- PROFILE IMAGE ----------
         if (!post.profileImageUrl.isNullOrEmpty()) {
@@ -135,42 +173,69 @@ class PostAdapter(
             val newLiked = !post.isLiked
             post.isLiked = newLiked
 
-            // Ensure likedBy map exists
             val likedByMap = post.likedBy?.toMutableMap() ?: mutableMapOf()
 
-
-            //remove this logic when no demos and using real
-            //use likedByMap.size
+            // Update likedBy map
             if (newLiked) {
-                //Add current user to likedBy
                 likedByMap[currentUserId] = true
-                post.likeCount = post.likeCount?.plus(1)
             } else {
-                //Remove current user from likedBy
                 likedByMap.remove(currentUserId)
-                post.likeCount = post.likeCount?.plus(-1)
             }
 
-            //logic real to update by size but rn we js increment and decrement
-            //post.likeCount = likedByMap.size
-
+            // Update like count
+            post.likeCount = likedByMap.size
             post.likedBy = likedByMap
 
-            //Update UI immediately
+            // 🔹 Update first liker details (for UI section “Liked by …”)
+            if (likedByMap.size > 1) {
+                val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+                val firstLikerId = likedByMap.keys.firstOrNull { it != currentUserId } ?: likedByMap.keys.first()
+
+                val usersRef = FirebaseDatabase.getInstance().getReference("Users").child(firstLikerId)
+                usersRef.get().addOnSuccessListener { snapshot ->
+                    val firstLikerName = snapshot.child("username").getValue(String::class.java)
+                    val firstLikerProfile = snapshot.child("profileImage").getValue(String::class.java) // base64
+
+                    post.likedByName = firstLikerName ?: "Unknown"
+                    post.likedByProfileResId = null // not used if base64
+
+                    // Update liked-by section dynamically
+                    holder.binding.layoutLikedBySection.visibility =
+                        if ((post.likeCount ?: 0) <= 1) View.GONE else View.VISIBLE
+                    holder.binding.tvLikeCount.text = "${post.likeCount ?: 0} others"
+
+                    if (!firstLikerProfile.isNullOrEmpty()) {
+                        try {
+                            val bytes = Base64.decode(firstLikerProfile, Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            holder.binding.ivLikedByProfile.setImageBitmap(bitmap)
+                            holder.binding.tvLikedByName.text=firstLikerName
+                        } catch (e: Exception) {
+                            holder.binding.ivLikedByProfile.setImageResource(R.drawable.profile)
+                        }
+                    } else {
+                        holder.binding.ivLikedByProfile.setImageResource(R.drawable.profile)
+                    }
+
+                    holder.binding.tvLikedByName.text = post.likedByName
+                }
+            } else {
+                holder.binding.layoutLikedBySection.visibility = View.GONE
+            }
+
+            // Update like button instantly
             holder.binding.ivLike.setImageResource(
                 if (newLiked) R.drawable.ic_heart_red else R.drawable.like
             )
-            holder.binding.tvLikeCount.text = "${post.likeCount ?: 0} others"
-            holder.binding.layoutLikedBySection.visibility =
-                if ((post.likeCount ?: 0) <= 1) View.GONE else View.VISIBLE
 
-            //Push updates to Firebase atomically
+            // Update Firebase atomically
             val updates = mapOf(
                 "likeCount" to post.likeCount,
                 "likedBy" to likedByMap
             )
             postRef.updateChildren(updates)
         }
+
 
         holder.binding.layoutLikedBySection.visibility =
             if ((post.likeCount ?: 0) <= 1) View.GONE else View.VISIBLE

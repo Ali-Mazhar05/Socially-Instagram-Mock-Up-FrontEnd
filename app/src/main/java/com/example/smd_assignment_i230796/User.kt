@@ -9,5 +9,9 @@ data class User(
     var email: String? = null,
     var dob: String? = null,
     var profileImage: String? = null
+
+
+    //add list of followers( with uid each)
+
 )
 
