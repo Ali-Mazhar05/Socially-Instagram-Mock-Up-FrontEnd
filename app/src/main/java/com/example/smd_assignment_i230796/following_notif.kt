@@ -1,10 +1,14 @@
 package com.example.smd_assignment_i230796
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class following_notif : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,31 +22,50 @@ class following_notif : AppCompatActivity() {
             finish()
         }
 
-    //bottom nav
-        var ichome=findViewById<ImageView>(R.id.iv_nav_home)
-        var icsearch=findViewById<ImageView>(R.id.iv_nav_search)
-        var icadd=findViewById<ImageView>(R.id.iv_nav_add)
-        var icheart=findViewById<ImageView>(R.id.iv_nav_heart)
-        var icprofile=findViewById<ImageView>(R.id.iv_your_profile)
+        //-------------bottom nav-----------------------------
+        findViewById<ImageView>(R.id.iv_nav_home).setOnClickListener {
+            startActivity(Intent(this, main_feed::class.java))
+            overridePendingTransition(0, 0)
+        }
+        findViewById<ImageView>(R.id.iv_nav_search).setOnClickListener {
+            startActivity(Intent(this, search_page::class.java))
+            overridePendingTransition(0, 0)
+        }
+        findViewById<ImageView>(R.id.iv_nav_add).setOnClickListener {
+            startActivity(Intent(this, AddChoiceActivity::class.java))
+            overridePendingTransition(0, 0)
+        }
+        findViewById<ImageView>(R.id.iv_nav_heart).setOnClickListener {
+            startActivity(Intent(this, following_notif::class.java))
+            overridePendingTransition(0, 0)
+        }
+        val icprofile = findViewById<ImageView>(R.id.iv_your_profile)
 
-        ichome.setOnClickListener{ startActivity(Intent(this, main_feed::class.java))
-                        overridePendingTransition(0,0)
-        finish()
-        }
-        icsearch.setOnClickListener { startActivity(Intent(this, search_page::class.java))
-                        overridePendingTransition(0,0)
-            finish()
-        }
-        icadd.setOnClickListener { startActivity(Intent(this, post_picture_screen::class.java))
-                        overridePendingTransition(0,0)
-            finish()
-        }
-        icheart.setOnClickListener { startActivity(Intent(this, following_notif::class.java))
-                        overridePendingTransition(0,0)
-            finish() }
-        icprofile.setOnClickListener { startActivity(Intent(this, your_profile_screen::class.java))
-                        overridePendingTransition(0,0)
-            finish()
+        val userRef = FirebaseDatabase.getInstance().getReference("Users")
+            .child(FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123")
+        userRef.child("profileImage").get()
+            .addOnSuccessListener { snapshot ->
+                val profileBase64 = snapshot.getValue(String::class.java)
+                if (!profileBase64.isNullOrEmpty()) {
+                    try {
+                        val bytes = Base64.decode(profileBase64, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        icprofile.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        icprofile.setImageResource(R.drawable.profile)
+                    }
+                } else {
+                    icprofile.setImageResource(R.drawable.profile)
+                }
+            }
+            .addOnFailureListener {
+                icprofile.setImageResource(R.drawable.profile)
+            }
+
+        findViewById<ImageView>(R.id.iv_your_profile).setOnClickListener {
+            startActivity(Intent(this, your_profile_screen::class.java))
+            overridePendingTransition(0, 0)
         }
 
 

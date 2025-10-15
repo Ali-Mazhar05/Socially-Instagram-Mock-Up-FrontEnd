@@ -15,7 +15,7 @@ class ChatListAdapter(
 
     inner class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
-        val tvName: TextView = view.findViewById(R.id.tvName)
+        val tvName: TextView = view.findViewById(R.id.txtUsername)
         val tvLastMsg: TextView = view.findViewById(R.id.txtLastMessage)
     }
 

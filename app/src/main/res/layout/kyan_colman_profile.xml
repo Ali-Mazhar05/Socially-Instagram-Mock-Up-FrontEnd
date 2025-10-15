@@ -108,6 +108,7 @@
                             android:orientation="vertical">
                             <TextView
                                 android:text="151"
+                                android:id="@+id/tvPostsCount"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/black"
@@ -129,6 +130,7 @@
                             android:orientation="vertical">
                             <TextView
                                 android:text="112k"
+                                android:id="@+id/tvFollowersCount"
                                 android:textColor="@color/black"
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
@@ -153,6 +155,7 @@
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/black"
                                 android:text="162"
+                                android:id="@+id/tvFollowingCount"
                                 android:textSize="20sp"
                                 android:textStyle="bold"/>
                             <TextView
@@ -170,7 +173,7 @@
 
                 <!-- Name -->
                 <TextView
-                    android:id="@+id/tvName"
+                    android:id="@+id/tvFullName"
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -285,6 +288,7 @@
                         android:layout_height="40dp"
                         android:layout_weight="1"
                         android:text="Follow"
+                        android:id="@+id/stateButton"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
@@ -296,9 +300,10 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="0dp"
                         android:layout_height="40dp"
+
                         android:layout_weight="1"
                         android:text="Message"
-                        android:id="@+id/msg_box"
+                        android:id="@+id/Message_btn"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
@@ -506,99 +511,14 @@
             </LinearLayout>
 
 
-            <!-- Grid of posts -->
-
-
-            <GridLayout
-                android:id="@+id/gridPosts"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProfilePosts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:alignmentMode="alignMargins"
-                android:useDefaultMargins="true"
-                android:padding="1dp">
-
-                <ImageView
-                    android:id="@+id/your_profile_pic1"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/kyan_post1" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic2"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/kyan_post2" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic3"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/kyan_post3" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic4"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/yout_profile_pic4" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic5"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/yout_profile_pic5" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic6"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/yout_profile_pic6" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic7"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/yout_profile_pic7" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic8"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/yout_profile_pic8" />
-
-                <ImageView
-                    android:id="@+id/your_profile_pic9"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="1dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/yout_profile_pic9" />
-            </GridLayout>
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="4dp"
+                android:paddingHorizontal="2dp"
+                android:clipToPadding="false"/>
         </LinearLayout>
 
     </ScrollView>

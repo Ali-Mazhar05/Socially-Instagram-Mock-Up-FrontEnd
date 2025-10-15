@@ -111,20 +111,6 @@ class main_feed : AppCompatActivity() {
 
 
 
-    override fun onStart() {
-        super.onStart()
-        val filter = IntentFilter("STORY_UPDATED")
-        LocalBroadcastManager.getInstance(this).registerReceiver(storyUpdateReceiver, filter)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        try {
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(storyUpdateReceiver)
-        } catch (_: Exception) { }
-    }
-
-
     private fun TopBar(){
         findViewById<ImageView>(R.id.iv_share).setOnClickListener {
             startActivity(Intent(this, dm_feed::class.java))
@@ -170,8 +156,7 @@ class main_feed : AppCompatActivity() {
         }
 
         icadd.setOnClickListener {
-            val intent = Intent(this, AddChoiceActivity::class.java)
-            addChoiceLauncher.launch(intent)
+            startActivity(Intent(this, AddChoiceActivity::class.java))
             overridePendingTransition(0, 0)
         }
 
@@ -258,96 +243,6 @@ class main_feed : AppCompatActivity() {
 
     // -------------------- Posts --------------------
 
-    private val addChoiceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val addType = result.data!!.getStringExtra("addType")
-                if (addType == "post") {
-
-                    pickImagesLauncher.launch("image/*")
-                }
-            }
-        }
-
-    private val pickImagesLauncher =
-        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
-            if (!uris.isNullOrEmpty()) openImagePreview(uris)
-        }
-
-    private fun openImagePreview(imageUris: List<Uri>) {
-        val intent = Intent(this, post_preview::class.java)
-        intent.putStringArrayListExtra("imageUris", ArrayList(imageUris.map { it.toString() }))
-        postPreviewLauncher.launch(intent)
-    }
-
-    private val postPreviewLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val uris = result.data!!.getStringArrayListExtra("imageUris")?.map { Uri.parse(it) } ?: emptyList()
-                val caption = result.data!!.getStringExtra("caption") ?: ""
-                addNewPost(uris, caption)
-            }
-        }
-
-    fun addNewPost(imageUris: List<Uri>, caption: String) {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user == null) {
-            Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val uid = user.uid
-        val usersRef = FirebaseDatabase.getInstance().getReference("Users").child(uid)
-
-        usersRef.get().addOnSuccessListener { snapshot ->
-            val username = snapshot.child("username").getValue(String::class.java) ?: "Unknown User"
-            val location = snapshot.child("location").getValue(String::class.java) ?: " "
-            val profileImageUrl = snapshot.child("profileImage").getValue(String::class.java) ?: ""
-
-            // Convert URIs to Base64
-            val imageBase64List = mutableListOf<String>()
-            for (uri in imageUris) {
-                try {
-                    val inputStream = contentResolver.openInputStream(uri)
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
-                    val base64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
-                    imageBase64List.add(base64)
-                    inputStream?.close()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
-            //Create a new post reference and assign its postId
-            val postRef = FirebaseDatabase.getInstance().getReference("Posts").push()
-            val postId = postRef.key ?: return@addOnSuccessListener
-
-            val newPost = Post(
-                postId = postId,
-                userId = uid,
-                username = username,
-                location = location,
-                caption = caption,
-                imageBase64List = imageBase64List,
-                profileImageUrl = profileImageUrl,
-                likedByName = null,
-                likeCount = 0,
-                isVerified = false,
-                comments = mutableListOf()
-            )
-
-            // ✅ Save to Firebase
-            postRef.setValue(newPost)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "✅ Post uploaded successfully", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "❌ Failed: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
-        }
-    }
-
     private fun loadPostsFromFirebase() {
         val postsRef = FirebaseDatabase.getInstance().getReference("Posts")
         postsRef.get().addOnSuccessListener { snapshot ->
@@ -380,7 +275,7 @@ class main_feed : AppCompatActivity() {
                         }
                     }
                 } else {
-                    Toast.makeText(this@main_feed,"No Posts in database", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@main_feed,"No Posts in database", Toast.LENGTH_SHORT).show()
                 }
 
 

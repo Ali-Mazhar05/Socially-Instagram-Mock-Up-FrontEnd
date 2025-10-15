@@ -8,10 +8,15 @@ data class User(
     var lastName: String? = null,
     var email: String? = null,
     var dob: String? = null,
-    var profileImage: String? = null
+    var profileImage: String? = null,
 
 
-    //add list of followers( with uid each)
+    // 🔹 Relationship fields
+    var followers: MutableMap<String, Boolean>? = null,            // userId → true
+    var following: MutableMap<String, Boolean>? = null,            // userId → true
+    var followRequestsSent: MutableMap<String, Boolean>? = null,   // pending requests sent
+    var followRequestsReceived: MutableMap<String, Boolean>? = null, // pending requests received
+    var closeFriends: MutableMap<String, Boolean>? = null          // close friends
 
 )
 
