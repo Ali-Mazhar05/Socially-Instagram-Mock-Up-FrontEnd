@@ -286,7 +286,6 @@ class kyan_colman_profile : AppCompatActivity() {
         val borderGreen = ContextCompat.getColor(this, R.color.greenn)
         val borderRed = ContextCompat.getColor(this, R.color.redd)
 
-        // --- Helper function to evaluate and set color ---
         fun applyBorderColor(isFollowing: Boolean, isCloseFriend: Boolean) {
             if (!isFollowing && !isCloseFriend) {
                 profileImageView.borderColor = borderGray
@@ -294,7 +293,6 @@ class kyan_colman_profile : AppCompatActivity() {
                 return
             }
 
-            // Listen for story updates in real-time
             storiesRef.child(profileOwnerId)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -308,7 +306,7 @@ class kyan_colman_profile : AppCompatActivity() {
                         sdf.timeZone = TimeZone.getTimeZone("UTC")
 
                         var latestStoryTime = 0L
-                        var latestStoryViewed = true
+                        var currentUserViewed = false
                         var latestStoryCloseFriends = false
 
                         for (storySnap in snapshot.children) {
@@ -317,10 +315,12 @@ class kyan_colman_profile : AppCompatActivity() {
 
                             if (parsedTime > latestStoryTime) {
                                 latestStoryTime = parsedTime
-                                latestStoryViewed = storySnap.child("isViewed")
-                                    .child(viewerId).getValue(Boolean::class.java) ?: true
                                 latestStoryCloseFriends = storySnap.child("isCloseFriends")
                                     .getValue(Boolean::class.java) ?: false
+
+                                // ✅ Properly handle viewedBy as Map<String, Boolean>
+                                val viewedByMap = storySnap.child("viewedBy").value as? Map<String, Boolean>
+                                currentUserViewed = viewedByMap?.get(viewerId) == true
                             }
                         }
 
@@ -330,13 +330,12 @@ class kyan_colman_profile : AppCompatActivity() {
                         if (!storyActive) {
                             profileImageView.borderColor = borderGray
                         } else {
-                            // Access rules (Instagram-style)
                             if (latestStoryCloseFriends && !isCloseFriend) {
-                                // not allowed to see close-friends story
+                                // viewer not allowed to see close-friends story
                                 profileImageView.borderColor = borderGray
                             } else {
                                 profileImageView.borderColor = when {
-                                    latestStoryViewed -> borderGray
+                                    currentUserViewed -> borderGray
                                     latestStoryCloseFriends -> borderGreen
                                     else -> borderRed
                                 }
@@ -350,7 +349,7 @@ class kyan_colman_profile : AppCompatActivity() {
                 })
         }
 
-        // --- Real-time listener for relationship changes ---
+        // --- Real-time relationship check ---
         val followingRef = usersRef.child(viewerId).child("following").child(profileOwnerId)
         val closeFriendsRef = usersRef.child(profileOwnerId).child("closeFriends").child(viewerId)
 
@@ -369,7 +368,6 @@ class kyan_colman_profile : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
         }
 
-        // Keep listening for changes in relationship and stories
         followingRef.addValueEventListener(relationshipListener)
         closeFriendsRef.addValueEventListener(relationshipListener)
     }

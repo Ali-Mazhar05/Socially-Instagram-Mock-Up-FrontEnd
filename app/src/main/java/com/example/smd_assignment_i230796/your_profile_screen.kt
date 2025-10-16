@@ -316,12 +316,15 @@ class your_profile_screen : AppCompatActivity() {
 
     private fun updateStoryBorder(currentUserId: String) {
         val storiesRef = FirebaseDatabase.getInstance().getReference("Stories")
-        val profileImageView = findViewById<CircleImageView>(R.id.ivProfilePic)
+        val profileImageView = findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.ivProfilePic)
 
         val borderGray = ContextCompat.getColor(this, R.color.grayy)
         val borderGreen = ContextCompat.getColor(this, R.color.greenn)
         val borderRed = ContextCompat.getColor(this, R.color.redd)
 
+        val viewerId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        // Real-time listener
         storiesRef.child(currentUserId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!snapshot.exists()) {
@@ -334,7 +337,7 @@ class your_profile_screen : AppCompatActivity() {
                 sdf.timeZone = TimeZone.getTimeZone("UTC")
 
                 var latestStoryTime = 0L
-                var latestStoryViewed = true
+                var currentUserViewed = false
                 var latestStoryCloseFriends = false
 
                 for (storySnap in snapshot.children) {
@@ -343,8 +346,12 @@ class your_profile_screen : AppCompatActivity() {
 
                     if (parsedTime > latestStoryTime) {
                         latestStoryTime = parsedTime
-                        latestStoryViewed = storySnap.child("isViewed").getValue(Boolean::class.java) ?: true
-                        latestStoryCloseFriends = storySnap.child("closeFriends").getValue(Boolean::class.java) ?: false
+                        latestStoryCloseFriends = storySnap.child("isCloseFriends")
+                            .getValue(Boolean::class.java) ?: false
+
+                        // ✅ Real-time detection of viewedBy updates
+                        val viewedByMap = storySnap.child("viewedBy").value as? Map<String, Boolean>
+                        currentUserViewed = viewedByMap?.get(viewerId) == true
                     }
                 }
 
@@ -355,9 +362,9 @@ class your_profile_screen : AppCompatActivity() {
                     profileImageView.borderColor = borderGray
                 } else {
                     profileImageView.borderColor = when {
-                        latestStoryViewed -> borderGray
-                        latestStoryCloseFriends -> borderGreen
-                        else -> borderRed
+                        currentUserViewed -> borderGray       // seen
+                        latestStoryCloseFriends -> borderGreen // cf story
+                        else -> borderRed                     // normal
                     }
                 }
 
@@ -366,6 +373,33 @@ class your_profile_screen : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {}
         })
+
+        // 👇 Optional — also listen to the specific "viewedBy" node to catch instant updates
+        storiesRef.child(currentUserId).get().addOnSuccessListener { userStories ->
+            for (storySnap in userStories.children) {
+                val storyId = storySnap.key ?: continue
+                storiesRef.child(currentUserId).child(storyId).child("viewedBy")
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val viewedByMap = snapshot.value as? Map<String, Boolean>
+                            val isViewed = viewedByMap?.get(viewerId) == true
+                            val isCloseFriend = storySnap.child("isCloseFriends")
+                                .getValue(Boolean::class.java) ?: false
+
+                            if (isViewed) {
+                                profileImageView.borderColor = borderGray
+                            } else if (isCloseFriend) {
+                                profileImageView.borderColor = borderGreen
+                            } else {
+                                profileImageView.borderColor = borderRed
+                            }
+                            profileImageView.invalidate()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {}
+                    })
+            }
+        }
     }
 
 }
