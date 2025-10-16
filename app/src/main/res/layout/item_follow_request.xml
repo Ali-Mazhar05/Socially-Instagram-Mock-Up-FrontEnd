@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:background="@android:color/white">
+
+    <!-- Profile Image -->
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile"
+        android:layout_marginEnd="10dp" />
+
+    <!-- Username -->
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="username_here"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginEnd="12dp" />
+   </LinearLayout>
+
+    <!-- Buttons aligned to the right -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|end"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="Accept"
+            android:background="@drawable/follow_btn_bg"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:paddingHorizontal="10dp"
+            android:layout_marginEnd="6dp"
+            android:stateListAnimator="@null"
+            android:elevation="0dp" />
+
+        <Button
+            android:id="@+id/btnCloseFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="Close Friends"
+            android:background="@drawable/follow_btn_bg"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:paddingHorizontal="10dp"
+            android:layout_marginEnd="6dp"
+            android:stateListAnimator="@null"
+            android:elevation="0dp" />
+
+        <Button
+            android:id="@+id/btnReject"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="Reject"
+            android:background="@drawable/notif_message"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            android:paddingHorizontal="10dp"
+            android:stateListAnimator="@null"
+            android:elevation="0dp" />
+    </LinearLayout>
+
+</LinearLayout>

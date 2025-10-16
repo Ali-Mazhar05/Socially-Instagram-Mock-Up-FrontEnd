@@ -36,8 +36,8 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="10dp"
                 android:id="@+id/dm_other_accounts"
+                android:layout_width="10dp"
                 android:layout_height="12dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="6dp"
@@ -62,401 +62,17 @@
         android:drawableTint="#D8D8D8"
         android:drawablePadding="8dp"
         android:drawableStart="@drawable/search_search_icon"
-        android:background="@color/searchbox_gray"/>
+        android:background="@color/searchbox_gray" />
 
-    <LinearLayout
-        android:id="@+id/chatList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerChats"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/etSearch"
-        android:orientation="vertical">
+        android:layout_above="@id/bottom_nav_container"
+        android:paddingVertical="8dp"
+        android:scrollbars="vertical" />
 
-        <LinearLayout
-            android:id="@+id/chat1"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-
-            <FrameLayout
-                android:layout_width="65dp"
-                android:layout_height="65dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/dm_viewed_story"
-                    android:scaleType="fitXY"/>
-                <ImageView
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/post_profile"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="joshua_l"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:text="Have a nice day, bro!"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". now"
-                android:textSize="12sp"
-                android:textColor="#060606"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp" />
-
-            <ImageView
-                android:id="@+id/chat_cam1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dm_camera" />
-        </LinearLayout>
-
-        <!-- Chat 2 -->
-        <LinearLayout
-            android:id="@+id/chat2"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-
-            <FrameLayout
-                android:layout_width="65dp"
-                android:layout_height="65dp">
-
-                <ImageView
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/karenne_profile"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="karenne"
-                    android:textColor="#060606"
-                    android:ellipsize="end"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="I heard this is a good movie, s..."
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". now"
-                android:textSize="12sp"
-                android:textColor="#060606"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp" />
-
-            <ImageView
-                android:id="@+id/chat_cam2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dm_camera" />
-        </LinearLayout>
-
-        <!-- Chat 3 -->
-        <LinearLayout
-            android:id="@+id/chat3"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-
-            <FrameLayout
-                android:layout_width="65dp"
-                android:layout_height="65dp">
-
-                <ImageView
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/dm_martini_rond"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="martini_rond"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:text="See you on the next meeting!"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". 15m"
-                android:textSize="12sp"
-                android:textColor="#060606"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp" />
-
-            <ImageView
-                android:id="@+id/chat_cam3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dm_camera" />
-        </LinearLayout>
-
-        <!-- Chat 4 -->
-        <LinearLayout
-            android:id="@+id/chat4"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-
-            <FrameLayout
-                android:layout_width="65dp"
-                android:layout_height="65dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/dm_viewed_story"
-                    android:scaleType="fitXY"/>
-                <ImageView
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/dm_andreww"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="andrewww_"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:text="Sounds good 😂😂😂"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". 20m"
-                android:textSize="12sp"
-                android:textColor="#060606"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp" />
-
-            <ImageView
-                android:id="@+id/chat_cam4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dm_camera" />
-        </LinearLayout>
-
-        <!-- Chat 5 -->
-        <LinearLayout
-            android:id="@+id/chat5"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-
-            <FrameLayout
-                android:layout_width="65dp"
-                android:layout_height="65dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/dm_viewed_story"
-                    android:scaleType="fitXY"/>
-                <ImageView
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/kieron_profile"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="kiero_d"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:text="The new design looks cool, b..."
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". 1m"
-                android:textSize="12sp"
-                android:textColor="#060606"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp" />
-
-            <ImageView
-                android:id="@+id/chat_cam5"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dm_camera" />
-        </LinearLayout>
-
-        <!-- Chat 6 -->
-        <LinearLayout
-            android:id="@+id/chat6"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical">
-
-            <FrameLayout
-                android:layout_width="65dp"
-                android:layout_height="65dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/dm_viewed_story"
-                    android:scaleType="fitXY"/>
-                <ImageView
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/dm_max_jacobson"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="maxjacobson"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:text="Thank you, bro!"
-                    android:textColor="#060606"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=". 15m"
-                android:textSize="12sp"
-                android:textColor="#060606"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp" />
-
-            <ImageView
-                android:id="@+id/chat_cam6"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/dm_camera" />
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <!-- Bottom Navigation with indicator inside -->
     <LinearLayout
         android:id="@+id/bottom_nav_container"
         android:layout_width="match_parent"
@@ -466,23 +82,22 @@
         android:background="@color/white"
         android:elevation="2dp">
 
-    <!-- Nav items row -->
-    <LinearLayout
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingHorizontal="12dp"
-        android:background="@color/white">
+        <LinearLayout
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/imgBottomCamera"
-            android:layout_width="375dp"
-            android:layout_height="79dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/dm_camera_filled" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imgBottomCamera"
+                android:layout_width="375dp"
+                android:layout_height="79dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/dm_camera_filled" />
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"

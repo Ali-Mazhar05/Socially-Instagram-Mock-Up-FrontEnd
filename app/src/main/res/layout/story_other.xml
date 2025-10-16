@@ -57,6 +57,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:id="@+id/profileImage"
                 android:src="@drawable/craig_circle_profile"
                 android:layout_marginEnd="8dp" />
 
@@ -68,7 +69,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/storyTitle"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/story_other_heading"

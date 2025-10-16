@@ -22,7 +22,8 @@ class AddChoiceActivity : AppCompatActivity() {
         }
 
         btnAddPost.setOnClickListener {
-            setResult(Activity.RESULT_OK, Intent().putExtra("addType", "post"))
+            val intent=Intent(this,add_post::class.java)
+            startActivity(  intent)
             finish()
         }
     }

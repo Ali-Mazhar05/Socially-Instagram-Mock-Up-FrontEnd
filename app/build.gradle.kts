@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
     id("org.jetbrains.kotlin.kapt") // for Glide annotation processor
+    id("kotlin-kapt")
 }
 
 android {
@@ -44,11 +45,12 @@ android {
 }
 
 dependencies {
-    // Core Android + UI
+    implementation(libs.material.v1130)
     implementation(libs.kotlin.stdlib)
+    implementation(libs.circleimageview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material.v1130)
+    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
@@ -66,6 +68,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.runtime.saved.instance.state)
     kapt(libs.glide.compiler)
 
     // Credentials & Google ID (for sign-in)
@@ -74,6 +78,17 @@ dependencies {
     implementation(libs.googleid)
 
     // Tests
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.firebase.database)
+    testImplementation(libs.junit)
+    implementation(libs.circleindicator)
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

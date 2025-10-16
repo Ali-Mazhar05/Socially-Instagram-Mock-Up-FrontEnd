@@ -20,10 +20,11 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-class StoryViewerActivity : AppCompatActivity() {
+class StoryViewerActivity : BaseActivity() {
 
     private lateinit var storyImage: ImageView
-    private lateinit var storyTitle: TextView
+    private lateinit var profileImage: ImageView
+    private lateinit var username:TextView
     private var storyDate: TextView? = null
     private var progressBar: ProgressBar? = null
 
@@ -46,18 +47,55 @@ class StoryViewerActivity : AppCompatActivity() {
         setContentView(if (isMine) R.layout.gursky_studio_story else R.layout.story_other)
 
         storyImage = findViewById(R.id.storyImage)
-        storyTitle = findViewById(R.id.storyTitle)
         storyDate = findViewById(R.id.storyDate)
         progressBar = findViewById(R.id.storyProgressBar)
+        profileImage = findViewById(R.id.profileImage)
+        username = findViewById(R.id.username)
 
-        // Get the userId whose stories we’re viewing
+        // 🔹 Get the userId whose stories we’re viewing
         userId = intent.getStringExtra("userId") ?: currentUserId
 
+        // 🔹 Try to get username passed via Intent
+        val passedUsername = intent.getStringExtra("username")
+
+        // 🔹 Set username (fallback to "Your Story" or "Unknown User")
+        username.text = when {
+            !passedUsername.isNullOrEmpty() -> passedUsername
+            isMine -> "Your Story"
+            else -> "Unknown User"
+        }
+
+        // 🔹 Fetch profile image from Firebase if not your own
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId)
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val profileBase64 = snapshot.child("profileImage").getValue(String::class.java)
+                if (!profileBase64.isNullOrEmpty()) {
+                    try {
+                        val bytes = Base64.decode(profileBase64, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        profileImage.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        profileImage.setImageResource(R.drawable.profile)
+                    }
+                } else {
+                    // Fallback if user doesn’t exist or has no profile
+                    profileImage.setImageResource(R.drawable.profile)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                profileImage.setImageResource(R.drawable.profile)
+            }
+        })
+
+        // 🔹 Close button
         findViewById<ImageView>(R.id.closeBtn)?.setOnClickListener { finish() }
 
+        // 🔹 Load stories for this user
         loadStories()
     }
-
     private fun loadStories() {
         val dbRef = FirebaseDatabase.getInstance().getReference("Stories").child(userId)
         dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -103,7 +141,6 @@ class StoryViewerActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        storyTitle.text = if (isMine) "Your Story" else userId.take(6)
         try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
             inputFormat.timeZone = TimeZone.getTimeZone("UTC")

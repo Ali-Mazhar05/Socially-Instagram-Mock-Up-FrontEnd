@@ -32,65 +32,117 @@ class StoryAdapter(private val context: Context, private val stories: MutableLis
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val userStory = stories[position]
-        //fallback on demoUser123
-        val currentUser = FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123"
-
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123"
         val firstStory = userStory.stories.firstOrNull()
-        val closeFriends = firstStory?.closeFriends == true
 
-        //CASE 1: Your own story (always first circle)
-        if (userStory.userId == currentUser) {
+        var username: String? = null
+        var profileImageBase64: String? = null
+
+        //CASE 1: Current user's story
+        if (userStory.userId == currentUserId) {
             holder.username.text = "Your Story"
-            Glide.with(context).load(R.drawable.profile).into(holder.profileImg)
 
-            holder.profileImg.borderColor = getBorderColor(userStory, currentUser)
+            // 🔹 Load current user's profileImageBase64 and username from Firebase Users node
+            val userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserId)
+            userRef.get()
+                .addOnSuccessListener { snapshot ->
+                    val userMap = snapshot.value as? Map<*, *>
+                    username = userMap?.get("username") as? String ?: "Your Story"
+                    profileImageBase64 = userMap?.get("profileImage") as? String
 
-            holder.itemView.setOnClickListener {
-                val intent = if (userStory.stories.isEmpty())
-                    Intent(context, add_to_story::class.java)
-                else
-                    Intent(context, StoryViewerActivity::class.java).apply {
-                        putExtra("userId", userStory.userId)
-                        putExtra("isMine", true)
+                    holder.username.text = username
+
+                    if (!profileImageBase64.isNullOrEmpty()) {
+                        try {
+                            val bytes = Base64.decode(profileImageBase64, Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            holder.profileImg.setImageBitmap(bitmap)
+                        } catch (e: Exception) {
+                            holder.profileImg.setImageResource(R.drawable.profile)
+                        }
+                    } else {
+                        holder.profileImg.setImageResource(R.drawable.profile)
                     }
-                context.startActivity(intent)
-            }
+
+                    holder.profileImg.borderColor = getBorderColor(userStory, currentUserId)
+
+                    //add_to_story if empty, else open StoryViewer
+                    holder.itemView.setOnClickListener {
+                        val intent = if (userStory.stories.isEmpty())
+                            Intent(context, add_to_story::class.java)
+                        else
+                            Intent(context, StoryViewerActivity::class.java).apply {
+                                putExtra("userId", userStory.userId)
+                                putExtra("isMine", true)
+                                putExtra("username", username)
+                            }
+                        context.startActivity(intent)
+                    }
+                }
+                .addOnFailureListener {
+                    holder.profileImg.setImageResource(R.drawable.profile)
+                    holder.username.text = "Your Story"
+                }
+
             return
         }
 
-        //CASE 2: Other users’ stories
-        if (firstStory != null && firstStory.imageBase64.isNotEmpty()) {
-            try {
-                val imageBytes = Base64.decode(firstStory.imageBase64, Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                holder.profileImg.setImageBitmap(bitmap)
-            } catch (_: Exception) {
+        // CASE 2: Other users’ stories
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userStory.userId)
+        userRef.get()
+            .addOnSuccessListener { snapshot ->
+                val userMap = snapshot.value as? Map<*, *>
+                username = userMap?.get("username") as? String ?: "User ${position}"
+                profileImageBase64 = userMap?.get("profileImage") as? String
+
+                holder.username.text = username
+
+                if (!profileImageBase64.isNullOrEmpty()) {
+                    try {
+                        val bytes = Base64.decode(profileImageBase64, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        holder.profileImg.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        holder.profileImg.setImageResource(R.drawable.profile)
+                    }
+                } else if (!firstStory?.profileImage.isNullOrEmpty()) {
+                    try {
+                        val bytes = Base64.decode(firstStory.profileImage, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        holder.profileImg.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        holder.profileImg.setImageResource(R.drawable.profile)
+                    }
+                } else {
+                    holder.profileImg.setImageResource(R.drawable.profile)
+                }
+
+                holder.profileImg.borderColor = getBorderColor(userStory, currentUserId)
+
+                // 👁 Click to open Story Viewer
+                holder.itemView.setOnClickListener {
+                    markViewedInFirebase(userStory, currentUserId)
+
+                    // Instantly update viewed status in memory
+                    userStory.stories.forEach { story ->
+                        story.viewedBy = story.viewedBy?.plus(currentUserId to true)
+                    }
+                    notifyItemChanged(position)
+
+                    val intent = Intent(context, StoryViewerActivity::class.java).apply {
+                        putExtra("userId", userStory.userId)
+                        putExtra("isMine", false)
+                        putExtra("username", username)
+                    }
+                    context.startActivity(intent)
+                }
+            }
+            .addOnFailureListener {
+                holder.username.text = "User ${position}"
                 holder.profileImg.setImageResource(R.drawable.profile)
             }
-        } else {
-            holder.profileImg.setImageResource(R.drawable.profile)
-        }
-
-        holder.username.text = if (userStory.userId.startsWith("user"))
-            userStory.userId else "User ${position}"
-
-        //Determine current color
-        holder.profileImg.borderColor = getBorderColor(userStory, currentUser)
-
-        // 👁 Click to open story viewer
-        holder.itemView.setOnClickListener {
-            markViewedInFirebase(userStory, currentUser)
-            //Update instantly in UI
-            userStory.stories.forEach { it.viewedBy = it.viewedBy?.plus((currentUser to true)) }
-            notifyItemChanged(position)
-
-            val intent = Intent(context, StoryViewerActivity::class.java).apply {
-                putExtra("userId", userStory.userId)
-                putExtra("isMine", false)
-            }
-            context.startActivity(intent)
-        }
     }
+
     private fun getBorderColor(userStory: UserStory, currentUser: String): Int {
         val stories = userStory.stories
         if (stories.isEmpty()) return Color.GRAY

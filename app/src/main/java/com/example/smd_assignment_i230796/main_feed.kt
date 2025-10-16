@@ -2,6 +2,7 @@ package com.example.smd_assignment_i230796
 
 import Story
 import android.content.*
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.Image
 import android.net.Uri
@@ -19,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.io.ByteArrayOutputStream
 
-class main_feed : AppCompatActivity() {
+class main_feed : BaseActivity() {
 
     private lateinit var binding: MainFeedBinding
     private lateinit var storyAdapter: StoryAdapter
@@ -89,7 +90,7 @@ class main_feed : AppCompatActivity() {
         setupStoriesRecycler()
         setupPostsRecycler()
         bottomNav()
-        addDemoDataOnce(this)
+        TopBar()
 
         //Register STORY_UPDATED receiver
         val updateFilter = IntentFilter("com.example.smd_assignment_i230796.STORY_UPDATED")
@@ -110,37 +111,41 @@ class main_feed : AppCompatActivity() {
 
 
 
-    override fun onStart() {
-        super.onStart()
-        val filter = IntentFilter("STORY_UPDATED")
-        LocalBroadcastManager.getInstance(this).registerReceiver(storyUpdateReceiver, filter)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        try {
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(storyUpdateReceiver)
-        } catch (_: Exception) { }
-    }
-
-
-    private val addChoiceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val addType = result.data!!.getStringExtra("addType")
-                if (addType == "post") {
-
-                    pickImagesLauncher.launch("image/*")
-                }
-            }
+    private fun TopBar(){
+        findViewById<ImageView>(R.id.iv_share).setOnClickListener {
+            startActivity(Intent(this, dm_feed::class.java))
+            overridePendingTransition(0,0)
         }
-
-
+    }
 
 
     //----------bottom navigation-----------------------
     private fun bottomNav() {
+
         val icadd = findViewById<ImageView>(R.id.iv_nav_add)
         val icprofile = findViewById<ImageView>(R.id.iv_your_profile)
+
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserId)
+        userRef.child("profileImage").get()
+            .addOnSuccessListener { snapshot ->
+                val profileBase64 = snapshot.getValue(String::class.java)
+                if (!profileBase64.isNullOrEmpty()) {
+                    try {
+                        val bytes = Base64.decode(profileBase64, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        icprofile.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        icprofile.setImageResource(R.drawable.profile)
+                    }
+                } else {
+                    icprofile.setImageResource(R.drawable.profile)
+                }
+            }
+            .addOnFailureListener {
+                icprofile.setImageResource(R.drawable.profile)
+            }
+
         findViewById<ImageView>(R.id.iv_nav_search).setOnClickListener {
             startActivity(Intent(this, search_page::class.java))
             overridePendingTransition(0,0)
@@ -151,8 +156,7 @@ class main_feed : AppCompatActivity() {
         }
 
         icadd.setOnClickListener {
-            val intent = Intent(this, AddChoiceActivity::class.java)
-            addChoiceLauncher.launch(intent)
+            startActivity(Intent(this, AddChoiceActivity::class.java))
             overridePendingTransition(0, 0)
         }
 
@@ -169,50 +173,78 @@ class main_feed : AppCompatActivity() {
         userStoryList.clear()
         setupStoriesRecycler()
     }
+
     //Load stories (public & close friends)
     private fun setupStoriesRecycler() {
         userStoryList.clear()
-        val storiesRef = FirebaseDatabase.getInstance().getReference("Stories")
+        val database = FirebaseDatabase.getInstance()
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123"
+        val usersRef = database.getReference("Users")
+        val storiesRef = database.getReference("Stories")
 
-        storiesRef.addValueEventListener(object : ValueEventListener {
-            @RequiresApi(Build.VERSION_CODES.O)
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userStoryList.clear()
-                val now = System.currentTimeMillis()
-                val currentUser = FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123"
+        // Step 1: Get list of users the current user follows
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(usersSnapshot: DataSnapshot) {
+                val followingList = mutableListOf<String>()
 
-                for (userNode in snapshot.children) {
-                    val uid = userNode.key ?: continue
-                    val stories = mutableListOf<Story>()
-
-                    for (st in userNode.children) {
-                        val story = st.getValue(Story::class.java) ?: continue
-                        val storyTime = try {
-                            java.time.Instant.parse(story.timestamp).toEpochMilli()
-                        } catch (_: Exception) { 0L }
-
-                        if (now - storyTime < 86_400_000) {
-                            stories.add(story)
-                        } else st.ref.removeValue() // delete old
+                for (userSnap in usersSnapshot.children) {
+                    val uid = userSnap.key ?: continue
+                    val followersMap = userSnap.child("followers").getValue(object : GenericTypeIndicator<Map<String, Boolean>>() {})
+                    if (followersMap?.get(currentUserId) == true) {
+                        followingList.add(uid)
                     }
-
-                    if (stories.isNotEmpty()) userStoryList.add(UserStory(uid, stories))
                 }
 
-                //sort: unviewed first (normal/close), viewed last
-                val sorted = userStoryList.sortedWith(compareByDescending<UserStory> {
-                    it.stories.any { s ->
-                        s.viewedBy?.get(currentUser) != true
+                // Optionally include current user's own stories
+                followingList.add(currentUserId)
+
+                // Step 2: Load only those users' stories
+                storiesRef.addValueEventListener(object : ValueEventListener {
+                    @RequiresApi(Build.VERSION_CODES.O)
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        userStoryList.clear()
+                        val now = System.currentTimeMillis()
+
+                        for (uid in followingList) {
+                            val userNode = snapshot.child(uid)
+                            if (!userNode.exists()) continue
+
+                            val stories = mutableListOf<Story>()
+                            for (st in userNode.children) {
+                                val story = st.getValue(Story::class.java) ?: continue
+                                val storyTime = try {
+                                    java.time.Instant.parse(story.timestamp).toEpochMilli()
+                                } catch (_: Exception) {
+                                    0L
+                                }
+
+                                // Keep only valid stories (less than 24h)
+                                if (now - storyTime < 86_400_000) {
+                                    stories.add(story)
+                                } else st.ref.removeValue()
+                            }
+
+                            if (stories.isNotEmpty()) userStoryList.add(UserStory(uid, stories))
+                        }
+
+                        // Sort: unviewed first
+                        val sorted = userStoryList.sortedWith(compareByDescending<UserStory> {
+                            it.stories.any { s -> s.viewedBy?.get(currentUserId) != true }
+                        })
+
+                        userStoryList.clear()
+                        userStoryList.addAll(sorted)
+                        updateStoryAdapter()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@main_feed, "❌ Error loading stories: ${error.message}", Toast.LENGTH_SHORT).show()
                     }
                 })
-
-                userStoryList.clear()
-                userStoryList.addAll(sorted)
-                updateStoryAdapter()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@main_feed, "❌ Error loading stories: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@main_feed, "❌ Error loading followed users: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -234,218 +266,114 @@ class main_feed : AppCompatActivity() {
     }
 
 
-    //Adds demo data ONCE (5 normal + 4 close friends)
-    private fun addDemoDataOnce(context: Context) {
-        val storiesRef = FirebaseDatabase.getInstance().getReference("Stories")
-        storiesRef.get().addOnSuccessListener { snapshot ->
-            if (!snapshot.exists()) {
-                Thread {
-                    try {
-                        val demoImages = listOf(
-                            R.drawable.post_picture_screen_1,
-                            R.drawable.post_picture_screen_2,
-                            R.drawable.post_picture_screen_3,
-                            R.drawable.post_picture_screen_4
-                        )
-
-                        //5 normal users
-                        val publicStories = mutableMapOf<String, List<Story>>()
-                        for (u in 1..5) {
-                            val tempStories = mutableListOf<Story>()
-                            val bmp = BitmapFactory.decodeResource(context.resources, demoImages.random())
-                            val baos = ByteArrayOutputStream()
-                            bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 80, baos)
-                            val b64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
-
-                            val st = Story(
-                                imageBase64 = b64,
-                                timestamp = "2025-10-13T0${5 + u}:00:00Z",
-                                caption = "User$u public story",
-                                closeFriends = false,
-                                viewedBy = mapOf("viewer1" to false)
-                            )
-                            tempStories.add(st)
-                            publicStories["user$u"] = tempStories
-                        }
-
-                        // 🟡 4 close friends users
-                        val closeStories = mutableMapOf<String, List<Story>>()
-                        for (u in 6..9) {
-                            val tempStories = mutableListOf<Story>()
-                            val bmp = BitmapFactory.decodeResource(context.resources, demoImages.random())
-                            val baos = ByteArrayOutputStream()
-                            bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 80, baos)
-                            val b64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
-
-                            val st = Story(
-                                imageBase64 = b64,
-                                timestamp = "2025-10-13T0${u}:00:00Z",
-                                caption = "User$u close story",
-                                closeFriends = true,
-                                viewedBy = mapOf("viewer1" to false)
-                            )
-                            tempStories.add(st)
-                            publicStories["user$u"] = tempStories
-                        }
-
-                        storiesRef.setValue(publicStories)
-
-
-                        runOnUiThread {
-                            Toast.makeText(context, "✅ Demo stories added", Toast.LENGTH_SHORT).show()
-                            refreshStories()
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }.start()
-            } else {
-                refreshStories()
-            }
-        }
-    }
 
     // -------------------- Posts --------------------
 
-    private val pickImagesLauncher =
-        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
-            if (!uris.isNullOrEmpty()) openImagePreview(uris)
-        }
-
-    private fun openImagePreview(imageUris: List<Uri>) {
-        val intent = Intent(this, post_preview::class.java)
-        intent.putStringArrayListExtra("imageUris", ArrayList(imageUris.map { it.toString() }))
-        postPreviewLauncher.launch(intent)
-    }
-
-    private val postPreviewLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val uris = result.data!!.getStringArrayListExtra("imageUris")?.map { Uri.parse(it) } ?: emptyList()
-                val caption = result.data!!.getStringExtra("caption") ?: ""
-                addNewPost(uris, caption)
+    private fun loadPostsFromFirebase() {
+        val postsRef = FirebaseDatabase.getInstance().getReference("Posts")
+        postsRef.get().addOnSuccessListener { snapshot ->
+            posts.clear()
+            for (postSnapshot in snapshot.children) {
+                val post = postSnapshot.getValue(Post::class.java)
+                if (post != null) posts.add(0, post)
             }
+            postAdapter.notifyDataSetChanged()
+        }.addOnFailureListener {
+            Toast.makeText(this, "❌ Failed to load posts: ${it.message}", Toast.LENGTH_SHORT).show()
         }
-
-    private fun addNewPost(imageUris: List<Uri>, caption: String) {
-        val newPost = Post(
-            username = "You",
-            location = "Pakistan",
-            caption = caption,
-            imageUris = imageUris,
-            profileResId = R.drawable.profile,
-            likedByProfileResId = 0,
-            likedByName = null,
-            likeCount = 0,
-            isVerified = true,
-            paginationIconResId = null,
-            isLiked = false,
-            comments = mutableListOf()
-        )
-        posts.add(0, newPost)
-        postAdapter.notifyItemInserted(0)
-        binding.rvPosts.scrollToPosition(0)
     }
-
     private fun setupPostsRecycler() {
-        posts.clear()
-        posts.addAll(
-            listOf(
-            Post(
-                username = "alex_jones",
-                location = "New York, USA",
-                caption = "Morning coffee vibes ☕🌅",
-                imageResIds = listOf(R.drawable.post_picture_screen_1),
-                profileResId = R.drawable.craig_profile,
-                likedByProfileResId = R.drawable.jack_profile,
-                likedByName = "emma_watson",
-                likeCount = 321,
-                isVerified = true,
-                paginationIconResId = null,
-                isLiked = false,
-                comments = mutableListOf(
-                    comment(R.drawable.profile, "john_doe", "That looks so peaceful!"),
-                    comment(R.drawable.profile_karenne, "sarah_k", "Love this shot 🔥")
-                )
-            ),
+        val database = FirebaseDatabase.getInstance()
+        val postsRef = database.getReference("Posts")
+        val usersRef = database.getReference("Users")
 
-            Post(
-                username = "sophia_lee",
-                location = "Maldives",
-                caption = "Paradise found 🏝️✨",
-                imageResIds = listOf(
-                    R.drawable.post_picture_screen_2,
-                    R.drawable.post_picture_screen_3
-                ),
-                profileResId = R.drawable.jack_profile,
-                likedByProfileResId = R.drawable.craig_profile,
-                likedByName = "alex_jones",
-                likeCount = 452,
-                isVerified = true,
-                paginationIconResId = R.drawable.main_feed_pagination,
-                isLiked = true
-            ),
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUserId = currentUser?.uid ?: ""
 
-            // 🐾 Post 3 — 3 images, a few comments
-            Post(
-                username = "petlover_mia",
-                location = "London, UK",
-                caption = "Playtime with these cuties 🐶🐾",
-                imageResIds = listOf(
-                    R.drawable.post_picture_screen_4,
-                    R.drawable.post_picture_screen_5,
-                    R.drawable.post_picture_screen_6
-                ),
-                profileResId = R.drawable.craig_profile,
-                likedByProfileResId = R.drawable.post_profile,
-                likedByName = "lucas_park",
-                likeCount = 198,
-                isVerified = false,
-                paginationIconResId = R.drawable.main_feed_pagination,
-                isLiked = false,
-                comments = mutableListOf(
-                    comment(R.drawable.profile_karenne, "sophia_lee", "Omg they’re adorable 😍"),
-                    comment(R.drawable.jack_profile, "emma_watson", "Cutest post today! 🐕❤️")
-                )
-            ),
+        // Step 1: Fetch followed users first
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(usersSnapshot: DataSnapshot) {
+                val followingList = mutableListOf<String>()
 
-            // 🚴 Post 4 — Single image
-            Post(
-                username = "lucas_park",
-                location = "Amsterdam, Netherlands",
-                caption = "City rides and clear skies 🚴‍♂️☀️",
-                imageResIds = listOf(R.drawable.post_picture_screen_7),
-                profileResId = R.drawable.post_profile,
-                likedByProfileResId = R.drawable.profile_karenne,
-                likedByName = "petlover_mia",
-                likeCount = 265,
-                isVerified = true,
-                paginationIconResId = null,
-                isLiked = true
-            ),
-            Post(
-                username = "emma_watson",
-                location = "Paris, France",
-                caption = "Lost in the rhythm 🎧💫",
-                imageResIds = listOf(R.drawable.post_picture_screen_8),
-                profileResId = R.drawable.kieron_profile,
-                likedByProfileResId = R.drawable.jack_profile,
-                likedByName = "alex_jones",
-                likeCount = 589,
-                isVerified = true,
-                paginationIconResId = null,
-                isLiked = false,
-                comments = mutableListOf(
-                    comment(R.drawable.craig_profile, "lucas_park", "That vibe tho 🔥🔥"),
-                    comment(R.drawable.profile_karenne, "sophia_lee", "Paris fits your style 💕")
-                )
-            )
-        )
-        )
+                for (userSnap in usersSnapshot.children) {
+                    val uid = userSnap.key ?: continue
+                    val followersMap = userSnap.child("followers").getValue(object : GenericTypeIndicator<Map<String, Boolean>>() {})
+                    if (followersMap?.get(currentUserId) == true) {
+                        followingList.add(uid)
+                    }
+                }
 
-        postAdapter = PostAdapter(posts)
-        binding.rvPosts.layoutManager = LinearLayoutManager(this)
-        binding.rvPosts.adapter = postAdapter
+                // Include your own posts
+                followingList.add(currentUserId)
+
+                // Step 2: Now load posts only from followed users
+                postsRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        posts.clear()
+
+                        if (snapshot.exists() && snapshot.childrenCount > 0) {
+                            for (postSnapshot in snapshot.children) {
+                                val post = postSnapshot.getValue(Post::class.java)
+                                if (post != null && followingList.contains(post.userId)) {
+                                    post.isLiked = post.likedBy?.get(currentUserId) == true
+                                    posts.add(0, post)
+                                }
+                            }
+                        } else {
+                            Toast.makeText(this@main_feed, "No Posts in database", Toast.LENGTH_SHORT).show()
+                        }
+
+                        // Initialize adapter if needed
+                        if (!::postAdapter.isInitialized) {
+                            var currentUsername = "You"
+                            var currentUserProfileBase64 = ""
+                            val usersRef = FirebaseDatabase.getInstance().getReference("Users")
+
+                            fun setupAdapter() {
+                                postAdapter = PostAdapter(
+                                    this@main_feed,
+                                    posts,
+                                    currentUsername,
+                                    currentUserProfileBase64
+                                )
+                                binding.rvPosts.layoutManager = LinearLayoutManager(this@main_feed)
+                                binding.rvPosts.adapter = postAdapter
+                            }
+
+                            if (currentUserId.isNotEmpty()) {
+                                usersRef.child(currentUserId).get()
+                                    .addOnSuccessListener { userSnapshot ->
+                                        if (userSnapshot.exists()) {
+                                            currentUsername = userSnapshot.child("username").getValue(String::class.java) ?: "You"
+                                            currentUserProfileBase64 = userSnapshot.child("profileImage").getValue(String::class.java) ?: ""
+                                        }
+                                        setupAdapter()
+                                    }
+                                    .addOnFailureListener {
+                                        setupAdapter()
+                                    }
+                            } else {
+                                setupAdapter()
+                            }
+                        } else {
+                            postAdapter.notifyDataSetChanged()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(
+                            this@main_feed,
+                            "Failed to load posts: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@main_feed, "❌ Error loading followed users: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 }
