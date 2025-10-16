@@ -20,7 +20,7 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class add_to_story : AppCompatActivity() {
+class add_to_story : BaseActivity() {
 
     private lateinit var storyImage: ImageView
     private lateinit var closeBtn: ImageView

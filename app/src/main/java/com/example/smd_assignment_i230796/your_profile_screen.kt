@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-class your_profile_screen : AppCompatActivity() {
+class your_profile_screen : BaseActivity() {
 
     private lateinit var tvUsername: TextView
     private lateinit var tvFullName: TextView

@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
-class SwitchAccountsActivity : AppCompatActivity() {
+class SwitchAccountsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

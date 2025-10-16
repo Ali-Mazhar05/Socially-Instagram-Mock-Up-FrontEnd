@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.io.ByteArrayOutputStream
 
-class add_post : AppCompatActivity() {
+class add_post : BaseActivity() {
 
     private val pickImagesLauncher =
         registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->

@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.io.ByteArrayOutputStream
 
-class chat_screen : AppCompatActivity() {
+class chat_screen : BaseActivity() {
 
     private lateinit var recyclerMessages: RecyclerView
     private lateinit var etMessage: EditText

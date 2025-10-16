@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.androidx.runtime.saved.instance.state)
     kapt(libs.glide.compiler)
 
     // Credentials & Google ID (for sign-in)

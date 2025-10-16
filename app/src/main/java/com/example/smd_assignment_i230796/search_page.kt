@@ -17,7 +17,7 @@ import com.example.smd_assignment_i230796.adapters.UserAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class search_page : AppCompatActivity() {
+class search_page : BaseActivity() {
 
     private lateinit var etSearch: EditText
     private lateinit var recyclerUsers: RecyclerView

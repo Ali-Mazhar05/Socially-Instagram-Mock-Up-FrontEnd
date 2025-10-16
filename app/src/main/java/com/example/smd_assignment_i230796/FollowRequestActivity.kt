@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class FollowRequestActivity : AppCompatActivity() {
+class FollowRequestActivity : BaseActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FollowRequestAdapter

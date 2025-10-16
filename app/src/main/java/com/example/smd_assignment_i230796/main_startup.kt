@@ -17,6 +17,6 @@ class main_startup : AppCompatActivity() {
             val intent = Intent(this, SwitchAccountsActivity::class.java)
             startActivity(intent)
             finish()
-        }, 3000)
+        }, 5000)
     }
 }

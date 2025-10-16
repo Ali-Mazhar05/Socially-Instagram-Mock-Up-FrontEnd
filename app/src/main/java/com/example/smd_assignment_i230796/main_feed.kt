@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.io.ByteArrayOutputStream
 
-class main_feed : AppCompatActivity() {
+class main_feed : BaseActivity() {
 
     private lateinit var binding: MainFeedBinding
     private lateinit var storyAdapter: StoryAdapter
