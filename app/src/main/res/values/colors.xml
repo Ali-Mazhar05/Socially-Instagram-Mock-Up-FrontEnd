@@ -7,5 +7,9 @@
     <color name="add_to_story">#A16F55</color>
     <color name="kyan_follow">#AC7F5F</color>
     <color name="kyan_gray">#EEF2F5</color>
+    <color name="grayy">#BDBDBD</color>
+    <color name="greenn">#00C853</color>
+    <color name="redd">#D50000</color>
+
 
 </resources>

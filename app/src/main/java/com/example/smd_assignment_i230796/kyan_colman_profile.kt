@@ -8,11 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 class kyan_colman_profile : AppCompatActivity() {
 
@@ -45,7 +49,14 @@ class kyan_colman_profile : AppCompatActivity() {
             finish()
             return
         }
+        val visuId=intent.getStringExtra("visitedUserId")
+        if (visuId == null) {
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
+        updateStoryBorder(visuId)
         auth = FirebaseAuth.getInstance()
         currentUserId = auth.currentUser?.uid
         usersRef = FirebaseDatabase.getInstance().getReference("Users")
@@ -59,6 +70,7 @@ class kyan_colman_profile : AppCompatActivity() {
         tvFollowingCount = findViewById(R.id.tvFollowingCount)
         btnFollow = findViewById(R.id.stateButton)
         recyclerProfilePosts = findViewById(R.id.recyclerProfilePosts)
+
 
         tvFollowersCount.setOnClickListener {
             val intent = Intent(this, UserListActivity::class.java)
@@ -261,4 +273,105 @@ class kyan_colman_profile : AppCompatActivity() {
             overridePendingTransition(0, 0)
         }
     }
+
+
+    private fun updateStoryBorder(profileOwnerId: String) {
+        val viewerId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val usersRef = FirebaseDatabase.getInstance().getReference("Users")
+        val storiesRef = FirebaseDatabase.getInstance().getReference("Stories")
+        val profileImageView = findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.ivProfilePic)
+
+        val borderGray = ContextCompat.getColor(this, R.color.grayy)
+        val borderGreen = ContextCompat.getColor(this, R.color.greenn)
+        val borderRed = ContextCompat.getColor(this, R.color.redd)
+
+        // --- Helper function to evaluate and set color ---
+        fun applyBorderColor(isFollowing: Boolean, isCloseFriend: Boolean) {
+            if (!isFollowing && !isCloseFriend) {
+                profileImageView.borderColor = borderGray
+                profileImageView.invalidate()
+                return
+            }
+
+            // Listen for story updates in real-time
+            storiesRef.child(profileOwnerId)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.exists()) {
+                            profileImageView.borderColor = borderGray
+                            profileImageView.invalidate()
+                            return
+                        }
+
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+                        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+                        var latestStoryTime = 0L
+                        var latestStoryViewed = true
+                        var latestStoryCloseFriends = false
+
+                        for (storySnap in snapshot.children) {
+                            val storyTime = storySnap.child("timestamp").value?.toString()
+                            val parsedTime = storyTime?.let { sdf.parse(it)?.time ?: 0L } ?: 0L
+
+                            if (parsedTime > latestStoryTime) {
+                                latestStoryTime = parsedTime
+                                latestStoryViewed = storySnap.child("isViewed")
+                                    .child(viewerId).getValue(Boolean::class.java) ?: true
+                                latestStoryCloseFriends = storySnap.child("isCloseFriends")
+                                    .getValue(Boolean::class.java) ?: false
+                            }
+                        }
+
+                        val currentTime = System.currentTimeMillis()
+                        val storyActive = (currentTime - latestStoryTime) < (24 * 60 * 60 * 1000)
+
+                        if (!storyActive) {
+                            profileImageView.borderColor = borderGray
+                        } else {
+                            // Access rules (Instagram-style)
+                            if (latestStoryCloseFriends && !isCloseFriend) {
+                                // not allowed to see close-friends story
+                                profileImageView.borderColor = borderGray
+                            } else {
+                                profileImageView.borderColor = when {
+                                    latestStoryViewed -> borderGray
+                                    latestStoryCloseFriends -> borderGreen
+                                    else -> borderRed
+                                }
+                            }
+                        }
+
+                        profileImageView.invalidate()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+        }
+
+        // --- Real-time listener for relationship changes ---
+        val followingRef = usersRef.child(viewerId).child("following").child(profileOwnerId)
+        val closeFriendsRef = usersRef.child(profileOwnerId).child("closeFriends").child(viewerId)
+
+        val relationshipListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                followingRef.get().addOnSuccessListener { followingSnap ->
+                    val isFollowing = followingSnap.exists()
+
+                    closeFriendsRef.get().addOnSuccessListener { closeFriendSnap ->
+                        val isCloseFriend = closeFriendSnap.exists()
+                        applyBorderColor(isFollowing, isCloseFriend)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        }
+
+        // Keep listening for changes in relationship and stories
+        followingRef.addValueEventListener(relationshipListener)
+        closeFriendsRef.addValueEventListener(relationshipListener)
+    }
+
 }

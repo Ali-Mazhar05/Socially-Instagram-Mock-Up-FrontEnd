@@ -177,48 +177,74 @@ class main_feed : AppCompatActivity() {
     //Load stories (public & close friends)
     private fun setupStoriesRecycler() {
         userStoryList.clear()
-        val storiesRef = FirebaseDatabase.getInstance().getReference("Stories")
+        val database = FirebaseDatabase.getInstance()
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123"
+        val usersRef = database.getReference("Users")
+        val storiesRef = database.getReference("Stories")
 
-        storiesRef.addValueEventListener(object : ValueEventListener {
-            @RequiresApi(Build.VERSION_CODES.O)
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userStoryList.clear()
-                val now = System.currentTimeMillis()
-                val currentUser = FirebaseAuth.getInstance().currentUser?.uid ?: "demoUser123"
+        // Step 1: Get list of users the current user follows
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(usersSnapshot: DataSnapshot) {
+                val followingList = mutableListOf<String>()
 
-                for (userNode in snapshot.children) {
-                    val uid = userNode.key ?: continue
-                    val stories = mutableListOf<Story>()
-
-                    for (st in userNode.children) {
-                        val story = st.getValue(Story::class.java) ?: continue
-                        val storyTime = try {
-                            java.time.Instant.parse(story.timestamp).toEpochMilli()
-                        } catch (_: Exception) {
-                            0L
-                        }
-
-                        // Keep only valid stories (less than 24h)
-                        if (now - storyTime < 86_400_000) {
-                            stories.add(story)
-                        } else st.ref.removeValue()
+                for (userSnap in usersSnapshot.children) {
+                    val uid = userSnap.key ?: continue
+                    val followersMap = userSnap.child("followers").getValue(object : GenericTypeIndicator<Map<String, Boolean>>() {})
+                    if (followersMap?.get(currentUserId) == true) {
+                        followingList.add(uid)
                     }
-
-                    if (stories.isNotEmpty()) userStoryList.add(UserStory(uid, stories))
                 }
 
-                // Sort: unviewed first
-                val sorted = userStoryList.sortedWith(compareByDescending<UserStory> {
-                    it.stories.any { s -> s.viewedBy?.get(currentUser) != true }
-                })
+                // Optionally include current user's own stories
+                followingList.add(currentUserId)
 
-                userStoryList.clear()
-                userStoryList.addAll(sorted)
-                updateStoryAdapter()
+                // Step 2: Load only those users' stories
+                storiesRef.addValueEventListener(object : ValueEventListener {
+                    @RequiresApi(Build.VERSION_CODES.O)
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        userStoryList.clear()
+                        val now = System.currentTimeMillis()
+
+                        for (uid in followingList) {
+                            val userNode = snapshot.child(uid)
+                            if (!userNode.exists()) continue
+
+                            val stories = mutableListOf<Story>()
+                            for (st in userNode.children) {
+                                val story = st.getValue(Story::class.java) ?: continue
+                                val storyTime = try {
+                                    java.time.Instant.parse(story.timestamp).toEpochMilli()
+                                } catch (_: Exception) {
+                                    0L
+                                }
+
+                                // Keep only valid stories (less than 24h)
+                                if (now - storyTime < 86_400_000) {
+                                    stories.add(story)
+                                } else st.ref.removeValue()
+                            }
+
+                            if (stories.isNotEmpty()) userStoryList.add(UserStory(uid, stories))
+                        }
+
+                        // Sort: unviewed first
+                        val sorted = userStoryList.sortedWith(compareByDescending<UserStory> {
+                            it.stories.any { s -> s.viewedBy?.get(currentUserId) != true }
+                        })
+
+                        userStoryList.clear()
+                        userStoryList.addAll(sorted)
+                        updateStoryAdapter()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@main_feed, "❌ Error loading stories: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@main_feed, "❌ Error loading stories: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@main_feed, "❌ Error loading followed users: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -257,74 +283,95 @@ class main_feed : AppCompatActivity() {
         }
     }
     private fun setupPostsRecycler() {
-        val postsRef = FirebaseDatabase.getInstance().getReference("Posts")
+        val database = FirebaseDatabase.getInstance()
+        val postsRef = database.getReference("Posts")
+        val usersRef = database.getReference("Users")
+
         val currentUser = FirebaseAuth.getInstance().currentUser
         val currentUserId = currentUser?.uid ?: ""
 
-        postsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                posts.clear()
+        // Step 1: Fetch followed users first
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(usersSnapshot: DataSnapshot) {
+                val followingList = mutableListOf<String>()
 
-                if (snapshot.exists() && snapshot.childrenCount > 0) {
-                    //Load posts from Firebase
-                    for (postSnapshot in snapshot.children) {
-                        val post = postSnapshot.getValue(Post::class.java)
-                        if (post != null) {
-                            post.isLiked = post.likedBy?.get(currentUserId) == true
-                            posts.add(0, post)
+                for (userSnap in usersSnapshot.children) {
+                    val uid = userSnap.key ?: continue
+                    val followersMap = userSnap.child("followers").getValue(object : GenericTypeIndicator<Map<String, Boolean>>() {})
+                    if (followersMap?.get(currentUserId) == true) {
+                        followingList.add(uid)
+                    }
+                }
+
+                // Include your own posts
+                followingList.add(currentUserId)
+
+                // Step 2: Now load posts only from followed users
+                postsRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        posts.clear()
+
+                        if (snapshot.exists() && snapshot.childrenCount > 0) {
+                            for (postSnapshot in snapshot.children) {
+                                val post = postSnapshot.getValue(Post::class.java)
+                                if (post != null && followingList.contains(post.userId)) {
+                                    post.isLiked = post.likedBy?.get(currentUserId) == true
+                                    posts.add(0, post)
+                                }
+                            }
+                        } else {
+                            Toast.makeText(this@main_feed, "No Posts in database", Toast.LENGTH_SHORT).show()
+                        }
+
+                        // Initialize adapter if needed
+                        if (!::postAdapter.isInitialized) {
+                            var currentUsername = "You"
+                            var currentUserProfileBase64 = ""
+                            val usersRef = FirebaseDatabase.getInstance().getReference("Users")
+
+                            fun setupAdapter() {
+                                postAdapter = PostAdapter(
+                                    this@main_feed,
+                                    posts,
+                                    currentUsername,
+                                    currentUserProfileBase64
+                                )
+                                binding.rvPosts.layoutManager = LinearLayoutManager(this@main_feed)
+                                binding.rvPosts.adapter = postAdapter
+                            }
+
+                            if (currentUserId.isNotEmpty()) {
+                                usersRef.child(currentUserId).get()
+                                    .addOnSuccessListener { userSnapshot ->
+                                        if (userSnapshot.exists()) {
+                                            currentUsername = userSnapshot.child("username").getValue(String::class.java) ?: "You"
+                                            currentUserProfileBase64 = userSnapshot.child("profileImage").getValue(String::class.java) ?: ""
+                                        }
+                                        setupAdapter()
+                                    }
+                                    .addOnFailureListener {
+                                        setupAdapter()
+                                    }
+                            } else {
+                                setupAdapter()
+                            }
+                        } else {
+                            postAdapter.notifyDataSetChanged()
                         }
                     }
-                } else {
-                    Toast.makeText(this@main_feed,"No Posts in database", Toast.LENGTH_SHORT).show()
-                }
 
-
-                if (!::postAdapter.isInitialized) {
-                    var currentUsername = "You"
-                    var currentUserProfileBase64 = ""
-                    val currentUserId = currentUser?.uid ?: ""
-                    val usersRef = FirebaseDatabase.getInstance().getReference("Users")
-
-                    fun setupAdapter() {
-                        postAdapter = PostAdapter(
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(
                             this@main_feed,
-                            posts,
-                            currentUsername,
-                            currentUserProfileBase64
-                        )
-                        binding.rvPosts.layoutManager = LinearLayoutManager(this@main_feed)
-                        binding.rvPosts.adapter = postAdapter
+                            "Failed to load posts: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-
-                    if (currentUserId.isNotEmpty()) {
-
-                        usersRef.child(currentUserId).get()
-                            .addOnSuccessListener { userSnapshot ->
-                                if (userSnapshot.exists()) {
-                                    currentUsername = userSnapshot.child("username").getValue(String::class.java) ?: "You"
-                                    currentUserProfileBase64 =
-                                        userSnapshot.child("profileImage").getValue(String::class.java) ?: ""
-                                }
-                                setupAdapter()
-                            }
-                            .addOnFailureListener {
-                                setupAdapter()
-                            }
-                    } else {
-                        setupAdapter()
-                    }
-                } else {
-                    postAdapter.notifyDataSetChanged()
-                }
+                })
             }
 
-
-                override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    this@main_feed,
-                    "Failed to load posts: ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@main_feed, "❌ Error loading followed users: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
