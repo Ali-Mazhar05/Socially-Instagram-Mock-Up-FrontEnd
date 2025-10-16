@@ -37,7 +37,7 @@ class FollowRequestAdapter(
         val user = requests[position]
         holder.tvUsername.text = user.username ?: "Unknown"
 
-        // decode base64 image if exists
+
         val imgBase64 = user.profileImage
         if (!imgBase64.isNullOrEmpty()) {
             try {
