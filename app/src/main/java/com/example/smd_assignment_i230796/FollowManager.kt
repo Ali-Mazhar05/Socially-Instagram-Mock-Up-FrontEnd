@@ -52,7 +52,23 @@ object FollowManager {
         }
     }
 
-    // 🔹 Reject a follow request
+
+    //Close friend request
+    fun acceptCloseFriendsFollowRequest(fromId: String, toId: String, onComplete: (Boolean) -> Unit) {
+        // fromId = requester, toId = receiver (the one accepting)
+        val updates = hashMapOf<String, Any?>(
+            "$fromId/followRequestsSent/$toId" to null,
+            "$toId/followRequestsReceived/$fromId" to null,
+            "$fromId/following/$toId" to true,
+            "$toId/closeFriends/$fromId" to true,
+            "$toId/followers/$fromId" to true
+        )
+
+        usersRef.updateChildren(updates).addOnCompleteListener {
+            onComplete(it.isSuccessful)
+        }
+    }
+    // Reject a follow request
     fun rejectFollowRequest(fromId: String, toId: String, onComplete: (Boolean) -> Unit) {
         val updates = hashMapOf<String, Any?>(
             "$fromId/followRequestsSent/$toId" to null,
