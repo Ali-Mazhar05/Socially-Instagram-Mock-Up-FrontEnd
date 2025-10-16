@@ -10,7 +10,7 @@ import com.example.smd_assignment_i230796.adapters.UserAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class UserListActivity : AppCompatActivity() {
+class UserListActivity : BaseActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: UserAdapter

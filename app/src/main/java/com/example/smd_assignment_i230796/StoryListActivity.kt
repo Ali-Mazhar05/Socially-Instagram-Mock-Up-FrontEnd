@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class StoryListActivity : AppCompatActivity() {
+class StoryListActivity : BaseActivity() {
 
     private lateinit var storyRecyclerView: RecyclerView
     private lateinit var storyAdapter: StoryAdapter

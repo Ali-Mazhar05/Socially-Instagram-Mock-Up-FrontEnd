@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.smd_assignment_i230796.databinding.PostPreviewBinding
 
-class post_preview : AppCompatActivity() {
+class post_preview : BaseActivity() {
 
     private lateinit var binding: PostPreviewBinding
     private lateinit var imageUris: List<Uri>

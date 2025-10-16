@@ -10,7 +10,7 @@ import com.example.smd_assignment_i230796.R
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class story_screen : AppCompatActivity() {
+class story_screen : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-class kyan_colman_profile : AppCompatActivity() {
+class kyan_colman_profile : BaseActivity() {
 
     private lateinit var tvUsername: TextView
     private lateinit var tvFullName: TextView

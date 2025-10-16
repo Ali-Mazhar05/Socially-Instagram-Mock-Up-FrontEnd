@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-class StoryViewerActivity : AppCompatActivity() {
+class StoryViewerActivity : BaseActivity() {
 
     private lateinit var storyImage: ImageView
     private lateinit var profileImage: ImageView

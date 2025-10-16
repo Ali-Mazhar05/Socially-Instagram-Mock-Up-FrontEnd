@@ -16,7 +16,10 @@ data class User(
     var following: MutableMap<String, Boolean>? = null,            // userId → true
     var followRequestsSent: MutableMap<String, Boolean>? = null,   // pending requests sent
     var followRequestsReceived: MutableMap<String, Boolean>? = null, // pending requests received
-    var closeFriends: MutableMap<String, Boolean>? = null          // close friends
+    var closeFriends: MutableMap<String, Boolean>? = null,     // close friends
 
+
+    var onlineStatus: String? = null,
+    var lastSeen: Long? = null
 )
 
