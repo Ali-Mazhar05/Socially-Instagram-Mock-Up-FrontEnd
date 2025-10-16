@@ -26,6 +26,7 @@ class FollowRequestAdapter(
         val tvUsername: TextView = itemView.findViewById(R.id.tvUsername)
         val btnAccept: Button = itemView.findViewById(R.id.btnAccept)
         val btnReject: Button = itemView.findViewById(R.id.btnReject)
+        val btnCloseFriends: Button= itemView.findViewById(R.id.btnCloseFriends)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowRequestViewHolder {
@@ -90,6 +91,27 @@ class FollowRequestAdapter(
                         if (requests.isEmpty()) onListEmpty?.invoke()
                     } else {
                         Toast.makeText(context, "Failed to reject request", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        holder.btnCloseFriends.setOnClickListener{
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION && currentUserId != null && user.uid != null) {
+                FollowManager.acceptCloseFriendsFollowRequest(user.uid!!, currentUserId) { success ->
+                    if (success) {
+                        Toast.makeText(context, "Accepted CloseFriends${user.username}", Toast.LENGTH_SHORT).show()
+                        if (pos in requests.indices) {
+                            requests.removeAt(pos)
+                            notifyItemRemoved(pos)
+                            if (requests.isEmpty()) onListEmpty?.invoke()
+                        } else {
+                            notifyDataSetChanged() // fallback refresh
+                        }
+                        if (requests.isEmpty()) onListEmpty?.invoke()
+                    } else {
+                        Toast.makeText(context, "Failed to accept request", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
