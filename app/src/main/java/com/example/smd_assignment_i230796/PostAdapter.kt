@@ -48,7 +48,7 @@ class PostAdapter(
             currentUsername =snapshot.getValue(String::class.java) ?: " "
         }
 
-        // ---------- BASIC INFO ----------
+        //----------BASIC INFO----------
         holder.binding.tvUsername.text = post.username ?: ""
         holder.binding.tvLocation.text = post.location ?: ""
         holder.binding.igpostCaption.text = post.caption ?: ""
