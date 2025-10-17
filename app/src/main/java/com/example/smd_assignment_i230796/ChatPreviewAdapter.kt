@@ -37,22 +37,22 @@ class ChatPreviewAdapter(
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chat = chatList[position]
 
-        // ✅ Load profile image (Base64) or fallback
+        // Load profile image (Base64) or fallback
         holder.imgProfile.setImageBitmap(
             decodeBase64ToCircularBitmap(chat.profileImage) ?: run {
                 BitmapFactory.decodeResource(holder.itemView.resources, R.drawable.jack_profile)
             }
         )
 
-        // ✅ Set username safely
+        // Set username safely
         holder.txtUsername.text = chat.username.ifBlank { "Unknown" }
 
-        // ✅ Set last message and timestamp
+        // Set last message and timestamp
         holder.txtLastMessage.text = chat.lastMessage.ifBlank { "No messages yet" }
         holder.txtTimestamp.text =
             if (chat.lastMessageTime > 0L) formatTime(chat.lastMessageTime) else ""
 
-        // ✅ Click listeners
+        // Click listeners
         holder.itemView.setOnClickListener { onChatClick(chat) }
         holder.btnCamera.setOnClickListener { onCameraClick(chat) }
     }

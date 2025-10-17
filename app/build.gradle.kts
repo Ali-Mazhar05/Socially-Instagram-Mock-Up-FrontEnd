@@ -45,6 +45,11 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-messaging:24.0.0")
+// latest stable
+    implementation("com.google.firebase:firebase-analytics:22.0.0")
+
+
     implementation(libs.material.v1130)
     implementation(libs.kotlin.stdlib)
     implementation(libs.circleimageview)
