@@ -2,11 +2,14 @@ package com.example.smd_assignment_i230796
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.database.ContentObserver
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Base64
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -41,6 +44,7 @@ class chat_screen : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.chat_screen)
 
         recyclerMessages = findViewById(R.id.recyclerMessages)
@@ -87,7 +91,91 @@ class chat_screen : BaseActivity() {
         } else {
             throw IllegalArgumentException("Chat cannot be opened without chatId or receiverId")
         }
+
+        startScreenshotDetection()
+
     }
+
+    //--------------screenshotdetection--------------
+    private var lastScreenshotTime = 0L
+
+    private fun startScreenshotDetection() {
+        if (checkSelfPermission(android.Manifest.permission.READ_MEDIA_IMAGES)
+            != android.content.pm.PackageManager.PERMISSION_GRANTED &&
+            checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            != android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES), 1001)
+            return
+        }
+
+        contentResolver.registerContentObserver(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            true,
+            object : ContentObserver(Handler(mainLooper)) {
+                override fun onChange(selfChange: Boolean) {
+                    super.onChange(selfChange)
+                    detectScreenshot()
+                }
+            }
+        )
+    }
+
+    private fun detectScreenshot() {
+        val projection = arrayOf(
+            MediaStore.Images.Media.DATE_ADDED,
+            MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.RELATIVE_PATH
+        )
+
+        val cursor = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            "${MediaStore.Images.Media.DATE_ADDED} > ?",
+            arrayOf((lastScreenshotTime / 1000).toString()),
+            "${MediaStore.Images.Media.DATE_ADDED} DESC"
+        )
+
+        cursor?.use {
+            while (it.moveToNext()) {
+                val dateAdded = it.getLong(it.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)) * 1000
+                val displayName = it.getString(it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+                val path = it.getString(it.getColumnIndexOrThrow(MediaStore.Images.Media.RELATIVE_PATH)) ?: ""
+
+                if (dateAdded > lastScreenshotTime &&
+                    (displayName.contains("screenshot", true) || path.contains("Screenshots", true))
+                ) {
+                    notifyScreenshotTaken()
+                    break
+                }
+            }
+        }
+    }
+
+    private fun notifyScreenshotTaken() {
+        val now = System.currentTimeMillis()
+        if (now - lastScreenshotTime < 2000) return // avoid duplicates
+        lastScreenshotTime = now
+
+        if (chatId.isNullOrEmpty() || receiverId.isNullOrEmpty()) return
+
+        val chatsRef = FirebaseDatabase.getInstance().getReference("chats").child(chatId!!)
+        val screenshotMessageId = chatsRef.child("messages").push().key ?: return
+
+        val screenshotMessage = ChatMessage(
+            messageId = screenshotMessageId,
+            senderId = currentUserId,
+            text = "[Screenshot]",
+            timestamp = now,
+            imageUrl = null,
+            edited = false
+        )
+
+        chatsRef.child("messages").child(screenshotMessageId).setValue(screenshotMessage)
+        chatsRef.child("lastMessage").setValue("[Screenshot]")
+    }
+
+
 
     private fun setReceiverProfile(profileBase64: String?) {
         if (!profileBase64.isNullOrEmpty()) {
@@ -102,6 +190,14 @@ class chat_screen : BaseActivity() {
             imgProfile.setImageResource(R.drawable.jack_profile)
         }
     }
+
+
+
+
+
+
+
+
 
     private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
         val size = minOf(bitmap.width, bitmap.height)

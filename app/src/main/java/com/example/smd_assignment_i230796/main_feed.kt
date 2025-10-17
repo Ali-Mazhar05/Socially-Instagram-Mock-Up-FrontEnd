@@ -2,6 +2,7 @@ package com.example.smd_assignment_i230796
 
 import Story
 import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.Image
@@ -13,6 +14,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smd_assignment_i230796.databinding.MainFeedBinding
@@ -91,6 +94,7 @@ class main_feed : BaseActivity() {
         setupPostsRecycler()
         bottomNav()
         TopBar()
+        requestNotificationPermission()
 
         //Register STORY_UPDATED receiver
         val updateFilter = IntentFilter("com.example.smd_assignment_i230796.STORY_UPDATED")
@@ -166,6 +170,23 @@ class main_feed : BaseActivity() {
         }
     }
 
+
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    101
+                )
+            }
+        }
+    }
 
 
     //--------------------stories---------------------------

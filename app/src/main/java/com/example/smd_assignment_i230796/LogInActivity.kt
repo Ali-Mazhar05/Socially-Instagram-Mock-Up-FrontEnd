@@ -43,6 +43,8 @@ class LogInActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    MyFirebaseMessagingService.updateTokenAfterLogin()
+
 
                     // Go to main feed
                     startActivity(Intent(this, main_feed::class.java))
