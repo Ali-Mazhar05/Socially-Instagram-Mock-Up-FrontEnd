@@ -7,8 +7,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -96,29 +98,63 @@ class chat_screen : BaseActivity() {
 
     }
 
-    //--------------screenshotdetection--------------
+    // ---------------- SCREENSHOT DETECTION ----------------
     private var lastScreenshotTime = 0L
+    private var lastScreenshotSentAt = 0L
+    private var lastScreenshotFileName: String? = null
+    private var lastScreenshotMessageId: String? = null
+    private var screenshotObserver: ContentObserver? = null
+    private var observerRegistered = false
 
     private fun startScreenshotDetection() {
-        if (checkSelfPermission(android.Manifest.permission.READ_MEDIA_IMAGES)
-            != android.content.pm.PackageManager.PERMISSION_GRANTED &&
-            checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            != android.content.pm.PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES), 1001)
+        //Prevent multiple observers if activity is recreated
+        if (observerRegistered) {
+            Log.d("Screenshot", "⚠️ Screenshot observer already registered — skipping.")
             return
+        }
+
+        val permissions = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES)
+        } else {
+            arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        val missingPermissions = permissions.filter {
+            checkSelfPermission(it) != android.content.pm.PackageManager.PERMISSION_GRANTED
+        }
+
+        if (missingPermissions.isNotEmpty()) {
+            requestPermissions(missingPermissions.toTypedArray(), 1001)
+            return
+        }
+
+        screenshotObserver = object : ContentObserver(Handler(mainLooper)) {
+            override fun onChange(selfChange: Boolean) {
+                super.onChange(selfChange)
+                detectScreenshot()
+            }
         }
 
         contentResolver.registerContentObserver(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             true,
-            object : ContentObserver(Handler(mainLooper)) {
-                override fun onChange(selfChange: Boolean) {
-                    super.onChange(selfChange)
-                    detectScreenshot()
-                }
-            }
+            screenshotObserver!!
         )
+        observerRegistered = true
+        Log.d("Screenshot", "📸 Screenshot observer registered.")
+    }
+
+    private fun stopScreenshotDetection() {
+        if (observerRegistered && screenshotObserver != null) {
+            contentResolver.unregisterContentObserver(screenshotObserver!!)
+            observerRegistered = false
+            Log.d("Screenshot", "🧹 Screenshot observer unregistered.")
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopScreenshotDetection()
     }
 
     private fun detectScreenshot() {
@@ -145,37 +181,59 @@ class chat_screen : BaseActivity() {
                 if (dateAdded > lastScreenshotTime &&
                     (displayName.contains("screenshot", true) || path.contains("Screenshots", true))
                 ) {
-                    notifyScreenshotTaken()
+                    lastScreenshotTime = dateAdded
+                    notifyScreenshotTaken(displayName)
                     break
                 }
             }
         }
     }
 
-    private fun notifyScreenshotTaken() {
+    private fun notifyScreenshotTaken(fileName: String?) {
         val now = System.currentTimeMillis()
-        if (now - lastScreenshotTime < 2000) return // avoid duplicates
-        lastScreenshotTime = now
+
+        //Ignore duplicate screenshot events (same file or too soon)
+        if (now - lastScreenshotSentAt < 4000 && fileName == lastScreenshotFileName) {
+            Log.d("Screenshot", "⚠️ Duplicate screenshot ignored (same file or cooldown).")
+            return
+        }
+
+        lastScreenshotSentAt = now
+        lastScreenshotFileName = fileName
 
         if (chatId.isNullOrEmpty() || receiverId.isNullOrEmpty()) return
 
         val chatsRef = FirebaseDatabase.getInstance().getReference("chats").child(chatId!!)
-        val screenshotMessageId = chatsRef.child("messages").push().key ?: return
+        val messageIdToUse = lastScreenshotMessageId ?: chatsRef.child("messages").push().key ?: return
+        lastScreenshotMessageId = messageIdToUse
 
-        val screenshotMessage = ChatMessage(
-            messageId = screenshotMessageId,
-            senderId = currentUserId,
-            text = "[Screenshot]",
-            timestamp = now,
-            imageUrl = null,
-            edited = false
-        )
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserId)
+        userRef.child("username").get().addOnSuccessListener { snapshot ->
+            val senderUsername = snapshot.value?.toString() ?: "Someone"
 
-        chatsRef.child("messages").child(screenshotMessageId).setValue(screenshotMessage)
-        chatsRef.child("lastMessage").setValue("[Screenshot]")
+            val screenshotMessage = ChatMessage(
+                messageId = messageIdToUse,
+                senderId = currentUserId,
+                text = "[ $senderUsername took a Screenshot ]",
+                timestamp = now,
+                imageUrl = null,
+                edited = false
+            )
+
+            val updates = hashMapOf<String, Any>(
+                "/messages/$messageIdToUse" to screenshotMessage,
+                "/lastMessage" to "[Screenshot]"
+            )
+            chatsRef.updateChildren(updates).addOnSuccessListener {
+                Log.d("Screenshot", "✅ Screenshot message sent once.")
+            }
+
+            // Allow new screenshot message after 5 seconds
+            Handler(Looper.getMainLooper()).postDelayed({
+                lastScreenshotMessageId = null
+            }, 5000)
+        }
     }
-
-
 
     private fun setReceiverProfile(profileBase64: String?) {
         if (!profileBase64.isNullOrEmpty()) {
@@ -190,9 +248,6 @@ class chat_screen : BaseActivity() {
             imgProfile.setImageResource(R.drawable.jack_profile)
         }
     }
-
-
-
 
 
 
